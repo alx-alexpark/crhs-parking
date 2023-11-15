@@ -13,19 +13,20 @@ const UserSchema = new mongoose.Schema({
     },
     phone: {
         // Pull from clerk profile if not available here
-        required: false,
-        maxlength: 15, // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
+      type: Number,
+      maxlength: 15 // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
     },
     studentId: {
-        required: true,
+        type: String,
         length: 8
     },
     admin: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     grade: {
         type: Number,
-        enum: [9, 10, 11, 12],
+        enum: [10, 11, 12],
     }
 
 }, {timestamps: true});
