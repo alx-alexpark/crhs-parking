@@ -57,7 +57,7 @@ const ParkingSpotRequestSchema = new mongoose.Schema({
     },
     quadrant: {
         type: String,
-        enum: ['9_GRADE', '1200', '1600'],
+        enum: ['9TH_GRADE', '1200', '1600', 'ATHLETICS'],
         required: true
     },
     paymentId: {
