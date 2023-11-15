@@ -3,13 +3,22 @@ import mongoose from 'mongoose'
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Name is required'],
-        maxlength: [60, 'Name cannot be longer than 60 characters']
+        required: true,
+        maxlength: 60
     },
     email: {
         type: String,
-        required: [true, "Email is required"],
-        maxlength: [128, "Email cannot be longer than 128 characters"]
+        required: true,
+        maxlength: 254 // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+    },
+    phone: {
+        // Pull from clerk profile if not available here
+        required: false,
+        maxlength: 15, // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
+    },
+    studentId: {
+        required: true,
+        length: 8
     },
     admin: {
         type: Boolean
