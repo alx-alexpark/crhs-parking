@@ -11,6 +11,6 @@ export async function POST(request: Request) {
     if ((await User.find({ email: email })).length > 0) 
         return new Response("User already exists");
 
-    User.create({name: name, email: email});
+    await User.create({name: name, email: email});
     return new Response("User created");
 }
