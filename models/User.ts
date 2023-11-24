@@ -27,8 +27,11 @@ const UserSchema = new mongoose.Schema({
     grade: {
         type: Number,
         enum: [10, 11, 12],
+    },
+    clerkUserId: {
+        type: String,
+        required: true
     }
-
 }, {timestamps: true});
 
 export default mongoose.models.User || mongoose.model('User', UserSchema)
