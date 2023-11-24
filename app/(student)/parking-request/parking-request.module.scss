@@ -1,0 +1,25 @@
+.container {
+  height: 100%;
+}
+
+.formPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+}
+
+.content > section {
+  // Spacing between text elements
+  p + *,
+  ul + *,
+  ol + * {
+    margin-top: var(--spacing-md);
+  }
+
+  // Spacing between sections
+  &:not(:first-child) {
+    margin-top: var(--spacing-lg);
+  }
+}

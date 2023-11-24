@@ -1,0 +1,167 @@
+@import './reset';
+
+:root {
+  --color-primary: #35f;
+  --color-foreground: #222;
+  --color-background: #fafaff;
+  --color-container: #fff;
+
+  --color-text: #666;
+  --color-surface-text: var(--color-background);
+  --color-placeholder: #c1c3cd;
+
+  --color-border: #bdc6d1;
+  /* --color-border: #e2e8f0; */
+  --color-inactive: #e0e0e0;
+
+  --text-h1: 2.5rem;
+  --text-h2: 2rem;
+  --text-h3: 1.2rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+
+  --border-full: 999px;
+  --border-input: 6px;
+
+  --spacing-lg: 1rem;
+  --spacing-md: 0.5rem;
+  --spacing-sm: 0.25rem;
+}
+
+// Reduce font size on smaller (mobile) screens
+@media (max-width: 540px) {
+  :root {
+    --text-h1: 1.8125rem;
+    --text-h2: 1.625rem;
+    --text-h3: 1.125rem;
+  }
+}
+
+// Use alternative colors for the dark color scheme
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #4d6aff;
+    --color-foreground: #fff;
+    /* --color-background: #030300; */
+    --color-background: #040408;
+    --color-container: #222;
+
+    --color-text: #ddd;
+    --color-surface-text: var(--color-foreground);
+
+    --color-border: #696c70;
+  }
+}
+
+/**
+ * Containers
+ */
+
+body {
+  height: 100vh;
+  padding: 1rem;
+
+  background-color: var(--color-background);
+  /* background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); */
+
+  color: var(--color-text);
+}
+
+@supports (min-height: 100dvh) {
+  body {
+    min-height: 100dvh !important;
+  }
+}
+
+main {
+  width: fit-content;
+  margin: auto;
+
+  /* background-color: var(--color-background); */
+}
+
+main > *:not(:first-child) {
+  // Spacing between elements
+  margin-top: 1rem;
+}
+
+/**
+ * Typography
+ */
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+h1,
+h2,
+h3,
+input {
+  color: var(--color-foreground);
+}
+
+ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+p,
+ol,
+ul {
+  max-width: 70ch;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+ol ol {
+  list-style-type: lower-alpha;
+}
+
+/**
+ * Form elements
+ */
+
+label {
+  display: block;
+
+  font-size: var(--text-small);
+}
+
+input,
+select,
+textarea {
+  padding: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-input);
+
+  background: var(--color-background);
+}
+
+select {
+  // <select> doesn't inherit color from body
+  color: var(--color-text);
+}
+
+input {
+  outline-offset: -1px;
+}
+
+button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+
+  background: var(--color-primary);
+
+  color: var(--color-surface-text);
+}
