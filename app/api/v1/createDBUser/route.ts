@@ -1,7 +1,9 @@
-import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from '@clerk/nextjs';
 
+import dbConnect from '@/lib/dbConnect';
+import User from '@/models/User';
+
+<<<<<<< HEAD
 export async function GET(request: Request) {
     await dbConnect();
     const user = await currentUser();
@@ -15,3 +17,18 @@ export async function GET(request: Request) {
     await User.create({name: name, email: email, clerkUserId: clerkUserId});
     return new Response("User created");
 }
+=======
+export async function POST(request: Request) {
+  await dbConnect();
+
+  const user = await currentUser();
+  const name = user?.firstName + ' ' + user?.lastName;
+  const email = user?.emailAddresses[0].emailAddress;
+
+  if ((await User.find({ email: email })).length > 0)
+    return new Response('User already exists');
+
+  await User.create({ name: name, email: email });
+  return new Response('User created');
+}
+>>>>>>> a89935f7704d05918212a9d55b035c33a2f10efd

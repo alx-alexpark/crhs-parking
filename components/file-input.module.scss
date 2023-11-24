@@ -1,0 +1,35 @@
+.container {
+  cursor: pointer;
+}
+
+@supports selector(::file-selector-button) {
+  .container {
+    display: flex;
+    align-items: center;
+
+    width: fit-content;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-input);
+  }
+
+  .input::file-selector-button {
+    display: none;
+  }
+
+  .icon {
+    display: inline !important;
+
+    width: 14px;
+    height: 14px;
+    margin: var(--spacing-sm);
+  }
+}
+
+.input {
+  border: none;
+  background: none;
+}
+
+.icon {
+  display: none;
+}
