@@ -29,7 +29,7 @@
 }
 
 // Reduce font size on smaller (mobile) screens
-@media (max-width: 540px) {
+@media (max-width: var(--width-mobile)) {
   :root {
     --text-h1: 1.8125rem;
     --text-h2: 1.625rem;
@@ -75,6 +75,7 @@ body {
 
 main {
   width: fit-content;
+  max-width: 100%;
   margin: auto;
 
   /* background-color: var(--color-background); */
@@ -134,6 +135,8 @@ ol ol {
 label {
   display: block;
 
+  margin-top: var(--spacing-md);
+
   font-size: var(--text-small);
 }
 
@@ -147,13 +150,19 @@ textarea {
   background: var(--color-background);
 }
 
+input:not([type='file']),
 select {
-  // <select> doesn't inherit color from body
-  color: var(--color-text);
+  padding: var(--spacing-md);
+  height: 2.5rem;
 }
 
 input {
   outline-offset: -1px;
+}
+
+select {
+  // <select> doesn't inherit color from body
+  color: var(--color-text);
 }
 
 button {

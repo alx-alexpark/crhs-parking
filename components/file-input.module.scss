@@ -1,4 +1,7 @@
 .container {
+  padding: var(--spacing-md);
+  height: 2.5rem;
+
   cursor: pointer;
 }
 
@@ -21,7 +24,7 @@
 
     width: 14px;
     height: 14px;
-    margin: var(--spacing-sm);
+    margin: var(--spacing-md);
   }
 }
 

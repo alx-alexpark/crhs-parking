@@ -60,7 +60,7 @@ export default function ParkingRequestPage() {
       <section className={styles.formPage}>
         <div className={styles.content}>{pages[activeStep]}</div>
 
-        <div>
+        <div className={styles.actions}>
           {activeStep < pages.length - 1 ? (
             <button onClick={() => void setActiveStepPage(activeStep + 1)}>
               Next <ArrowForwardIcon />
