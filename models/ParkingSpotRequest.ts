@@ -21,15 +21,15 @@ const ParkingSpotRequestSchema = new mongoose.Schema(
       },
       make: {
         type: String,
-        length: 64,
+        maxlength: 64,
       },
       model: {
         type: String,
-        length: 64,
+        maxlength: 64,
       },
       color: {
         type: String,
-        length: 64,
+        maxlength: 64,
       },
     },
     student: {
