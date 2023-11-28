@@ -40,10 +40,12 @@ const ParkingSpotRequestSchema = new mongoose.Schema(
       },
       legalFirstName: {
         // if it doesen't exist, take directly from user google account
+        type: String,
         maxlength: 64,
       },
       legalLastName: {
         // if it doesen't exist, take directly from user google account
+        type: String,
         maxlength: 64,
       },
     },
@@ -59,6 +61,11 @@ const ParkingSpotRequestSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    decision: {
+      type: String,
+      enum: ["undecided", "approved", "denied"],
+      default: "undecided"
+    }
   },
   { timestamps: true }
 );
