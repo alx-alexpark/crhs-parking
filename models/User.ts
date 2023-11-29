@@ -26,12 +26,12 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     grade: {
-        type: Number,
-        enum: [10, 11, 12],
+      type: Number,
+      enum: [10, 11, 12],
     },
     clerkUserId: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     }
 }, {timestamps: true});
 
