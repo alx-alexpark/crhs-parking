@@ -4,9 +4,9 @@ import { v4 as uuidv4 }from "uuid";
 import { getAuth } from "@clerk/nextjs/server";
 
 const s3 = new S3({
-  endpoint: process.env.CLOUDFLARE_R2_ENDPOINT,
-  accessKeyId: process.env.CLOUDFLARE_KEY_ID,
-  secretAccessKey: process.env.CLOUDFLARE_SECRET_KEY,
+  endpoint: process.env.S3_ENDPOINT,
+  accessKeyId: process.env.S3_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_KEY,
   signatureVersion: "v4",
 });
 
