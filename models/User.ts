@@ -10,12 +10,16 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      maxlength: 254, // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+
+      // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+      maxlength: 254,
     },
     phone: {
-      // Pull from clerk profile if not available here
+      // Pull from Clerk profile if not available here
       type: Number,
-      maxlength: 15, // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
+
+      // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
+      maxlength: 15,
     },
     studentId: {
       type: String,
@@ -31,8 +35,20 @@ const UserSchema = new mongoose.Schema(
     },
     clerkUserId: {
       type: String,
-      required: true
-    }
-}, {timestamps: true});
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-export default mongoose.models.User || mongoose.model('User', UserSchema)
+export default mongoose.models.User || mongoose.model('User', UserSchema);
+
+export default interface UserType {
+  name: string;
+  email: string;
+  phone: number;
+  studentId: string;
+  admin: boolean;
+  grade: number;
+  clerkUserId: string;
+}

@@ -1,10 +1,11 @@
 .container {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  flex-shrink: 0;
+  gap: var(--spacing-lg);
 
   max-width: fit-content;
-  padding: 0.5rem;
+  padding: var(--spacing-lg) var(--spacing-md);
   border: 1px solid var(--color-border);
   border-radius: 1rem;
 
@@ -14,7 +15,7 @@
 .item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--spacing-md);
 
   min-width: max-content;
   height: fit-content;
@@ -25,6 +26,10 @@
 .icon {
   --border: var(--color-border);
   --color: var(--color-foreground);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   height: 2rem;
   min-width: 2rem;
@@ -39,11 +44,21 @@
 
 .active {
   --border: var(--color-primary);
+  color: var(--border);
+
+  & + p {
+    color: var(--color-primary);
+  }
 }
 
 .complete {
   --color: var(--color-background);
+  color: var(--color);
   background-color: var(--color-primary);
+
+  & + p {
+    color: var(--color-primary);
+  }
 }
 
 .text p {

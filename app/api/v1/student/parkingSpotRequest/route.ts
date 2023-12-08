@@ -4,6 +4,35 @@ import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
 
+const RequestTemplate = {
+  user: {
+    name: '',
+    email: '',
+    phone: 0,
+    studentId: '',
+    admin: false,
+    grade: 0,
+    clerkUserId: '',
+  },
+  vehicle: {
+    licensePlate: '',
+    proofOfInsurance: '',
+    year: 0,
+    make: '',
+    model: '',
+    color: '',
+  },
+  student: {
+    driversLicense: '',
+    legalFirstName: '',
+    legalLastName: '',
+  },
+  quadrant: '',
+  paymentId: '',
+  submitted: false,
+  decision: '',
+};
+
 export async function GET(request: Request) {
   await dbConnect();
 
@@ -17,18 +46,21 @@ export async function GET(request: Request) {
     submitted: false,
   });
 
-  return new Response('hello ' + String(currentParkingSpotRequest));
+  return Response.json(currentParkingSpotRequest);
 }
 
 // TODO: test this and make sure it works
 export async function PUT(request: Request) {
   await dbConnect();
 
-  const newJson = request.json();
+  const newJson = await request.json();
   const user = await currentUser();
   const dbUser = await User.findOne({
     email: user?.emailAddresses[0].emailAddress,
   });
+
+  // Prevent the user from directly setting the submitted value
+  newJson.submitted = false;
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({
     user: dbUser._id,
@@ -41,5 +73,5 @@ export async function PUT(request: Request) {
     await ParkingSpotRequest.create({ user: dbUser._id, ...newJson });
   }
 
-  return new Response('yes');
+  return new Response('OK');
 }

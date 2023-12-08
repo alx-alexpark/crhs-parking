@@ -1,4 +1,4 @@
-import { FileInput } from "@/components/file-input";
+import { FileInput } from '@/components/file-input';
 
 export function Payment() {
   return (
@@ -15,7 +15,7 @@ export function Payment() {
         </p>
 
         <label htmlFor="receipt-photo">CRHS parking receipt</label>
-        <FileInput id="receipt-photo" accept="image/*" />
+        <FileInput id="receipt-photo" name="paymentId" accept="image/*" />
       </section>
     </>
   );

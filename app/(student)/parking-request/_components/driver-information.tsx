@@ -1,23 +1,28 @@
-import { FileInput } from "@/components/file-input";
+import { FileInput } from '@/components/file-input';
+import ParkingRequestPage from '.';
 
-export function DriverInformation() {
+export function DriverInformation({ formik, children }: ParkingRequestPage) {
   return (
     <>
       <section>
         <h1>Driver information</h1>
 
-        <label htmlFor="license-number">Driver's license number</label>
-        <input id="license-number"></input>
-
-        <label htmlFor="exp-date">Expiration date</label>
-        <input id="exp-date" type="date"></input>
-
         <label htmlFor="license-photo">Photo of your driver's license</label>
-        <FileInput id="license-photo" accept="image/*" />
+        <FileInput
+          id="license-photo"
+          name="student.driversLicense"
+          accept="image/*"
+        />
 
         <label htmlFor="insurance-photo">Photo of vehicle's insurance</label>
-        <FileInput id="insurance-photo" accept="image/*" />
+        <FileInput
+          id="insurance-photo"
+          name="vehicle.proofOfInsurance"
+          accept="image/*"
+        />
       </section>
+
+      {children}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Tabs } from '@/components/tabs';
+import ParkingRequestPage from '.';
 
-export function Guidelines() {
+export function Guidelines({ formik, children }: ParkingRequestPage) {
   const documents = [
     {
       title: 'Student Code of Conduct',
@@ -105,8 +106,8 @@ export function Guidelines() {
           </p>
           <ol>
             <li>
-              It shall be unlawful for any person to operate or park a vehicle on
-              the grounds of the district in the following manner:
+              It shall be unlawful for any person to operate or park a vehicle
+              on the grounds of the district in the following manner:
               <ol>
                 <li>Passing another moving vehicle.</li>
                 <li>Driving without a valid driver's license.</li>
@@ -127,10 +128,10 @@ export function Guidelines() {
                   than is reasonable and prudent under the existing conditions.
                 </li>
                 <li>
-                  Parking a vehicle except in the manner and in the spaces marked
-                  and designated by the district. Vehicles parked in violation of
-                  District rules may be removed by order of the Superintendent or
-                  designee at the expense of the violator.
+                  Parking a vehicle except in the manner and in the spaces
+                  marked and designated by the district. Vehicles parked in
+                  violation of District rules may be removed by order of the
+                  Superintendent or designee at the expense of the violator.
                 </li>
                 <li>
                   Blocking or impeding traffic through any driveway or parking
@@ -151,16 +152,18 @@ export function Guidelines() {
               The District may suspend a student's permission to drive or park a
               vehicle on any District property for violation of any traffic or
               parking regulation as promulgated by the board.  After 30 days,
-              reinstatement may be permitted, and a fee of $25 for reissuance of a
-              parking permit shall be assessed. Thereafter for each reissuance of
-              a parking permit a fee of $50 shall be charged.
+              reinstatement may be permitted, and a fee of $25 for reissuance of
+              a parking permit shall be assessed. Thereafter for each reissuance
+              of a parking permit a fee of $50 shall be charged.
             </li>
             <li>
-              Each facility administrator shall develop and implement a procedure
-              for the enforcement of traffic and parking regulations.</li>
+              Each facility administrator shall develop and implement a
+              procedure for the enforcement of traffic and parking regulations.
+            </li>
             <li>
-              The Superintendent or designee will post information signs, caution
-              signs, and traffic control devices.</li>
+              The Superintendent or designee will post information signs,
+              caution signs, and traffic control devices.
+            </li>
             <li>
               District peace officers are hereby authorized to issue traffic
               citations for violation of District traffic rules and state laws
@@ -247,6 +250,8 @@ export function Guidelines() {
 
         <Tabs tabs={documents} />
       </section>
+
+      {children}
     </>
   );
 }

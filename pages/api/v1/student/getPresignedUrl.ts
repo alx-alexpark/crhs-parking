@@ -1,36 +1,38 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import S3 from "aws-sdk/clients/s3";
-import { v4 as uuidv4 }from "uuid";
-import { getAuth } from "@clerk/nextjs/server";
+import { getAuth } from '@clerk/nextjs/server';
+import S3 from 'aws-sdk/clients/s3';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { v4 as uuidv4 } from 'uuid';
 
 const s3 = new S3({
   endpoint: process.env.S3_ENDPOINT,
   accessKeyId: process.env.S3_KEY_ID,
   secretAccessKey: process.env.S3_SECRET_KEY,
-  signatureVersion: "v4",
+  signatureVersion: 'v4',
 });
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-
   const { userId } = getAuth(req);
 
   if (!userId) {
     return res
       .status(403)
-      .json({ message: "Access denied: What are you doing???" });
+      .json({ message: 'Access denied: What are you doing???' });
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
   }
 
   try {
     let { name, type } = req.body;
-    let newName = uuidv4() + "." + name.split(".")[1];
+    let newName = uuidv4() + '.' + name.split('.')[1];
 
-    if (!type.startsWith("image/")) {
-      return res.status(500).json({ error: "Only images are allowed, what shenanigans are you trying to pull??" })
+    if (!type.startsWith('image/')) {
+      return res.status(500).json({
+        error:
+          'Only images are allowed, what shenanigans are you trying to pull??',
+      });
     }
 
     const fileParams = {
@@ -40,7 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       ContentType: type,
     };
 
-    const url = await s3.getSignedUrlPromise("putObject", fileParams);
+    const url = await s3.getSignedUrlPromise('putObject', fileParams);
 
     res.status(200).json({ url: url, filename: newName });
   } catch (err) {
@@ -52,7 +54,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "8mb", // Set desired value here
+      sizeLimit: '8mb', // Set desired value here
     },
   },
 };

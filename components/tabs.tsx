@@ -29,17 +29,16 @@ export function Tabs({ tabs }: TabsProps) {
         setTabIndex(tabs.length - 1);
         break;
     }
-  }
+  };
 
   return (
-    <div className={styles.container}>
+    <div>
       <div className={styles.tabs} role="tablist">
         {tabs.map((tab, index) => (
           <div
             className={clsx(styles.tab, index == tabIndex && styles.activeTab)}
             tabIndex={index == tabIndex ? 0 : -1}
             role="tab"
-
             onClick={() => setTabIndex(index)}
             onKeyDown={keyDownEvent}
           >
@@ -47,7 +46,9 @@ export function Tabs({ tabs }: TabsProps) {
           </div>
         ))}
       </div>
-      <div className={styles.content} role="tabpanel">{tabs[tabIndex].child}</div>
+      <div className={styles.content} role="tabpanel">
+        {tabs[tabIndex].child}
+      </div>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { Outfit } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 
 import '@/styles/globals.scss';
-import { ChakraProvider, ChakraTheme } from '@chakra-ui/react';
 
 const fontFamily = Outfit({ subsets: ['latin'] });
 
@@ -24,12 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      {/* <ChakraProvider> */}
-        <ClerkProvider>
-          <body className={fontFamily.className}>{children}</body>
-        </ClerkProvider>
-      {/* </ChakraProvider> */}
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={fontFamily.className}>
+          <noscript>Enable JavaScript</noscript>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -8,6 +8,7 @@ The new parking website for Cinco Ranch High School.
 ## Infrastructure requirements
 
 You need:
+
 - An S3 compatible bucket with public URL access.
 - A project on Clerk setup
 - A MongoDB Database

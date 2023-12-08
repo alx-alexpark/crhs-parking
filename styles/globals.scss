@@ -148,6 +148,8 @@ textarea {
   border-radius: var(--border-input);
 
   background: var(--color-background);
+
+  color: var(--color-foreground);
 }
 
 input:not([type='file']),
@@ -173,4 +175,8 @@ button {
   background: var(--color-primary);
 
   color: var(--color-surface-text);
+
+  svg {
+    display: inline;
+  }
 }

@@ -1,4 +1,4 @@
-import { CheckIcon } from '@chakra-ui/icons';
+import { CheckIcon } from '@radix-ui/react-icons';
 import { clsx } from 'clsx';
 import styles from './stepper.module.scss';
 
@@ -16,7 +16,11 @@ export function Stepper({
   return (
     <div className={styles.container}>
       {steps.map((step, index) => (
-        <div className={styles.item} onClick={() => setStepperIndex(index)}>
+        <div
+          className={styles.item}
+          onClick={() => setStepperIndex(index)}
+          key={index}
+        >
           <span
             className={clsx(
               styles.icon,

@@ -1,3 +1,14 @@
+import { ReactNode } from 'react';
+
+import { FormikProps } from 'formik';
+
+import ParkingSpotRequestType from '@/models/ParkingSpotRequest';
+
+export default interface ParkingRequestPage {
+  formik: FormikProps<ParkingSpotRequestType>;
+  children: ReactNode;
+}
+
 // tslint:disable:ordered-imports
 export * from './get-started';
 export * from './parking-spot';

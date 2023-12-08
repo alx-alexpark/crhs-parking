@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
+import UserType from './User';
 
-const ParkingSpotRequestSchema = new mongoose.Schema(
+const ParkingSpotRequestSchema = new Schema(
   {
     user: {
       type: Schema.ObjectId,
@@ -17,7 +18,9 @@ const ParkingSpotRequestSchema = new mongoose.Schema(
       },
       year: {
         type: Number,
-        length: 4,
+        // length: 4,
+        min: 1900,
+        max: 9999,
       },
       make: {
         type: String,
@@ -63,12 +66,33 @@ const ParkingSpotRequestSchema = new mongoose.Schema(
     },
     decision: {
       type: String,
-      enum: ["undecided", "approved", "denied"],
-      default: "undecided"
-    }
+      enum: ['undecided', 'approved', 'denied'],
+      default: 'undecided',
+    },
   },
   { timestamps: true }
 );
 
 export default mongoose.models.ParkingSpotRequest ||
   mongoose.model('ParkingSpotRequest', ParkingSpotRequestSchema);
+
+export default interface ParkingSpotRequestType {
+  user: UserType;
+  vehicle: {
+    licensePlate: string;
+    proofOfInsurance: string;
+    year: number;
+    make: string;
+    model: string;
+    color: string;
+  };
+  student: {
+    driversLicense: string;
+    legalFirstName: string;
+    legalLastName: string;
+  };
+  quadrant: string;
+  paymentId: string;
+  submitted: boolean;
+  decision: string;
+}
