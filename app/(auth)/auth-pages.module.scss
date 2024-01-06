@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+}
+
+.background {
+  margin: 0 !important;
+
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(70%);
+
+  z-index: -10;
+}
+
+.attribution {
+  position: absolute;
+  left: var(--spacing-sm);
+  bottom: var(--spacing-sm);
+
+  // Change color of text to white for legibility
+  &,
+  & > a {
+    color: white;
+  }
+}

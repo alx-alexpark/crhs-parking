@@ -26,7 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={fontFamily.className}>
-          <noscript>Enable JavaScript</noscript>
+          <noscript>CRHS MyParking won't work without JavaScript</noscript>
           {children}
         </body>
       </html>

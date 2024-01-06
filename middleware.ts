@@ -4,8 +4,14 @@ import { authMiddleware } from '@clerk/nextjs';
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-  // '/' will be accessible to all users
-  publicRoutes: ['/'],
+  publicRoutes: [
+    '/',
+    '/login',
+    '/sign-up',
+
+    // TEMPORARY. PLEASE UNDO BEFORE COMITTING
+    '/dashboard',
+  ],
 
   signInUrl: '/login',
 

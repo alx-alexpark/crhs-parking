@@ -1,5 +1,15 @@
+// TODO: convert to mobile first
 .container {
   height: 100%;
+}
+
+@media (min-width: 712px) {
+  .container {
+    width: 680px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-container);
+  }
 }
 
 .formPage {
@@ -8,7 +18,7 @@
   justify-content: space-between;
 }
 
-.content > section {
+.content section {
   // Spacing between text elements
   p + *,
   ul + *,
@@ -17,13 +27,38 @@
   }
 
   // Spacing between sections
-  &:not(:first-child) {
+  & + section {
     margin-top: var(--spacing-lg);
   }
 }
 
 .actions {
+  display: flex;
+  gap: var(--spacing-md);
+
   margin-top: var(--spacing-lg);
+
+  button {
+    display: flex;
+    gap: var(--spacing-md);
+
+    width: 100%;
+    padding: 0 var(--spacing-lg);
+  }
+
+  .hiddenButton {
+    visibility: hidden;
+  }
+
+  .backButton {
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .backButton {
+    background: var(--color-primary);
+    color: white;
+  }
 }
 
 @media (max-width: $width-mobile) {

@@ -30,7 +30,7 @@ const RequestTemplate = {
   quadrant: '',
   paymentId: '',
   submitted: false,
-  decision: '',
+  decision: 'undecided',
 };
 
 export async function GET(request: Request) {
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
     submitted: false,
   });
 
-  return Response.json(currentParkingSpotRequest);
+  return Response.json(currentParkingSpotRequest ?? RequestTemplate);
 }
 
 // TODO: test this and make sure it works
@@ -67,10 +67,13 @@ export async function PUT(request: Request) {
     submitted: false,
   });
 
-  if (currentParkingSpotRequest != undefined) {
-    await ParkingSpotRequest.updateOne({ user: dbUser._id }, newJson);
+  if (currentParkingSpotRequest === undefined) {
+    await ParkingSpotRequest.create(
+      { user: dbUser._id },
+      { ...RequestTemplate, ...newJson }
+    );
   } else {
-    await ParkingSpotRequest.create({ user: dbUser._id, ...newJson });
+    await ParkingSpotRequest.updateOne({ user: dbUser._id }, newJson);
   }
 
   return new Response('OK');

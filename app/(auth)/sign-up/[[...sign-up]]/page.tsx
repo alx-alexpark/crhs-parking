@@ -1,13 +1,14 @@
 import Image from 'next/image';
 
-import { SignIn } from '@clerk/nextjs';
+import { SignUp } from '@clerk/nextjs';
+import { Suspense } from 'react';
 
 import styles from '../../auth-pages.module.scss';
 
-export default function LoginPage() {
+export default function SignUpPage() {
   return (
     <main className={styles.container}>
-      <SignIn redirectUrl={'/'} afterSignInUrl={'/'} />
+      <SignUp redirectUrl={'/'} afterSignInUrl={'/'} />
 
       <Image
         className={styles.background}

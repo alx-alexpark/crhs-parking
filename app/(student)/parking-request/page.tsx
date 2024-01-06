@@ -16,8 +16,9 @@ import {
   VehicleInformation,
 } from './_components';
 
-import { ArrowRightIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import axios from 'axios';
+import clsx from 'clsx';
 import { useFormik } from 'formik';
 import styles from './parking-request.module.scss';
 
@@ -110,13 +111,15 @@ export default function ParkingRequestPage() {
               formik,
               children: (
                 <div className={styles.actions}>
-                  {activeStep > 0 && (
-                    <button
-                      onClick={() => void setActiveStepPage(activeStep - 1)}
-                    >
-                      Go back
-                    </button>
-                  )}
+                  <button
+                    className={clsx(
+                      activeStep && styles.hiddenButton,
+                      styles.backButton
+                    )}
+                    onClick={() => void setActiveStepPage(activeStep - 1)}
+                  >
+                    <ArrowLeftIcon /> Go back
+                  </button>
 
                   {activeStep < pages.length - 1 ? (
                     <button type="submit">
