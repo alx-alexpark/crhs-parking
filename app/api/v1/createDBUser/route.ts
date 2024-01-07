@@ -2,6 +2,7 @@ import { currentUser } from '@clerk/nextjs';
 
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
+import sendEmail from '@/lib/sendEmail';
 
 export async function GET(request: Request) {
   await dbConnect();

@@ -6,6 +6,9 @@ const ParkingSpotRequestSchema = new Schema(
     user: {
       type: Schema.ObjectId,
     },
+    schoolYear: {
+      type: String,
+    },
     vehicle: {
       licensePlate: {
         type: String,
@@ -31,23 +34,6 @@ const ParkingSpotRequestSchema = new Schema(
         maxlength: 64,
       },
       color: {
-        type: String,
-        maxlength: 64,
-      },
-    },
-    student: {
-      driversLicense: {
-        // A url to a bucket (picture)
-        type: String,
-        maxlength: 100,
-      },
-      legalFirstName: {
-        // if it doesen't exist, take directly from user google account
-        type: String,
-        maxlength: 64,
-      },
-      legalLastName: {
-        // if it doesen't exist, take directly from user google account
         type: String,
         maxlength: 64,
       },

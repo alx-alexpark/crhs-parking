@@ -1,19 +1,11 @@
 import { currentUser } from '@clerk/nextjs';
-
 import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
+import { NextResponse } from 'next/server';
 
-const RequestTemplate = {
-  user: {
-    name: '',
-    email: '',
-    phone: 0,
-    studentId: '',
-    admin: false,
-    grade: 0,
-    clerkUserId: '',
-  },
+let RequestTemplate = {
+  user: "",
   vehicle: {
     licensePlate: '',
     proofOfInsurance: '',
@@ -38,15 +30,16 @@ export async function GET(request: Request) {
 
   const user = await currentUser();
   const dbUser = await User.findOne({
-    email: user?.emailAddresses[0].emailAddress,
+    clerkUserId: user?.id
   });
+  RequestTemplate.user = dbUser._id;
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({
     user: dbUser._id,
     submitted: false,
   });
 
-  return Response.json(currentParkingSpotRequest ?? RequestTemplate);
+  return NextResponse.json(currentParkingSpotRequest ?? RequestTemplate);
 }
 
 // TODO: test this and make sure it works
@@ -56,11 +49,13 @@ export async function PUT(request: Request) {
   const newJson = await request.json();
   const user = await currentUser();
   const dbUser = await User.findOne({
-    email: user?.emailAddresses[0].emailAddress,
+    clerkUserId: user?.id
   });
 
-  // Prevent the user from directly setting the submitted value
+  // Prevent the user from directly setting the submitted value or decision status
   newJson.submitted = false;
+  newJson.decicion = 'undecided';
+  newJson.user = dbUser._id;
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({
     user: dbUser._id,
