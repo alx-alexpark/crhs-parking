@@ -16,8 +16,8 @@ const UserSchema = new mongoose.Schema(
     },
     phone: {
       // Pull from Clerk profile if not available here
-      type: Number,
-
+      type: String,
+      default: "+1",
       // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
       maxlength: 15,
     },
@@ -36,6 +36,11 @@ const UserSchema = new mongoose.Schema(
     clerkUserId: {
       type: String,
       required: true,
+    },
+    driversLicense: {
+      // format "$bucket/$filename"
+      type: String,
+      maxlength: 100,
     },
   },
   { timestamps: true }
