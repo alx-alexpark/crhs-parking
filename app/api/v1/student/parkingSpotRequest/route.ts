@@ -1,11 +1,12 @@
 import { currentUser } from '@clerk/nextjs';
+
 import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
-import { NextResponse } from 'next/server';
+import ParkingSpotRequestType from '@/models/ParkingSpotRequest';
 
-let RequestTemplate = {
-  user: "",
+const RequestTemplate = {
+  user: '',
   vehicle: {
     licensePlate: '',
     proofOfInsurance: '',
@@ -25,36 +26,54 @@ let RequestTemplate = {
   decision: 'undecided',
 };
 
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
 
   const user = await currentUser();
   const dbUser = await User.findOne({
-    clerkUserId: user?.id
+    clerkUserId: user?.id,
   });
-  RequestTemplate.user = dbUser._id;
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({
     user: dbUser._id,
     submitted: false,
   });
 
-  return NextResponse.json(currentParkingSpotRequest ?? RequestTemplate);
+  return Response.json(currentParkingSpotRequest ?? RequestTemplate);
 }
 
 // TODO: test this and make sure it works
 export async function PUT(request: Request) {
   await dbConnect();
 
-  const newJson = await request.json();
+  const newJsonRaw = await request.json();
   const user = await currentUser();
   const dbUser = await User.findOne({
-    clerkUserId: user?.id
+    email: user?.emailAddresses[0].emailAddress,
   });
 
-  // Prevent the user from directly setting the submitted value or decision status
+  // Filter out invalid keys
+  const filterObject = (ref: Object, target: Object): Object => {
+    const newEntries = Object.entries(target).filter(
+      ([key, value]: [string, any]) => {
+        if (value.constructor === Object) {
+          // @ts-expect-error @ `target[key]`: Typescript doesn't let you use
+          // strings to index Objects.
+          return filterObject(target[key], value);
+        }
+        return ref.hasOwnProperty(key);
+      }
+    );
+
+    return Object.fromEntries(newEntries);
+  };
+
+  const newJson = filterObject(RequestTemplate, newJsonRaw) as ParkingSpotRequestType;
+
+  // Prevent the user from directly setting sensitive information
+  // TODO: is there benefit to setting to original values?
   newJson.submitted = false;
-  newJson.decicion = 'undecided';
+  newJson.decision = 'undecided';
   newJson.user = dbUser._id;
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({

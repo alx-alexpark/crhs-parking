@@ -24,5 +24,5 @@ export async function PUT(request: Request) {
     { phone: json.phone, driversLicense: json.license }
   );
 
-  return NextResponse.json({ sucess: true });
+  return NextResponse.json({ success: true });
 }

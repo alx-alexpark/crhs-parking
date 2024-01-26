@@ -16,10 +16,10 @@ async function sendEmail(to: string, subject: string, text: string, html: string
 
     const info = await transporter.sendMail({
         from: `"CRHS Parking" <${process.env.SMTP_USER}>`, // sender address
-        to: to, // list of receivers
-        subject: subject, // Subject line
-        text: text, // plain text body
-        html: html, // html body
+        to, // list of receivers
+        subject, // Subject line
+        text, // plain text body
+        html, // html body
       });
     
       console.log("Message sent: %s", info.messageId);
