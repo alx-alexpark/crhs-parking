@@ -3,17 +3,10 @@ import { currentUser } from '@clerk/nextjs';
 import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
+import ParkingSpotRequestType from '@/models/ParkingSpotRequest';
 
 const RequestTemplate = {
-  user: {
-    name: '',
-    email: '',
-    phone: 0,
-    studentId: '',
-    admin: false,
-    grade: 0,
-    clerkUserId: '',
-  },
+  user: '',
   vehicle: {
     licensePlate: '',
     proofOfInsurance: '',
@@ -33,12 +26,12 @@ const RequestTemplate = {
   decision: 'undecided',
 };
 
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
 
   const user = await currentUser();
   const dbUser = await User.findOne({
-    email: user?.emailAddresses[0].emailAddress,
+    clerkUserId: user?.id,
   });
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({
@@ -53,14 +46,35 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
   await dbConnect();
 
-  const newJson = await request.json();
+  const newJsonRaw = await request.json();
   const user = await currentUser();
   const dbUser = await User.findOne({
     email: user?.emailAddresses[0].emailAddress,
   });
 
-  // Prevent the user from directly setting the submitted value
+  // Filter out invalid keys
+  const filterObject = (ref: Object, target: Object): Object => {
+    const newEntries = Object.entries(target).filter(
+      ([key, value]: [string, any]) => {
+        if (value.constructor === Object) {
+          // @ts-expect-error @ `target[key]`: Typescript doesn't let you use
+          // strings to index Objects.
+          return filterObject(target[key], value);
+        }
+        return ref.hasOwnProperty(key);
+      }
+    );
+
+    return Object.fromEntries(newEntries);
+  };
+
+  const newJson = filterObject(RequestTemplate, newJsonRaw) as ParkingSpotRequestType;
+
+  // Prevent the user from directly setting sensitive information
+  // TODO: is there benefit to setting to original values?
   newJson.submitted = false;
+  newJson.decision = 'undecided';
+  newJson.user = dbUser._id;
 
   const currentParkingSpotRequest = await ParkingSpotRequest.findOne({
     user: dbUser._id,
