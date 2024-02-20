@@ -1,6 +1,4 @@
-import { currentUser } from '@clerk/nextjs';
-
-import { UserButton } from '@clerk/nextjs';
+import { useUser, UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -14,12 +12,9 @@ import {
 import styles from './student-dashboard.module.scss';
 
 export default async function StudentDashboardPage() {
+  const { isSignedIn, user, isLoaded } = useUser();
   const bubbleStyle = false;
-
   const quadrant = '1600s';
-
-  // const user = await currentUser();
-  const user = { firstName: 'Joey' };
 
   return (
     <main>

@@ -38,9 +38,9 @@ const ParkingSpotRequestSchema = new Schema(
         maxlength: 64,
       },
     },
-    quadrant: {
-      type: String,
-      enum: ['9TH_GRADE', '1200', '1600', 'ATHLETICS'],
+    spotNum: {
+      type: Number,
+      maxlength:4,
     },
     paymentId: {
       // An invoice number or similar to confirm that the person has indeed paid their dues through PayNGo
@@ -77,7 +77,7 @@ export default interface ParkingSpotRequestType {
     legalFirstName: string;
     legalLastName: string;
   };
-  quadrant: string;
+  spotNum: number;
   paymentId: string;
   submitted: boolean;
   decision: string;
