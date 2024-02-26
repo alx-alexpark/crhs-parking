@@ -20,6 +20,9 @@ interface ParkingMapProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const ENABLE_DEBUG = 0;
 
+// TODO: this is a debug option
+const LOW_BANDWIDTH = 0;
+
 const layer = L.layerGroup();
 
 let isDragging = false;
@@ -242,17 +245,18 @@ export function ParkingMap(props: ParkingMapProps) {
       renderer={L.canvas()}
       {...props} // Placed before className so we can add styles.mapContainer
       className={clsx(styles.mapContainer, props.className)}
-      style={{ cursor: 'initial' }} // WARNING: remove this
     >
       {/* <SelectionDisplay /> */}
 
       <OnClickHandler />
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxNativeZoom={19}
-        maxZoom={21}
-      />
+      {!LOW_BANDWIDTH && (
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maxNativeZoom={19}
+          maxZoom={21}
+        />
+      )}
 
       <LayerGroup>
         {MAP_DATA.map((quadrant: Quadrant) =>
