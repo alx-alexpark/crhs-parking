@@ -6,8 +6,9 @@
 @import './base/form';
 
 :root {
-  --color-primary: #35f;
+  /* --color-primary: #35f; */
   --color-primary-rgb: 51, 85, 255;
+  --color-primary: rgb(var(--color-primary-rgb));
   --color-foreground: #222;
   --color-background: #fafaff;
   --color-container: #fff;
@@ -15,6 +16,7 @@
   --color-text: #444;
   --color-surface-text: var(--color-background);
   --color-placeholder: #c1c3cd;
+  --color-error: #c91212;
 
   --color-border: #bdc6d1;
   // --color-border: #e2e8f0;
@@ -62,3 +64,11 @@
 //     --color-border: #696c70;
 //   }
 // }
+
+button {
+  cursor: pointer;
+}
+
+.leaflet-pane canvas {
+  max-width: unset;
+}

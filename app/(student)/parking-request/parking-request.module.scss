@@ -1,6 +1,8 @@
 // TODO: convert to mobile first
 .container {
   height: 100%;
+  padding: var(--spacing-lg);
+  background: var(--color-container);
 }
 
 @media (min-width: 712px) {

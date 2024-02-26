@@ -1,25 +1,15 @@
-import { currentUser } from '@clerk/nextjs';
-
-import { UserButton } from '@clerk/nextjs';
-import Image from 'next/image';
+import { currentUser, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 
 import clsx from 'clsx';
 
-import { Suspense } from 'react';
-import {
-  ParkingRequestItem,
-  ParkingRequestStatus,
-} from './_components/parking-request-item';
+import ParkingRequestHistory from './_components/student-list';
 import styles from './student-dashboard.module.scss';
 
 export default async function StudentDashboardPage() {
   const bubbleStyle = false;
 
-  const quadrant = '1600s';
-
-  // const user = await currentUser();
-  const user = { firstName: 'Joey' };
+  const user = await currentUser();
 
   return (
     <main>
@@ -51,7 +41,7 @@ export default async function StudentDashboardPage() {
       <div className={styles.overviewContainer}>
         <div className={styles.mapContainer}>
           <h2>Your parking spot</h2>
-          <p>You park in the {quadrant} Quadrant.</p>
+          <p>You park in the [object Object] Quadrant.</p>
 
           {/* <Map /> */}
           <div
@@ -67,18 +57,7 @@ export default async function StudentDashboardPage() {
         <div>
           <h2>Recent parking requests</h2>
           <div className={styles.requestsContainer}>
-            <ParkingRequestItem
-              status={ParkingRequestStatus.PENDING}
-              timestamp={Date.now()}
-            />
-            <ParkingRequestItem
-              status={ParkingRequestStatus.APPROVED}
-              timestamp={Date.now()}
-            />
-            <ParkingRequestItem
-              status={ParkingRequestStatus.REJECTED}
-              timestamp={Date.now()}
-            />
+            <ParkingRequestHistory />
             <Link href="#">View older parking requests</Link>
           </div>
         </div>
