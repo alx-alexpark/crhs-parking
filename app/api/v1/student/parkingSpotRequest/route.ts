@@ -1,9 +1,10 @@
 import { currentUser } from '@clerk/nextjs';
 
 import dbConnect from '@/lib/dbConnect';
-import ParkingSpotRequest from '@/models/ParkingSpotRequest';
+import ParkingSpotRequest, {
+  ParkingSpotRequestType,
+} from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
-import ParkingSpotRequestType from '@/models/ParkingSpotRequest';
 
 const RequestTemplate = {
   user: '',
@@ -14,11 +15,6 @@ const RequestTemplate = {
     make: '',
     model: '',
     color: '',
-  },
-  student: {
-    driversLicense: '',
-    legalFirstName: '',
-    legalLastName: '',
   },
   quadrant: '',
   paymentId: '',
@@ -68,7 +64,10 @@ export async function PUT(request: Request) {
     return Object.fromEntries(newEntries);
   };
 
-  const newJson = filterObject(RequestTemplate, newJsonRaw) as ParkingSpotRequestType;
+  const newJson = filterObject(
+    RequestTemplate,
+    newJsonRaw
+  ) as ParkingSpotRequestType;
 
   // Prevent the user from directly setting sensitive information
   // TODO: is there benefit to setting to original values?

@@ -1,0 +1,97 @@
+// TODO: convert to mobile-first
+.container {
+  display: flex;
+  flex-direction: column;
+
+  min-height: min(100%, 1000px);
+
+  padding: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+
+  background-color: var(--color-container);
+}
+
+@media (min-width: 712px) {
+  // :root {
+  //   --color-background: #fcfcff;
+  // }
+
+  .container {
+    width: 680px;
+
+    outline: 1px solid var(--color-border);
+    border-radius: var(--border-container);
+  }
+}
+
+.formPage {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  section {
+    // Spacing between text elements
+    p + *,
+    ul + *,
+    ol + * {
+      margin-top: var(--spacing-md);
+    }
+
+    // Spacing between sections
+    & + section {
+      margin-top: var(--spacing-lg);
+    }
+  }
+
+  textarea {
+    max-width: 100%;
+    min-height: 2rem;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-md);
+
+  margin-top: var(--spacing-lg);
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+
+    width: 100%;
+    padding: var(--spacing-lg) 0;
+
+    cursor: pointer;
+  }
+
+  .hiddenButton {
+    visibility: hidden;
+  }
+
+  .backButton {
+    background: none;
+    border: 1px solid var(--color-primary);
+
+    color: var(--color-primary);
+  }
+}
+
+@media (max-width: $width-mobile) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .formPage {
+    height: 100%;
+  }
+
+  .actions {
+    text-align: right;
+  }
+}

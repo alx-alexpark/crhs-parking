@@ -1,4 +1,4 @@
-import { FileInput } from '@/components/file-input';
+import { FileInput } from '@/components';
 import ParkingRequestPage from '.';
 
 export function DriverInformation({ formik, children }: ParkingRequestPage) {

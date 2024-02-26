@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { InferSchemaType, Schema } from 'mongoose';
 import UserType from './User';
 
 const ParkingSpotRequestSchema = new Schema(
@@ -62,23 +62,6 @@ const ParkingSpotRequestSchema = new Schema(
 export default mongoose.models.ParkingSpotRequest ||
   mongoose.model('ParkingSpotRequest', ParkingSpotRequestSchema);
 
-export default interface ParkingSpotRequestType {
-  user: UserType;
-  vehicle: {
-    licensePlate: string;
-    proofOfInsurance: string;
-    year: number;
-    make: string;
-    model: string;
-    color: string;
-  };
-  student: {
-    driversLicense: string;
-    legalFirstName: string;
-    legalLastName: string;
-  };
-  spotNum: number;
-  paymentId: string;
-  submitted: boolean;
-  decision: string;
-}
+export type ParkingSpotRequestType = InferSchemaType<
+  typeof ParkingSpotRequestSchema
+>;

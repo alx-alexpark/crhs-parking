@@ -2,7 +2,7 @@ import { FileInput } from '@/components';
 
 export function Payment() {
   return (
-    <>
+    <div>
       <section>
         <h1>Payment</h1>
 
@@ -17,6 +17,6 @@ export function Payment() {
         <label htmlFor="receipt-photo">CRHS parking receipt</label>
         <FileInput id="receipt-photo" name="paymentId" accept="image/*" />
       </section>
-    </>
+    </div>
   );
 }

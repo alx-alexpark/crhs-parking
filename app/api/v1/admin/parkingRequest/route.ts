@@ -6,30 +6,41 @@ import User from '@/models/User';
 
 export async function PATCH(request: Request) {
   await dbConnect();
+
   const user = await currentUser();
   const userDbObj = await User.findOne({ clerkUserId: user?.id });
-  if (userDbObj.admin === true) {
-    const requests = await ParkingSpotRequest.findOneAndUpdate(
-      { _id: request.json().requestId },
-      { decision: request.json().newDecision }
-    );
-    // TODO: return actual json
-    return new Response('yes');
-  } else {
+
+  if (!userDbObj.admin) {
     return new Response('Permission denied');
   }
+
+  const data: { requestId: string; newDecision: string } = await request.json();
+
+  const requests = await ParkingSpotRequest.findOneAndUpdate(
+    { _id: data.requestId },
+    { decision: data.newDecision }
+  );
+
+  // TODO: return actual json
+  return new Response('yes');
 }
 
 export async function GET(request: Request) {
   await dbConnect();
+
   const user = await currentUser();
   const userDbObj = await User.findOne({ clerkUserId: user?.id });
-  if (userDbObj.admin === true) {
-    const parkingSpotRequest = await ParkingSpotRequest.findOne({
-      _id: request.json().requestId,
-    }); // TODO: return actual json
-    return new Response(parkingSpotRequest);
-  } else {
+
+  const data: { requestId: string } = await request.json();
+
+  if (!userDbObj.admin) {
     return new Response('Permission denied');
   }
+
+  const parkingSpotRequest = await ParkingSpotRequest.findOne({
+    _id: data.requestId,
+  });
+
+  // TODO: return actual json
+  return new Response(parkingSpotRequest);
 }

@@ -1,13 +1,10 @@
-import Image from 'next/image';
+'use client';
+
 import Link from 'next/link';
 
-import {
-  RedirectToSignIn,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 
+import { ParkingMap } from '@/components';
 import styles from './index.module.scss';
 
 export default function IndexPage() {
@@ -33,29 +30,9 @@ export default function IndexPage() {
       </nav>
 
       <h1>Need to park at CRHS?</h1>
-      <p>This is some cool copywriting</p>
-      <p>
-        Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit
-        enim labore culpa sint ad nisi Lorem pariatur mollit ex esse
-        exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit
-        nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor
-        minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure
-        elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor
-        Lorem duis laboris cupidatat officia voluptate. Culpa proident
-        adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod.
-        Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim.
-        Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa
-        et culpa duis.
-      </p>
+      <p>Click where you'd like to park, and we'll get you started!</p>
 
-      <ul>
-        <li>
-          <Link href="/parking-request">parking request</Link>
-        </li>
-        <li>
-          <Link href="/dashboard">dashboard</Link>
-        </li>
-      </ul>
+      <ParkingMap className={styles.map} />
     </main>
   );
 }

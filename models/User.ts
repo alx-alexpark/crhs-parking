@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType } from 'mongoose';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
     phone: {
       // Pull from Clerk profile if not available here
       type: String,
-      default: "+1",
+      default: '+1',
       // https://stackoverflow.com/questions/3350500/international-phone-number-max-and-min
       maxlength: 15,
     },
@@ -48,12 +48,4 @@ const UserSchema = new mongoose.Schema(
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);
 
-export default interface UserType {
-  name: string;
-  email: string;
-  phone: number;
-  studentId: string;
-  admin: boolean;
-  grade: number;
-  clerkUserId: string;
-}
+export type UserType = InferSchemaType<typeof UserSchema>;
