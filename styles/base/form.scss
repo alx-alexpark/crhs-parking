@@ -1,0 +1,56 @@
+/**
+ * Form elements
+ */
+
+label {
+  display: block;
+
+  margin-top: var(--spacing-md);
+
+  font-size: var(--text-small);
+}
+
+input,
+select,
+textarea {
+  padding: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-small);
+
+  background: var(--color-background);
+
+  color: var(--color-foreground);
+}
+
+input:not([type='file'], [type='radio']),
+select {
+  padding: var(--spacing-md);
+  height: 2.5rem;
+}
+
+input {
+  outline-offset: -1px;
+
+  &:is([type='radio'], [type='checkbox']) {
+    margin-right: var(--spacing-md);
+  }
+}
+
+select {
+  // <select> doesn't inherit color from body
+  color: var(--color-text);
+}
+
+button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+
+  background: var(--color-primary);
+
+  color: var(--color-surface-text);
+
+  svg {
+    display: inline;
+  }
+}

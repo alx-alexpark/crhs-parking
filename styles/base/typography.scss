@@ -1,0 +1,55 @@
+/**
+ * Typography
+ */
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+h1,
+h2,
+h3,
+input {
+  color: var(--color-foreground);
+}
+
+ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+p,
+ol,
+ul {
+  max-width: 70ch;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+ol ol {
+  list-style-type: lower-alpha;
+}
+
+mark {
+  background: var(--color-primary);
+  padding-inline: var(--spacing-md);
+  padding-block: var(--spacing-sm);
+  border-radius: var(--border-full);
+
+  color: var(--color-background);
+}
+
+[role='doc-subtitle'] {
+  margin: 0 !important;
+  font-size: var(--text-h3);
+}
