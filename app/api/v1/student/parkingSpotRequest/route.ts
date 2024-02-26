@@ -16,7 +16,7 @@ const RequestTemplate = {
     model: '',
     color: '',
   },
-  quadrant: '',
+  spotNum: '',
   paymentId: '',
   submitted: false,
   decision: 'undecided',

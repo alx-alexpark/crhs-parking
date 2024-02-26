@@ -6,25 +6,18 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
       <section>
         <h1>Pick your parking spot</h1>
         <p>
-          Pick the quadrant you wish to park in. A staff member will select a
-          specific parking spot in the quadrant you chose for you.
+          Pick the spot you wish to park in.
         </p>
         <p>
           Note that you won't get the parking spot until you submit the form.
         </p>
 
-        <select
+        <input
           id="parking-select"
-          name="quadrant"
+          name="spotNum"
           onChange={formik.handleChange}
-          value={formik.values?.quadrant}
-        >
-          <option value="">--Please choose an option--</option>
-          <option value="9TH_GRADE">9th Grade</option>
-          <option value="1200">1200s</option>
-          <option value="1600">1600s</option>
-          <option value="ATHLETICs">Athletics</option>
-        </select>
+          value={formik.values?.spotNum?.toString() || ""}
+        />
       </section>
 
       <section>

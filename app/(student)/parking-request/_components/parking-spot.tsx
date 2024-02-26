@@ -6,25 +6,22 @@ export function ParkingSpot({ formik, children }: ParkingRequestPage) {
       <section>
         <h1>Pick your parking spot</h1>
         <p>
-          Pick the quadrant you wish to park in. A staff member will select a
-          specific parking spot in the quadrant you chose for you.
+          Pick the spot you wish to park in. 
         </p>
         <p>
           Note that you won't get the parking spot until you submit the form.
+          A spot may be reserved for 72 hours (3 days). Not completing the 
+          form in 3 days will result in your reservation and form progress being reset.
         </p>
 
-        <select
+        <label htmlFor="parking-select">Spot number</label>
+        <input
           id="parking-select"
-          name="quadrant"
+          name="spotNum"
           onChange={formik.handleChange}
-          value={formik.values.quadrant}
-        >
-          <option value="">--Please choose an option--</option>
-          <option value="pac">PAC</option>
-          <option value="1200s">1200s</option>
-          <option value="1600s">1600s</option>
-          <option value="athletic">Athletic</option>
-        </select>
+          value={formik.values.spotNum || ''}
+        />
+
       </section>
 
       <section>

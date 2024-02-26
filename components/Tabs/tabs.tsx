@@ -4,9 +4,9 @@ import { ReactNode } from 'react';
 
 import styles from './tabs.module.scss';
 
-interface Tab {
+export interface Tab {
   title: string;
-  content: ReactNode;
+  content: ReactNode | JSX.Element;
 }
 
 interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {

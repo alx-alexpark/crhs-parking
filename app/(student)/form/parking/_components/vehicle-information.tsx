@@ -11,7 +11,7 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
           id="vehicle-make"
           name="vehicle.make"
           onChange={formik.handleChange}
-          value={formik.values?.vehicle?.make}
+          value={formik.values?.vehicle?.make || ""}
         />
 
         <label htmlFor="vehicle-model">Vehicle model</label>
@@ -19,7 +19,7 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
           id="vehicle-brand"
           name="vehicle.model"
           onChange={formik.handleChange}
-          value={formik.values?.vehicle?.model}
+          value={formik.values?.vehicle?.model || ""}
         />
 
         <label htmlFor="vehicle-color">Vehicle color</label>
@@ -27,7 +27,7 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
           id="vehicle-color"
           name="vehicle.color"
           onChange={formik.handleChange}
-          value={formik.values?.vehicle?.color}
+          value={formik.values?.vehicle?.color || ""}
         />
 
         <label htmlFor="license-plate">License plate</label>
@@ -35,7 +35,7 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
           id="license-plate"
           name="vehicle.licensePlate"
           onChange={formik.handleChange}
-          value={formik.values?.vehicle?.licensePlate}
+          value={formik.values?.vehicle?.licensePlate || ""}
         />
       </section>
     </div>

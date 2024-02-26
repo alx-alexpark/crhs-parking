@@ -36,7 +36,7 @@ export function ReviewerFormDialog({
     Name: user.name,
     'Student ID': user.studentId,
     'Payment ID': form.paymentId,
-    'Parking spot': form.quadrant,
+    'Parking spot': form.spotNum,
   };
 
   const valuesCar = {

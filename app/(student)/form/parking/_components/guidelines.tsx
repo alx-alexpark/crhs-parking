@@ -2,9 +2,15 @@
 
 import { Tabs } from '@/components';
 import ParkingRequestPage from '.';
+import { ReactNode } from 'react';
+
+interface Tab {
+  title: string;
+  content: ReactNode;
+}
 
 export function Guidelines({ formik }: ParkingRequestPage) {
-  const documents = [
+  const documents: Tab[] = [
     {
       title: 'Student Code of Conduct',
       content: (
