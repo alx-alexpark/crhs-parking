@@ -14,6 +14,7 @@
   --color-container: #fff;
 
   --color-text: #444;
+  // --color-text: #666;
   --color-surface-text: var(--color-background);
   --color-placeholder: #c1c3cd;
   --color-error: #c91212;
@@ -37,6 +38,7 @@
   --spacing-lg: 1rem;
   --spacing-md: 0.5rem;
   --spacing-sm: 0.25rem;
+  --spacing-container: 1.5rem;
 }
 
 // Reduce font size on smaller (mobile) screens

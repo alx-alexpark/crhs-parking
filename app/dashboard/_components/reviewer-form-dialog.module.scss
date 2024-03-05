@@ -22,6 +22,7 @@
 .overlay {
   position: fixed;
   inset: 0;
+  z-index: 1000;
 
   background-color: rgba(0, 0, 0, 0.25);
 
@@ -32,10 +33,11 @@
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 1000;
 
   width: max-content;
 
-  padding: var(--spacing-lg);
+  padding: var(--spacing-container);
   border-radius: var(--border-container);
 
   background: var(--color-background);
@@ -45,10 +47,6 @@
 
   animation: content-appear 0.1s forwards;
 
-  .title {
-    font-size: 1.15rem;
-  }
-
   section {
     display: flex;
     flex-direction: column;
@@ -56,43 +54,60 @@
 
     margin: var(--spacing-lg) 0;
   }
+}
 
-  .formLine {
-    display: flex;
-    gap: var(--spacing-md);
+.title {
+  font-size: 1.15rem;
+}
 
-    span {
-      width: 15ch;
-      text-align: right;
-    }
+.sectionTitle {
+  font-size: var(--text-body);
+}
 
-    p {
-      color: var(--color-foreground);
-    }
+.formLine {
+  display: flex;
+  gap: var(--spacing-md);
+
+  span {
+    width: 15ch;
+    text-align: right;
   }
 
-  .actionButtonContainer {
-    display: flex;
-    gap: var(--spacing-md);
-  }
-
-  .actionButton {
-    border: 1px solid var(--color-primary);
-    border-radius: var(--border-small);
-    background: none;
-
-    color: var(--color-primary);
-  }
-
-  .closeButton {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-
-    background: none;
-    padding: initial;
-    margin: initial;
-
+  p {
     color: var(--color-foreground);
   }
+}
+
+.actionButtonContainer {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.actionButton {
+  flex: 1;
+
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-small);
+  background: none;
+
+  color: var(--color-primary);
+
+  transition: background 0.1s;
+
+  &:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  background: none;
+  padding: initial;
+  margin: initial;
+
+  color: var(--color-foreground);
 }
