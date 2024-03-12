@@ -2,10 +2,15 @@ import { ReactNode } from 'react';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { ToastContainer, toast } from 'react-toastify';
+
+import axios from 'axios';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 import { UserType } from '@/models/User';
 
+import { ParkingMap } from '@/components';
+import 'react-toastify/dist/ReactToastify.min.css';
 import styles from './reviewer-form-dialog.module.scss';
 
 interface ReviewerFormDialogProps {
@@ -36,14 +41,29 @@ export function ReviewerFormDialog({
     Name: user.name,
     'Student ID': user.studentId,
     'Payment ID': form.paymentId,
-    'Parking spot': form.spotNum,
+    'Parking spot': <ParkingMap spot={form.spotNum} />,
+    // 'Parking spot': form.spotNum,
   };
 
   const valuesCar = {
     'Car make': form.vehicle?.make,
     'Car model': form.vehicle?.model,
+    'Car year': form.vehicle?.year,
     'Car color': form.vehicle?.color,
     'License plate': form.vehicle?.licensePlate,
+  };
+
+  const updateSubmission = (status: string) => {
+    const requestPromise = axios.patch('/api/v1/admin/parkingRequest', {
+      requestId: form._id,
+      decision: 'approved',
+    });
+
+    toast.promise(requestPromise, {
+      pending: 'Updating application',
+      success: `The application has been ${status}.`,
+      error: `The application could not be ${status}. Please try again.`,
+    });
   };
 
   const content = (
@@ -54,33 +74,44 @@ export function ReviewerFormDialog({
         or denying.
       </Dialog.Description>
 
-      <section>{generateFromValues(values)}</section>
+      <section>
+        <h3 className={styles.sectionTitle}>Application</h3>
+        {generateFromValues(values)}
+      </section>
 
-      <section>{generateFromValues(valuesCar)}</section>
+      <section>
+        <h3 className={styles.sectionTitle}>Vehicle details</h3>
+        {generateFromValues(valuesCar)}
+      </section>
 
       <div className={styles.actionButtonContainer}>
         <Dialog.Close asChild>
           <button
             className={styles.actionButton}
-            name="close"
-            aria-label="Close"
+            aria-label="Deny application"
+            onClick={() => updateSubmission('denied')}
           >
-            Approve
+            Deny
           </button>
         </Dialog.Close>
         <Dialog.Close asChild>
           <button
             className={styles.actionButton}
-            name="close"
-            aria-label="Close"
+            aria-label="Approve application"
+            onClick={() => updateSubmission('approved')}
           >
-            Deny
+            Approve
           </button>
         </Dialog.Close>
       </div>
 
       <Dialog.Close asChild>
-        <button className={styles.closeButton} name="close" aria-label="Close">
+        <button
+          className={styles.closeButton}
+          name="close"
+          aria-label="Close"
+          autoFocus={true}
+        >
           <Cross2Icon />
         </button>
       </Dialog.Close>
@@ -90,6 +121,7 @@ export function ReviewerFormDialog({
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+      <ToastContainer position="bottom-right" />
       <Dialog.Portal>
         <Dialog.Overlay className={styles.overlay} />
         <Dialog.Content className={styles.content}>{content}</Dialog.Content>

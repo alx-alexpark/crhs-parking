@@ -19,6 +19,12 @@ export async function PUT(request: Request) {
 
   const user = await currentUser();
   const json = await request.json();
+
+  const model = new User(json);
+  if (!model.validateSync()) {
+    return NextResponse.json({ success: false });
+  }
+
   await User.updateOne(
     { clerkUserId: user?.id },
     { phone: json.phone, driversLicense: json.license }

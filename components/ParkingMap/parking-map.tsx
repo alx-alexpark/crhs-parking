@@ -1,28 +1,37 @@
 import { useLeafletContext } from '@react-leaflet/core';
 import clsx from 'clsx';
 import L, { LatLngBoundsExpression } from 'leaflet';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import {
-  LayerGroup,
-  LayersControl,
-  MapContainer,
-  TileLayer,
-  useMap,
-} from 'react-leaflet';
+import { LayerGroup, MapContainer, TileLayer, useMap } from 'react-leaflet';
 
 import 'leaflet/dist/leaflet.css';
 import styles from './parking-map.module.scss';
 
 import { MAP_DATA, Quadrant, RowData } from './map-data';
 
-interface ParkingMapProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ParkingMapProps extends React.HTMLAttributes<HTMLDivElement> {
+  onClick?: () => void;
+  highlightSpot?: number;
+  interactive?: boolean;
+  height: number;
+}
 
 const ENABLE_DEBUG = 0;
+
+// TODO: this is a debug option
+const LOW_BANDWIDTH = 0;
 
 const layer = L.layerGroup();
 
 let isDragging = false;
+
+const POSITION_CLASSES = {
+  bottomleft: 'leaflet-bottom leaflet-left',
+  bottomright: 'leaflet-bottom leaflet-right',
+  topleft: 'leaflet-top leaflet-left',
+  topright: 'leaflet-top leaflet-right',
+};
 
 function OnClickHandler() {
   const map = useMap();
@@ -54,7 +63,15 @@ function OnClickHandler() {
   return null;
 }
 
-function ParkingRow({ double, spaces, range, points: _points }: RowData) {
+function ParkingRow({
+  double,
+  spaces,
+  range,
+  points: _points,
+  spot,
+  setSpot,
+  interactive,
+}: RowData & { spot?: number; setSpot: any; interactive: boolean }) {
   const context = useLeafletContext();
   const map = useMap();
 
@@ -71,6 +88,8 @@ function ParkingRow({ double, spaces, range, points: _points }: RowData) {
 
     const layer = L.layerGroup();
     container.addLayer(layer);
+
+    const polygons: Map<number, L.Polygon> = new Map();
 
     // Draw row
     let parkingSpot = range[0];
@@ -144,7 +163,7 @@ function ParkingRow({ double, spaces, range, points: _points }: RowData) {
         end.add(offsetEnd.multiplyBy(index)),
       ];
 
-      L.polygon(
+      const polygon = L.polygon(
         coords.map((coord) => map.unproject(coord)),
         {
           color: '#35f',
@@ -152,30 +171,54 @@ function ParkingRow({ double, spaces, range, points: _points }: RowData) {
           fillOpacity: 0.2,
           weight: 0.5,
         }
-      )
-        .on(
-          'mouseup',
-          // Capture parkingSpot with a closure.
-          // Top 10 TIPS for CAPTURING VARIABLES! ESLint HATES this code!
-          ((spot) =>
-            function (e: L.LeafletMouseEvent) {
-              // Don't register spot if the user releases mouse while dragging
-              if (isDragging) {
-                return;
-              }
+      );
 
-              console.log(spot);
-            })(parkingSpot)
-        )
-        .on('mouseover', (e: L.LeafletMouseEvent) => {
-          e.target.options.fillOpacity = 0.5;
-          e.target.redraw();
-        })
-        .on('mouseout', (e: L.LeafletMouseEvent) => {
-          e.target.options.fillOpacity = 0.2;
-          e.target.redraw();
-        })
-        .addTo(layer);
+      if (interactive) {
+        polygon
+          .on(
+            'mouseup',
+            // Capture parkingSpot with a closure.
+            // Top 10 TIPS for CAPTURING VARIABLES! ESLint HATES this code!
+            ((thisSpot) =>
+              function (e: L.LeafletMouseEvent) {
+                // Don't register spot if the user releases mouse while dragging
+                if (isDragging) {
+                  return;
+                }
+
+                // Unhighlight the previous selection
+                if (spot && polygons.has(spot)) {
+                  const polygon = polygons.get(spot)!;
+                  polygon.options.fillOpacity = 0.2;
+                  polygon.redraw();
+                }
+
+                // Highlight the current selection
+                e.target.options.fillOpacity = 0.5;
+                e.target.redraw();
+                //map.fitBounds(e.target.getLatLngs());
+
+                // Updating parking spot state
+                setSpot(thisSpot);
+              })(parkingSpot)
+          )
+          .on('mouseover', (e: L.LeafletMouseEvent) => {
+            e.target.options.fillOpacity = 0.5;
+            e.target.redraw();
+          })
+          .on(
+            'mouseout',
+            ((thisSpot) =>
+              function (e: L.LeafletMouseEvent) {
+                if (spot === thisSpot) return;
+                e.target.options.fillOpacity = 0.2;
+                e.target.redraw();
+              })(parkingSpot)
+          );
+      }
+
+      polygon.addTo(layer);
+      polygons.set(parkingSpot, polygon);
     }
 
     function drawRow(
@@ -226,11 +269,41 @@ function ParkingRow({ double, spaces, range, points: _points }: RowData) {
   return null;
 }
 
-export function ParkingMap(props: ParkingMapProps) {
+function SelectionDisplay({
+  position,
+  spot,
+}: {
+  position: string;
+  spot?: number;
+}) {
+  const parentMap = useMap();
+
+  const positionClass =
+    // @ts-expect-error: typescript
+    (position && POSITION_CLASSES[position]) || POSITION_CLASSES.topright;
+
+  return (
+    <div className={positionClass}>
+      <div
+        className={clsx('leaflet-control leaflet-bar', styles.selectionDisplay)}
+      >
+        {spot}
+      </div>
+    </div>
+  );
+}
+
+export function ParkingMap({
+  interactive,
+  height,
+  className,
+}: ParkingMapProps) {
   const bounds = [
     [29.74335, -95.78269],
     [29.74711, -95.77633],
   ] as LatLngBoundsExpression;
+
+  const [spot, setSpot] = useState(undefined);
 
   return (
     <MapContainer
@@ -240,23 +313,32 @@ export function ParkingMap(props: ParkingMapProps) {
       zoom={17}
       preferCanvas={true}
       renderer={L.canvas()}
-      {...props} // Placed before className so we can add styles.mapContainer
-      className={clsx(styles.mapContainer, props.className)}
-      style={{ cursor: 'initial' }} // WARNING: remove this
+      style={{ height }}
+      className={clsx(styles.mapContainer, className)}
     >
-      {/* <SelectionDisplay /> */}
+      {spot && <SelectionDisplay position="topright" spot={spot} />}
 
       <OnClickHandler />
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxNativeZoom={19}
-        maxZoom={21}
-      />
+      {!LOW_BANDWIDTH && (
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maxNativeZoom={19}
+          maxZoom={22}
+        />
+      )}
 
       <LayerGroup>
-        {MAP_DATA.map((quadrant: Quadrant) =>
-          quadrant.data.map((data: RowData) => <ParkingRow {...data} />)
+        {MAP_DATA.map((quadrant: Quadrant, topIndex: number) =>
+          quadrant.data.map((data: RowData, botIndex: number) => (
+            <ParkingRow
+              spot={spot}
+              setSpot={setSpot}
+              interactive={Boolean(interactive)}
+              {...data}
+              key={`${topIndex}${botIndex}`}
+            />
+          ))
         )}
       </LayerGroup>
     </MapContainer>
