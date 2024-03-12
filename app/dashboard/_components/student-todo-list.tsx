@@ -64,8 +64,8 @@ export default function StudentTodoList() {
           <li className={style.step} key={i}>
             {/* https://www.radix-ui.com/primitives/docs/utilities/accessible-icon */}
             <div
-              // @ts-expect-error: These keys are hardcoded to match the schema
               data-state={
+                // @ts-expect-error: These keys are hardcoded to match the schema
                 (data?.todoSteps && data.todoSteps[dataStepKeys[i]]) === true &&
                 'complete'
               }

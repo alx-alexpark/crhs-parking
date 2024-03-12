@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-import { FileInput, Tooltip, Tooltip } from '@/components';
+import { FileInput, Tooltip } from '@/components';
 import styles from '../form.module.scss';
 
 // TODO: Error messages try to be friendly, but they may be too vague

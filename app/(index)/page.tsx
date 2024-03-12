@@ -32,7 +32,7 @@ export default function IndexPage() {
       <h1>Need to park at CRHS?</h1>
       <p>Click where you'd like to park, and we'll get you started!</p>
 
-      <ParkingMap className={styles.map} />
+      <ParkingMap height={400} className={styles.map} />
     </main>
   );
 }

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 import { UserType } from '@/models/User';
 
+import { ParkingMap } from '@/components';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styles from './reviewer-form-dialog.module.scss';
 
@@ -40,7 +41,8 @@ export function ReviewerFormDialog({
     Name: user.name,
     'Student ID': user.studentId,
     'Payment ID': form.paymentId,
-    'Parking spot': form.spotNum,
+    'Parking spot': <ParkingMap spot={form.spotNum} />,
+    // 'Parking spot': form.spotNum,
   };
 
   const valuesCar = {
