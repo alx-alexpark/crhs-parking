@@ -28,14 +28,14 @@ export function GetStarted({ formik }: ParkingRequestPage) {
           Only students in grades 10, 11, or 12 can purchase a parking spot.
         </p>
       </section>
-
+      {/* 
       <section>
         <h3>New for the 2023-2024 school year</h3>
         <p>
           You can now only pick the quadrant you want to park in instead of
           picking specific spot.
         </p>
-      </section>
+      </section> */}
     </div>
   );
 }

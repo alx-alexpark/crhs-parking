@@ -28,7 +28,7 @@ export function GetStarted({ formik }: ParkingRequestPage) {
           Only students in grades 10, 11, or 12 can purchase a parking spot.
         </p>
       </section>
-
+{/* 
       <section>
         <h3>New for the 2023-2024 school year</h3>
         <p>

@@ -1,10 +1,16 @@
 // TODO: Comprehension
 
 import { Tabs } from '@/components';
+import { ReactNode } from 'react';
 import ParkingRequestPage from '.';
 
+interface Tab {
+  title: string;
+  content: ReactNode;
+}
+
 export function Guidelines({ formik }: ParkingRequestPage) {
-  const documents = [
+  const documents: Tab[] = [
     {
       title: 'Student Code of Conduct',
       content: (

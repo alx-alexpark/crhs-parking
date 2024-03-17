@@ -1,4 +1,4 @@
-import { Tabs } from '@/components';
+import { Tab, Tabs } from '@/components';
 import ParkingRequestPage from '.';
 
 export function Guidelines({ formik }: ParkingRequestPage) {
