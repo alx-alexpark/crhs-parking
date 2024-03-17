@@ -99,7 +99,25 @@ export default function ParkingRequestPage() {
                   id="license-photo"
                   name="student.driversLicense"
                   accept="image/*"
-                  setFile={setLicenseFile}
+                  setFile={async (h: File) => {
+                    setLicenseFile(h);
+                    let { data } = await axios.post("/api/v1/student/getPresignedUrl", {
+                      name: h?.name,
+                      type: h?.type,
+                    });
+
+                    console.log(data);
+
+                    let uploadResp = await axios.put(data.url, h.stream, {
+                      headers: {
+                        "Content-type": h.type,
+                        "Access-Control-Allow-Origin": "*",
+                      },
+                    });
+
+                    console.log(uploadResp.data);
+
+                  }}
                 />
 
                 <label htmlFor="insurance-photo">
@@ -109,7 +127,7 @@ export default function ParkingRequestPage() {
                   id="insurance-photo"
                   name="vehicle.proofOfInsurance"
                   accept="image/*"
-                  setFile={setInsuranceFile}
+                  setFile={(h: File) => {setInsuranceFile(h)}}
                 />
               </section>
 
