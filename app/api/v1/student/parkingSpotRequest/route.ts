@@ -5,6 +5,7 @@ import ParkingSpotRequest, {
   ParkingSpotRequestType,
 } from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
+import { NextResponse } from 'next/server';
 
 const RequestTemplate = {
   user: '',
@@ -80,14 +81,24 @@ export async function PUT(request: Request) {
     submitted: false,
   });
 
-  if (currentParkingSpotRequest === undefined) {
+  if (currentParkingSpotRequest == null) {
+    const currentlyPendingRequest = await ParkingSpotRequest.findOne({
+      user: dbUser._id,
+      submitted: true,
+      decision: "undecided"
+    });
+    if (currentlyPendingRequest != null) {
+      return NextResponse.json({error: "You already have a pending parking request"}, {status:500});
+    }
+    
     await ParkingSpotRequest.create(
       { user: dbUser._id },
       { ...RequestTemplate, ...newJson }
     );
+      
   } else {
     await ParkingSpotRequest.updateOne({ user: dbUser._id }, newJson);
   }
 
-  return new Response('OK');
+  return NextResponse.json({success: true});
 }

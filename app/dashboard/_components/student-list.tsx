@@ -21,7 +21,7 @@ export default function ParkingRequestHistory() {
         {data?.requests.map((req: ParkingSpotRequestType, index: number) => (
           <ParkingRequestItem
             status={req.decision}
-            timestamp={req.updatedAt.getTime()}
+            timestamp={req.updatedAt}
             key={index}
           />
         ))}
