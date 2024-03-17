@@ -6,11 +6,14 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 import { ParkingMap } from '@/components';
+import { useState } from 'react';
 import ParkingRequestHistory from './_components/student-list';
 import StudentTodoList from './_components/student-todo-list';
 import styles from './student-dashboard.module.scss';
 
 export default function StudentDashboardPage() {
+  const [spot, setSpot] = useState<number | null>(null);
+
   const bubbleStyle = false;
 
   const user = useUser().user;
@@ -51,15 +54,7 @@ export default function StudentDashboardPage() {
         <div className={styles.mapContainer}>
           <h2>Your parking spot</h2>
 
-          <ParkingMap height={300} />
-          {/* <div */}
-          {/*   style={{ */}
-          {/*     background: 'var(--color-primary)', */}
-          {/*     width: '100%', */}
-          {/*     height: '250px', */}
-          {/*     borderRadius: 'var(--border-container)', */}
-          {/*   }} */}
-          {/* ></div> */}
+          <ParkingMap spot={spot} interactive={false} height={300} />
         </div>
         <div>
           <h2>Recent parking requests</h2>

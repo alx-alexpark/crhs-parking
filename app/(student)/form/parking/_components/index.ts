@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { FormikProps } from 'formik';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';

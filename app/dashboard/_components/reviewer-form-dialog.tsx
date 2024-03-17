@@ -41,7 +41,13 @@ export function ReviewerFormDialog({
     Name: user.name,
     'Student ID': user.studentId,
     'Payment ID': form.paymentId,
-    'Parking spot': <ParkingMap spot={form.spotNum} />,
+    'Parking spot': (
+      <ParkingMap
+        spot={form.spotNum ?? null}
+        interactive={false}
+        height={400}
+      />
+    ),
     // 'Parking spot': form.spotNum,
   };
 
@@ -55,6 +61,7 @@ export function ReviewerFormDialog({
 
   const updateSubmission = (status: string) => {
     const requestPromise = axios.patch('/api/v1/admin/parkingRequest', {
+      // @ts-ignore-error: _id does exist
       requestId: form._id,
       decision: 'approved',
     });

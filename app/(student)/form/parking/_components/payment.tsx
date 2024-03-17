@@ -1,8 +1,11 @@
 import { FileInput } from '@/components';
+import { useState } from 'react';
 
 export function Payment() {
+  const [receiptFile, setReceiptFile] = useState<File>();
+
   return (
-    <div>
+    <>
       <section>
         <h1>Payment</h1>
 
@@ -15,8 +18,13 @@ export function Payment() {
         </p>
 
         <label htmlFor="receipt-photo">CRHS parking receipt</label>
-        <FileInput id="receipt-photo" name="paymentId" accept="image/*" />
+        <FileInput
+          id="receipt-photo"
+          name="paymentId"
+          accept="image/*"
+          setFile={setReceiptFile}
+        />
       </section>
-    </div>
+    </>
   );
 }

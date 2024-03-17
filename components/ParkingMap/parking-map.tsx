@@ -12,7 +12,7 @@ import { MAP_DATA, Quadrant, RowData } from './map-data';
 
 interface ParkingMapProps {
   spot: number | null;
-  setSpot: Function;
+  setSpot?: Function;
   height: number;
   interactive: boolean;
   className?: string;
@@ -70,9 +70,13 @@ function ParkingRow({
   range,
   points: _points,
   spot,
-  setSpot,
+  setSpot = () => {},
   interactive = true,
-}: RowData & { spot: number | null; setSpot: Function; interactive: boolean }) {
+}: RowData & {
+  spot: number | null;
+  setSpot?: Function;
+  interactive: boolean;
+}) {
   const context = useLeafletContext();
   const map = useMap();
 

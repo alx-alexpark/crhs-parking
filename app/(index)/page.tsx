@@ -11,6 +11,8 @@ import styles from './index.module.scss';
 export default function IndexPage() {
   const [spot, setSpot] = useState<number | null>(null);
 
+  // const user = useUser();
+
   return (
     <main>
       <nav>
@@ -41,6 +43,7 @@ export default function IndexPage() {
         setSpot={setSpot}
         height={400}
         className={styles.map}
+        interactive={true} // TODO: check if student or reviewer
       />
     </main>
   );

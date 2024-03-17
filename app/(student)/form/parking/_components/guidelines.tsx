@@ -1,16 +1,8 @@
-// TODO: Comprehension
-
-import { Tabs } from '@/components';
-import { ReactNode } from 'react';
+import { Tab, Tabs } from '@/components';
 import ParkingRequestPage from '.';
 
-interface Tab {
-  title: string;
-  content: ReactNode;
-}
-
 export function Guidelines({ formik }: ParkingRequestPage) {
-  const documents: Tab[] = [
+  const documents = [
     {
       title: 'Student Code of Conduct',
       content: (
@@ -187,7 +179,7 @@ export function Guidelines({ formik }: ParkingRequestPage) {
       ),
     },
     {
-      title: 'Student Responsibilities',
+      title: 'Responsibilities',
       content: (
         <ul>
           <li>
@@ -252,12 +244,12 @@ export function Guidelines({ formik }: ParkingRequestPage) {
   ];
 
   return (
-    <div>
+    <>
       <section>
         <h1>Guidelines</h1>
 
         <Tabs tabs={documents} />
       </section>
-    </div>
+    </>
   );
 }
