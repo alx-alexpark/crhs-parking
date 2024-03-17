@@ -10,42 +10,47 @@
 
 @keyframes content-appear {
   from {
-    opacity: 0;
     transform: translate(-50%, -48%) scale(0.96);
+    opacity: 0;
   }
   to {
-    opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
   }
+}
+
+.trigger {
+  background: none;
+  padding: 0;
 }
 
 .overlay {
   position: fixed;
-  inset: 0;
   z-index: 1000;
 
-  background-color: rgba(0, 0, 0, 0.25);
-
   animation: overlay-appear 0.1s forwards;
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .content {
   position: fixed;
   top: 50%;
   left: 50%;
+
+  transform: translate(-50%, -50%);
   z-index: 1000;
 
-  width: max-content;
-
-  padding: var(--spacing-container);
+  animation: content-appear 0.1s forwards;
+  box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.16);
   border-radius: var(--border-container);
 
   background: var(--color-background);
-  box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.16);
 
-  transform: translate(-50%, -50%);
+  padding: var(--spacing-container);
 
-  animation: content-appear 0.1s forwards;
+  width: max-content;
 
   section {
     display: flex;
@@ -86,13 +91,13 @@
 .actionButton {
   flex: 1;
 
+  transition: background 0.1s;
+
   border: 1px solid var(--color-primary);
   border-radius: var(--border-small);
   background: none;
 
   color: var(--color-primary);
-
-  transition: background 0.1s;
 
   &:hover {
     background: var(--color-primary);
@@ -104,10 +109,10 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+  margin: initial;
 
   background: none;
   padding: initial;
-  margin: initial;
 
   color: var(--color-foreground);
 }

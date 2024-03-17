@@ -1,11 +1,11 @@
 import { Tabs } from '@/components';
 import ParkingRequestPage from '.';
 
-export function Guidelines({ formik, children }: ParkingRequestPage) {
+export function Guidelines({ formik }: ParkingRequestPage) {
   const documents = [
     {
       title: 'Student Code of Conduct',
-      child: (
+      content: (
         <>
           <p>Discipline Management Plan and Student Code of Conduct</p>
           <p>Vehicles on Campus</p>
@@ -89,7 +89,7 @@ export function Guidelines({ formik, children }: ParkingRequestPage) {
     },
     {
       title: 'KatyISD Vehicle regulations',
-      child: (
+      content: (
         <>
           <p>Katy ISD</p>
           <p>101-914</p>
@@ -180,7 +180,7 @@ export function Guidelines({ formik, children }: ParkingRequestPage) {
     },
     {
       title: 'Responsibilities',
-      child: (
+      content: (
         <ul>
           <li>
             By accepting a parking permit for Cinco Ranch High School, you are
@@ -250,8 +250,6 @@ export function Guidelines({ formik, children }: ParkingRequestPage) {
 
         <Tabs tabs={documents} />
       </section>
-
-      {children}
     </>
   );
 }

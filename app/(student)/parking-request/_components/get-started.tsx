@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import ParkingRequestPage from '.';
 
-export function GetStarted({ formik, children }: ParkingRequestPage) {
+export function GetStarted({ formik }: ParkingRequestPage) {
   return (
     <>
       <section>
@@ -36,8 +36,6 @@ export function GetStarted({ formik, children }: ParkingRequestPage) {
           picking specific spot.
         </p>
       </section>
-
-      {children}
     </>
   );
 }

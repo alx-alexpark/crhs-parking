@@ -9,7 +9,7 @@ const fontFamily = Outfit({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'CRHS Parking',
-  description: 'Lorem ipsum dolor sit amet',
+  description: '',
   keywords: ['katyisd', 'crhs', 'parking'],
 };
 
@@ -26,7 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={fontFamily.className}>
-          <noscript>CRHS MyParking won't work without JavaScript</noscript>
+          <noscript>CRHS Parking won't work without JavaScript</noscript>
           {children}
         </body>
       </html>

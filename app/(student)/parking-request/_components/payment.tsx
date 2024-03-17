@@ -1,4 +1,5 @@
 import { FileInput } from '@/components';
+import { useState } from 'react';
 
 export function Payment() {
   return (

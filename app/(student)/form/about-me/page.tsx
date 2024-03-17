@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { FileInput, Tooltip } from '@/components';
+import { useState } from 'react';
 import styles from '../form.module.scss';
 
 // TODO: Error messages try to be friendly, but they may be too vague
@@ -32,6 +33,9 @@ export default function ParkingRequestPage() {
     '/api/v1/student/userProfile',
     fetcher
   );
+
+  const [insuranceFile, setInsuranceFile] = useState<File>();
+  const [licenseFile, setLicenseFile] = useState<File>();
 
   return (
     <main className={styles.container}>
@@ -95,6 +99,7 @@ export default function ParkingRequestPage() {
                   id="license-photo"
                   name="student.driversLicense"
                   accept="image/*"
+                  setFile={setLicenseFile}
                 />
 
                 <label htmlFor="insurance-photo">
@@ -104,6 +109,7 @@ export default function ParkingRequestPage() {
                   id="insurance-photo"
                   name="vehicle.proofOfInsurance"
                   accept="image/*"
+                  setFile={setInsuranceFile}
                 />
               </section>
 

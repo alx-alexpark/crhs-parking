@@ -1,52 +1,35 @@
+import { ParkingMap } from '@/components';
+import { useState } from 'react';
 import ParkingRequestPage from '.';
 
-export function ParkingSpot({ formik, children }: ParkingRequestPage) {
+export function ParkingSpot({ formik }: ParkingRequestPage) {
+  const [spot, setSpot] = useState(formik.values.spotNum || null);
+
   return (
     <>
       <section>
         <h1>Pick your parking spot</h1>
         <p>
-          Pick the quadrant you wish to park in. A staff member will select a
-          specific parking spot in the quadrant you chose for you.
-        </p>
-        <p>
-          Note that you won't get the parking spot until you submit the form.
+          Select the spot you wish to park in. Note that you won't get the
+          parking spot until you submit the form.
         </p>
 
-        <select
-          id="parking-select"
-          name="quadrant"
+        <input
+          name="spotNum"
+          type="number"
           onChange={formik.handleChange}
-          value={formik.values.quadrant}
-        >
-          <option value="">--Please choose an option--</option>
-          <option value="pac">PAC</option>
-          <option value="1200s">1200s</option>
-          <option value="1600s">1600s</option>
-          <option value="athletic">Athletic</option>
-        </select>
+          value={spot ?? undefined}
+          hidden={true}
+          readOnly={true}
+        />
+
+        <ParkingMap
+          spot={spot}
+          setSpot={setSpot}
+          height={400}
+          interactive={true}
+        />
       </section>
-
-      <section>
-        <p>
-          You may make requests to park in specific spots depending on your
-          need. Do not request to be next to a friend, as such requests will be
-          ignored. Please note that we do our best to accommodate requests, but
-          we cannot make guarantees!
-        </p>
-        <ul>
-          <li>
-            I drive a truck and would like to be on the back row of 1600 Lot - F
-          </li>
-          <li>I would like to be near the rotunda</li>
-          <li>I would like to be near the tennis courts</li>
-        </ul>
-
-        <label htmlFor="special-request">Special parking requests</label>
-        <textarea id="special-request"></textarea>
-      </section>
-
-      {children}
     </>
   );
 }

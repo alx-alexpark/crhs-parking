@@ -13,11 +13,13 @@ const ParkingSpotRequestSchema = new Schema(
       licensePlate: {
         type: String,
         maxlength: 10,
+        default: '',
       },
       proofOfInsurance: {
         // A url to a bucket (picture)
         type: String,
         maxlength: 100,
+        default: '',
       },
       year: {
         type: Number,
@@ -28,19 +30,22 @@ const ParkingSpotRequestSchema = new Schema(
       make: {
         type: String,
         maxlength: 64,
+        default: '',
       },
       model: {
         type: String,
         maxlength: 64,
+        default: '',
       },
       color: {
         type: String,
         maxlength: 64,
+        default: '',
       },
     },
     spotNum: {
       type: Number,
-      maxlength:4,
+      maxlength: 4,
     },
     paymentId: {
       // An invoice number or similar to confirm that the person has indeed paid their dues through PayNGo
@@ -54,6 +59,10 @@ const ParkingSpotRequestSchema = new Schema(
       type: String,
       enum: ['undecided', 'approved', 'denied'],
       default: 'undecided',
+    },
+    formStep: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

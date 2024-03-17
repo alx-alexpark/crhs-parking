@@ -1,56 +1,28 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
 import useSWR from 'swr';
 
 import { Stepper } from '@/components';
-import {
-  DriverInformation,
-  GetStarted,
-  Guidelines,
-  ParkingSpot,
-  Payment,
-  StudentInformation,
-  VehicleInformation,
-} from './_components';
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import axios from 'axios';
-import clsx from 'clsx';
 import { useFormik } from 'formik';
-import styles from './parking-request.module.scss';
+import { ParkingRequestForm } from './form';
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const steps = [
   'Introduction',
   'Parking Spot',
-  'Student',
-  'Driver',
   'Vehicle',
   'Payment',
   'Guidelines',
 ];
 
-const pages = [
-  GetStarted,
-  ParkingSpot,
-  StudentInformation,
-  DriverInformation,
-  VehicleInformation,
-  Payment,
-  Guidelines,
-];
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 export default function ParkingRequestPage() {
-  // TODO: organize this section
-
-  const searchParams = useSearchParams();
-  const initialFormStep = searchParams
-    ? Number(searchParams.get('step') ?? 1) - 1
-    : 0;
+  // TODO: pull from DB (formik.formStep)
+  const initialFormStep = 0;
 
   const [activeStep, setActiveStep] = useState(initialFormStep);
   const { data, error, isLoading } = useSWR(
@@ -60,20 +32,20 @@ export default function ParkingRequestPage() {
 
   console.debug({ data, error, isLoading });
 
-  // Wrap setActiveStep to also update the "step" query parameter
-  const setActiveStepPage = (n: number) => {
-    setActiveStep(n);
-    window.history.pushState(null, '', '?step=' + (n + 1));
-  };
-
   const formik = useFormik({
     initialValues: data,
     onSubmit: (values) => {
+      setActiveStep(activeStep + 1);
+
+      if (formik.initialValues === values) {
+        console.log('Skip submit');
+        return;
+      }
+
       axios
         .put('/api/v1/student/parkingSpotRequest', values)
         .then((res) => {
           console.log(res);
-          setActiveStepPage(activeStep + 1);
         })
         .catch((error) => {
           console.error(error);
@@ -85,57 +57,23 @@ export default function ParkingRequestPage() {
   });
 
   return (
-    <main className={styles.container}>
+    <>
       <Stepper
         steps={steps}
         stepperIndex={activeStep}
-        setStepperIndex={setActiveStepPage}
+        setStepperIndex={setActiveStep}
       />
 
       {error && <div>There was an error loading your data.</div>}
       {isLoading && <div>Please wait.</div>}
 
       {!isLoading && (
-        <div className={styles.content}>
-          <form className={styles.formPage} onSubmit={formik.handleSubmit}>
-            {/*
-            Tip:
-            React.createElement is required here because it errors if you try
-            to use pages[activeStep]({ ... }) instead.
-
-            Since hooks are meant to be defined at the top-level, having a hook
-            inside of a function would normally raise an error. Doing this
-            tells React that this is a component and not a normal function.
-            */}
-            {React.createElement(pages[activeStep], {
-              formik,
-              children: (
-                <div className={styles.actions}>
-                  <button
-                    className={clsx(
-                      activeStep && styles.hiddenButton,
-                      styles.backButton
-                    )}
-                    onClick={() => void setActiveStepPage(activeStep - 1)}
-                  >
-                    <ArrowLeftIcon /> Go back
-                  </button>
-
-                  {activeStep < pages.length - 1 ? (
-                    <button type="submit">
-                      Next <ArrowRightIcon />
-                    </button>
-                  ) : (
-                    <button onClick={() => void alert('done!')}>
-                      Submit <ArrowRightIcon />
-                    </button>
-                  )}
-                </div>
-              ),
-            })}
-          </form>
-        </div>
+        <ParkingRequestForm
+          formik={formik}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+        />
       )}
-    </main>
+    </>
   );
 }

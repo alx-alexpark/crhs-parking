@@ -2,12 +2,15 @@
 
 import Link from 'next/link';
 
-import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 import { ParkingMap } from '@/components';
+import { useState } from 'react';
 import styles from './index.module.scss';
 
 export default function IndexPage() {
+  const [spot, setSpot] = useState<number | null>(null);
+
   return (
     <main>
       <nav>
@@ -25,6 +28,7 @@ export default function IndexPage() {
             <Link className={styles.highlightLink} href="/dashboard">
               Dashboard
             </Link>
+            <UserButton />
           </SignedIn>
         </div>
       </nav>
@@ -32,7 +36,12 @@ export default function IndexPage() {
       <h1>Need to park at CRHS?</h1>
       <p>Click where you'd like to park, and we'll get you started!</p>
 
-      <ParkingMap height={400} className={styles.map} />
+      <ParkingMap
+        spot={spot}
+        setSpot={setSpot}
+        height={400}
+        className={styles.map}
+      />
     </main>
   );
 }

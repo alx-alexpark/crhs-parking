@@ -120,7 +120,9 @@ export function ReviewerFormDialog({
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+      <Dialog.Trigger asChild>
+        <button className={styles.trigger}>{children}</button>
+      </Dialog.Trigger>
       <ToastContainer position="bottom-right" />
       <Dialog.Portal>
         <Dialog.Overlay className={styles.overlay} />

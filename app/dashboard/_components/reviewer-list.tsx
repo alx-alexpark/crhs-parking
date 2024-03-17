@@ -23,7 +23,7 @@ export default function ReviewerList() {
 
   return (
     <div>
-      {data?.requests.length == 0 && <h1>Wow. It's empty!</h1>}
+      {data?.requests.length == 0 && <p>Wow. It's empty!</p>}
 
       {data?.requests.map((req: ParkingSpotRequestType, index: number) => (
         <ReviewerFormDialog form={req}>

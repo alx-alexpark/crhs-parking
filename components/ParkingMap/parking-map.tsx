@@ -1,7 +1,7 @@
 import { useLeafletContext } from '@react-leaflet/core';
 import clsx from 'clsx';
 import L, { LatLngBoundsExpression } from 'leaflet';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { LayerGroup, MapContainer, TileLayer, useMap } from 'react-leaflet';
 
@@ -10,11 +10,12 @@ import styles from './parking-map.module.scss';
 
 import { MAP_DATA, Quadrant, RowData } from './map-data';
 
-interface ParkingMapProps extends React.HTMLAttributes<HTMLDivElement> {
-  onClick?: () => void;
-  highlightSpot?: number;
-  interactive?: boolean;
+interface ParkingMapProps {
+  spot: number | null;
+  setSpot: Function;
   height: number;
+  interactive: boolean;
+  className?: string;
 }
 
 const ENABLE_DEBUG = 0;
@@ -70,8 +71,8 @@ function ParkingRow({
   points: _points,
   spot,
   setSpot,
-  interactive,
-}: RowData & { spot?: number; setSpot: any; interactive: boolean }) {
+  interactive = true,
+}: RowData & { spot: number | null; setSpot: Function; interactive: boolean }) {
   const context = useLeafletContext();
   const map = useMap();
 
@@ -276,8 +277,6 @@ function SelectionDisplay({
   position: string;
   spot?: number;
 }) {
-  const parentMap = useMap();
-
   const positionClass =
     // @ts-expect-error: typescript
     (position && POSITION_CLASSES[position]) || POSITION_CLASSES.topright;
@@ -294,6 +293,8 @@ function SelectionDisplay({
 }
 
 export function ParkingMap({
+  spot,
+  setSpot,
   interactive,
   height,
   className,
@@ -303,7 +304,7 @@ export function ParkingMap({
     [29.74711, -95.77633],
   ] as LatLngBoundsExpression;
 
-  const [spot, setSpot] = useState(undefined);
+  console.log({ spot });
 
   return (
     <MapContainer
