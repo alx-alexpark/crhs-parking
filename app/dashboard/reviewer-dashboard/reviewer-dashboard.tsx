@@ -1,10 +1,7 @@
-import { currentUser, UserButton } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 import Head from 'next/head';
-import Link from 'next/link';
 
-import ReviewerList from './_components/reviewer-list';
-
-import styles from './reviewer-dashboard.module.scss';
+import ReviewerList from './_reviewer-list';
 
 export default async function ReviewerDashboardPage() {
   const user = await currentUser();
@@ -14,7 +11,7 @@ export default async function ReviewerDashboardPage() {
   }
 
   return (
-    <main>
+    <>
       <Head>
         <link
           rel="preload"
@@ -24,17 +21,6 @@ export default async function ReviewerDashboardPage() {
         />
       </Head>
 
-      <nav>
-        <span>
-          <strong>CRHS Parking</strong>
-        </span>
-        <div className="nav-links">
-          <Link href="/">Home</Link>
-          <Link href="/review-log">Review log</Link>
-          <UserButton />
-        </div>
-      </nav>
-
       {user!.firstName ? (
         <h1>Hello, {user?.firstName}.</h1>
       ) : (
@@ -42,6 +28,6 @@ export default async function ReviewerDashboardPage() {
       )}
 
       <ReviewerList />
-    </main>
+    </>
   );
 }

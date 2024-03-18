@@ -34,8 +34,13 @@ export default function ParkingRequestPage() {
 
   const formik = useFormik({
     initialValues: data,
+    // initialValues: {...RequestTemplate, data},
     onSubmit: (values) => {
-      setActiveStep(activeStep + 1);
+      console.log('submitting', values);
+
+      if (activeStep !== steps.length - 1) {
+        setActiveStep(activeStep + 1);
+      }
 
       if (formik.initialValues === values) {
         console.log('Skip submit');

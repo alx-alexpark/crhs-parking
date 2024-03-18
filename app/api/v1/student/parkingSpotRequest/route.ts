@@ -16,10 +16,11 @@ const RequestTemplate = {
     model: '',
     color: '',
   },
-  spotNum: '',
+  spotNum: null,
   paymentId: '',
   submitted: false,
   decision: 'undecided',
+  formStep: 0,
 };
 
 export async function GET() {
@@ -45,7 +46,7 @@ export async function PUT(request: Request) {
   const newJsonRaw = await request.json();
   const user = await currentUser();
   const dbUser = await User.findOne({
-    email: user?.emailAddresses[0].emailAddress,
+    clerkUserId: user?.id,
   });
 
   // Filter out invalid keys
@@ -80,9 +81,10 @@ export async function PUT(request: Request) {
     submitted: false,
   });
 
-  if (currentParkingSpotRequest === undefined) {
+  if (currentParkingSpotRequest === null) {
     await ParkingSpotRequest.create(
       { user: dbUser._id },
+      // Use the template to fill in what is missing
       { ...RequestTemplate, ...newJson }
     );
   } else {

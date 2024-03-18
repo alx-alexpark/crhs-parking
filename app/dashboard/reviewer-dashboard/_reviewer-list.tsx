@@ -4,8 +4,8 @@ import { useState } from 'react';
 import useSWR from 'swr';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
-import { ParkingRequestItem } from './parking-request-item';
-import { ReviewerFormDialog } from './reviewer-form-dialog';
+import { ParkingRequestItem } from '../_components/parking-request-item';
+import { ReviewerFormDialog } from './_form-dialog';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

@@ -2,7 +2,7 @@
 
 import useSWR from 'swr';
 
-import { ParkingRequestItem } from './parking-request-item';
+import { ParkingRequestItem } from '../_components/parking-request-item';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 

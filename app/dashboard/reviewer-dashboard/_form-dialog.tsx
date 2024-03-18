@@ -11,7 +11,7 @@ import { UserType } from '@/models/User';
 
 import { ParkingMap } from '@/components';
 import 'react-toastify/dist/ReactToastify.min.css';
-import styles from './reviewer-form-dialog.module.scss';
+import styles from './_form-dialog.module.scss';
 
 interface ReviewerFormDialogProps {
   form: ParkingSpotRequestType;

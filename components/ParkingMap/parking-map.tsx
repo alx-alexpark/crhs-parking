@@ -26,6 +26,7 @@ const LOW_BANDWIDTH = 0;
 const layer = L.layerGroup();
 
 let isDragging = false;
+let firstLoad = true; // TODO: save coordinates
 
 const POSITION_CLASSES = {
   bottomleft: 'leaflet-bottom leaflet-left',
@@ -173,10 +174,16 @@ function ParkingRow({
         {
           color: '#35f',
           fill: true,
-          fillOpacity: 0.2,
-          weight: 0.5,
+          weight: 0.2,
+          fillOpacity: spot === parkingSpot ? 0.5 : 0.2,
         }
       );
+
+      if (spot === parkingSpot && firstLoad) {
+        firstLoad = false;
+        // @ts-expect-error: This works
+        map.fitBounds(polygon.getLatLngs());
+      }
 
       if (interactive) {
         polygon
@@ -307,8 +314,6 @@ export function ParkingMap({
     [29.74335, -95.78269],
     [29.74711, -95.77633],
   ] as LatLngBoundsExpression;
-
-  console.log({ spot });
 
   return (
     <MapContainer

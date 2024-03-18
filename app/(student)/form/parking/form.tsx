@@ -46,14 +46,14 @@ export function ParkingRequestForm({
 
       <div>
         {/*
-            Tip:
-            React.createElement is required here because it errors if you try
-            to use pages[activeStep]({ ... }) instead.
+        Tip:
+        React.createElement is required here because it errors if you try
+        to use pages[activeStep]({ ... }) instead.
 
-            Since hooks are meant to be defined at the top-level, having a hook
-            inside of a function would normally raise an error. Doing this
-            tells React that this is a component and not a normal function.
-            */}
+        Since hooks are meant to be defined at the top-level, having a hook
+        inside of a function would normally raise an error. Doing this
+        tells React that this is a component and not a normal function.
+        */}
         {createElement(pages[activeStep], {
           formik,
         })}
@@ -77,7 +77,10 @@ export function ParkingRequestForm({
         ) : (
           <button
             className={styles.backButton}
-            onClick={() => void alert('done!')}
+            onClick={() => {
+              formik.setFieldValue('submitted', true);
+              alert('submitted!');
+            }}
             type="submit"
           >
             Submit <ArrowRightIcon />

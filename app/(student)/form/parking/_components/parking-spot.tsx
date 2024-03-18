@@ -1,9 +1,17 @@
 import { ParkingMap } from '@/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ParkingRequestPage from '.';
 
+import styles from './form-page.module.scss';
+
 export function ParkingSpot({ formik }: ParkingRequestPage) {
-  const [spot, setSpot] = useState(formik.values.spotNum || null);
+  const [spot, setSpot] = useState(formik.values?.spotNum || null);
+
+  // Since the parking spot is updated by the map, we need to update the Formik
+  // value manually
+  useEffect(() => {
+    formik.setFieldValue('spotNum', spot);
+  }, [spot]);
 
   return (
     <>
@@ -17,8 +25,8 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
         <input
           name="spotNum"
           type="number"
-          onChange={formik.handleChange}
           value={spot ?? undefined}
+          onChange={() => {}}
           hidden={true}
           readOnly={true}
         />
@@ -28,6 +36,7 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
           setSpot={setSpot}
           height={400}
           interactive={true}
+          className={styles.map}
         />
       </section>
     </>

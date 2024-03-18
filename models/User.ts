@@ -9,6 +9,10 @@ const TodoSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  accepted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const UserSchema = new mongoose.Schema(

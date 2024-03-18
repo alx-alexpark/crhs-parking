@@ -7,9 +7,9 @@ import clsx from 'clsx';
 
 import { ParkingMap } from '@/components';
 import { useState } from 'react';
-import ParkingRequestHistory from './_components/student-list';
-import StudentTodoList from './_components/student-todo-list';
-import styles from './student-dashboard.module.scss';
+import ParkingRequestHistory from './_student-list';
+
+import styles from '../dashboard.module.scss';
 
 export default function StudentDashboardPage() {
   const [spot, setSpot] = useState<number | null>(null);
@@ -19,23 +19,7 @@ export default function StudentDashboardPage() {
   const user = useUser().user;
 
   return (
-    <main>
-      <nav>
-        <span>
-          <strong>CRHS Parking</strong>
-        </span>
-        <div className="nav-links">
-          <Link href="/">Home</Link>
-          <Link href="/parking-request">New request</Link>
-          <UserButton />
-        </div>
-      </nav>
-
-      {/* TODO: hide if all items are completed **on page load** */}
-      <section>
-        <StudentTodoList />
-      </section>
-
+    <>
       {/* TODO: determine if this is a good style */}
       {/*       or wrap in div and add heropattern */}
       {user?.firstName ? (
@@ -64,6 +48,6 @@ export default function StudentDashboardPage() {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }
