@@ -5,6 +5,7 @@ import ParkingSpotRequest, {
   ParkingSpotRequestType,
 } from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
+import { NextResponse } from 'next/server';
 
 const RequestTemplate = {
   user: '',
@@ -91,5 +92,5 @@ export async function PUT(request: Request) {
     await ParkingSpotRequest.updateOne({ user: dbUser._id }, newJson);
   }
 
-  return new Response('OK');
+  return NextResponse.json({ success: true });
 }
