@@ -1,13 +1,17 @@
-'use client';
-
-import { CheckIcon } from '@radix-ui/react-icons';
-import Link from 'next/link';
-
+import clsx from 'clsx';
 import useSWR from 'swr';
 
-import { UserType } from '@/models/User';
+import { ArrowRightIcon, CheckIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
-import style from './student-todo.module.scss';
+import { fetcher } from '@/app/util';
+import User, { UserType } from '@/models/User';
+
+import ParkingSpotRequest, {
+  ParkingSpotRequestType,
+} from '@/models/ParkingSpotRequest';
+import { currentUser } from '@clerk/nextjs';
+import styles from './student-todo.module.scss';
 
 const steps = [
   <>
@@ -17,46 +21,67 @@ const steps = [
     Make your <Link href="parking">parking request</Link>.
   </>,
 ];
-const dataStepKeys = ['about', 'parkingRequest', 'approved'];
+const dataStepKeys = ['about', 'parkingRequest'];
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export default async function StudentTodoPage() {
+  let activeStep = true;
 
-export default function StudentTodoPage() {
-  const { data, error }: { data: UserType; error: any; isLoading: boolean } =
-    useSWR('/api/v1/student/userProfile', fetcher);
+  const user = await currentUser();
 
-  if (error) {
-    console.error(error);
-  }
+  const userDbObj = (await User.findOne({
+    clerkUserId: user?.id,
+  })) as UserType;
+
+  const lastParkingRequest = (await ParkingSpotRequest.findOne({
+    submitted: true,
+  })) as ParkingSpotRequestType;
+
+  const finished = !userDbObj.driversLicense || !lastParkingRequest;
 
   return (
-    <main>
-      <div className={style.container}>
-        <p className={style.title}>What to do next</p>
-        <ol className={style.stepsContainer}>
-          {steps.map((step, i) => (
-            <li className={style.step} key={i}>
+    <div className={styles.container}>
+      <h1>Are you ready?</h1>
+      <ol className={styles.stepsContainer}>
+        {steps.map((step, i) => {
+          const complete =
+            // @ts-expect-error: These keys are hardcoded to match the schema
+            (data?.todoSteps && data.todoSteps[dataStepKeys[i]]) === true;
+
+          const active = activeStep;
+          activeStep = false;
+
+          return (
+            <li
+              className={clsx(styles.step, !active && styles.incomplete)}
+              key={i}
+            >
               {/* https://www.radix-ui.com/primitives/docs/utilities/accessible-icon */}
               <div
-                data-state={
-                  // @ts-expect-error: These keys are hardcoded to match the schema
-                  (data?.todoSteps && data.todoSteps[dataStepKeys[i]]) ===
-                    true && 'complete'
-                }
-                className={style.checkIcon}
+                className={clsx(
+                  styles.checkIcon,
+                  complete && styles.iconComplete
+                )}
               >
                 <CheckIcon />
               </div>
               <p>{step}</p>
             </li>
-          ))}
-        </ol>
-        <br />
-        <p>
-          Once finished, come back to this page or check your email to see when
-          your request has been reviewed.
-        </p>
-      </div>
-    </main>
+          );
+        })}
+      </ol>
+      <button
+        disabled={!finished}
+        className={clsx(
+          styles.dashboardButton,
+          !finished && styles.disabledButton
+        )}
+        onClick={() => {
+          if (!finished) return;
+          window.location.reload();
+        }}
+      >
+        Open dashboard <ArrowRightIcon />
+      </button>
+    </div>
   );
 }

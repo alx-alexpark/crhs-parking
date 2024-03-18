@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 
-import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 import { ParkingRequestItem } from '../_components/parking-request-item';
 import { ReviewerFormDialog } from './_form-dialog';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { fetcher } from '@/app/util';
+import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 
 export default function ReviewerList() {
   const [dialogClosed, setDialogClosed] = useState(true);

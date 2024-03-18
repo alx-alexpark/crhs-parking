@@ -6,8 +6,6 @@ import { ParkingRequestItem } from '../_components/parking-request-item';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 export default function ParkingRequestHistory() {
   const { data, error, isLoading } = useSWR(
     '/api/v1/student/getAllParkingSpotRequests',
