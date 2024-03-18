@@ -6,7 +6,7 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
       <section>
         <h1>Vehicle information</h1>
 
-        <label htmlFor="vehicle-make">Vehicle brand</label>
+        <label htmlFor="vehicle-make">Car manufacturer</label>
         <input
           id="vehicle-make"
           name="vehicle.make"
@@ -16,10 +16,19 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
 
         <label htmlFor="vehicle-model">Vehicle model</label>
         <input
-          id="vehicle-brand"
+          id="vehicle-model"
           name="vehicle.model"
           onChange={formik.handleChange}
           value={formik.values?.vehicle?.model}
+        />
+
+        <label htmlFor="vehicle-year">Release year</label>
+        <input
+          id="vehicle-year"
+          name="vehicle.year"
+          type="number"
+          onChange={formik.handleChange}
+          value={formik.values?.vehicle?.year ?? undefined}
         />
 
         <label htmlFor="vehicle-color">Vehicle color</label>
@@ -28,15 +37,6 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
           name="vehicle.color"
           onChange={formik.handleChange}
           value={formik.values?.vehicle?.color}
-        />
-
-        <label htmlFor="vehicle-year">Vehicle year</label>
-        <input
-          id="vehicle-year"
-          name="vehicle.year"
-          type="number"
-          onChange={formik.handleChange}
-          value={formik.values?.vehicle?.year ?? undefined}
         />
 
         <label htmlFor="license-plate">License plate</label>
