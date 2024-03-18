@@ -5,7 +5,10 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 import '@/styles/globals.scss';
 
-const fontFamily = Outfit({ subsets: ['latin'] });
+const fontFamily = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'CRHS Parking',
