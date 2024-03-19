@@ -3,6 +3,7 @@ import { currentUser } from '@clerk/nextjs';
 import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   await dbConnect();
@@ -11,7 +12,7 @@ export async function GET() {
   const userDbObj = await User.findOne({ clerkUserId: user?.id });
 
   if (userDbObj.admin === false) {
-    return new Response('Permission denied');
+    return NextResponse.json({error: 'Permission denied'}, {status: 403});
   }
 
   const requests = await ParkingSpotRequest.find({
@@ -19,5 +20,5 @@ export async function GET() {
     decision: 'undecided',
   });
 
-  return Response.json({ requests: requests });
+  return NextResponse.json({ requests: requests });
 }

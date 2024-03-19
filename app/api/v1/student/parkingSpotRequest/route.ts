@@ -37,7 +37,7 @@ export async function GET() {
     submitted: false,
   });
 
-  return Response.json(currentParkingSpotRequest ?? RequestTemplate);
+  return NextResponse.json(currentParkingSpotRequest ?? RequestTemplate);
 }
 
 // TODO: test this and make sure it works
