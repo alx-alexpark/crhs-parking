@@ -83,6 +83,7 @@ export async function PUT(request: Request) {
   });
 
   if (currentParkingSpotRequest === null) {
+    // TODO: Check that the prerequites are fullfilled.
     await ParkingSpotRequest.create(
       { user: dbUser._id },
       // Use the template to fill in what is missing
