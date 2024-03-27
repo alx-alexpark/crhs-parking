@@ -13,9 +13,13 @@ export async function GET(request: Request) {
   const email = user?.emailAddresses[0].emailAddress;
   const clerkUserId = user?.id;
 
-  if ((await User.find({ clerkUserId: clerkUserId })).length > 0)
-    return NextResponse.json({error: 'User already exists'}, {status: 403});
+  if (!(email?.endsWith("@students.katyisd.org") || email?.endsWith("@katyisd.org"))) {
+    return NextResponse.json({error: 'Only KatyISD students are allowed!'});
+  }
 
-  await User.create({ name: name, email: email, clerkUserId: clerkUserId });
+  if ((await User.find({ clerkUserId: clerkUserId })).length > 0)
+    return NextResponse.json({error: 'User already exists'}, {status: 500});
+
+  await User.create({ name: name, email: email, clerkUserId: clerkUserId, studentId: email.split("@")[0]});
   return NextResponse.json({success: 'User created'});
 }
