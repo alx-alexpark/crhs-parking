@@ -1,4 +1,5 @@
 import { FileInput } from '@/components';
+import { ErrorMessage } from 'formik';
 import { useState } from 'react';
 
 export function Payment() {
@@ -24,6 +25,7 @@ export function Payment() {
           accept="image/*"
           setFile={setReceiptFile}
         />
+        <ErrorMessage name="paymentId" component="div" />
       </section>
     </>
   );

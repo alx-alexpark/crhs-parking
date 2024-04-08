@@ -1,11 +1,9 @@
 .container {
-  height: 100%;
-}
-
-.title {
-  color: var(--color-foreground);
-  font-weight: bold;
-  font-size: var(--text-h3);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-lg);
 }
 
 .stepsContainer {
@@ -20,6 +18,22 @@
 .step {
   // Align items horizontally
   display: flex;
+  flex: 1;
+  gap: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-container);
+
+  padding: var(--spacing-lg);
+
+  // Active step
+  color: var(--color-foreground);
+
+  // Grey out incomplete steps
+  &.incomplete > p,
+  &.incomplete > p > * {
+    pointer-events: none;
+    color: var(--color-border) !important;
+  }
 }
 
 .checkIcon {
@@ -36,10 +50,21 @@
 
   color: transparent;
 
-  &[data-state='complete'] {
+  &.iconComplete {
     border-color: none;
     background-color: var(--color-primary);
 
     color: white;
+  }
+}
+
+.dashboardButton {
+  width: fit-content;
+
+  &.disabledButton {
+    cursor: not-allowed;
+    border: 1px solid var(--color-text);
+    background: none;
+    color: var(--color-text);
   }
 }

@@ -1,4 +1,4 @@
-import styles from './parking-request.module.scss';
+import styles from './form.module.scss';
 
 export default function ParkingRequestLayout({
   children,

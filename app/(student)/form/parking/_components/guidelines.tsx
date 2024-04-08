@@ -1,7 +1,8 @@
-import { Tab, Tabs } from '@/components';
+import { Tabs } from '@/components';
+import { useState } from 'react';
 import ParkingRequestPage from '.';
 
-export function Guidelines({ formik }: ParkingRequestPage) {
+export function Guidelines() {
   const documents = [
     {
       title: 'Student Code of Conduct',
@@ -243,12 +244,18 @@ export function Guidelines({ formik }: ParkingRequestPage) {
     },
   ];
 
+  const [allVisited, setAllVisited] = useState(false);
+
   return (
     <>
       <section>
         <h1>Guidelines</h1>
 
-        <Tabs tabs={documents} />
+        <Tabs tabs={documents} setAllVisited={setAllVisited} />
+
+        <input type="checkbox" disabled={!allVisited} required>
+          I've read and understood these terms
+        </input>
       </section>
     </>
   );

@@ -11,9 +11,12 @@ export interface Tab {
 
 interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
   tabs: Tab[];
+  setAllVisited?: Function;
 }
 
-export function Tabs({ tabs }: TabsProps) {
+export function Tabs({ tabs, setAllVisited }: TabsProps) {
+  const visitedTabs = tabs.map(() => false);
+
   return (
     <TabsPrimitive.Root defaultValue={'0'}>
       <TabsPrimitive.List className={styles.tabs}>
@@ -22,6 +25,13 @@ export function Tabs({ tabs }: TabsProps) {
             className={styles.tab}
             value={String(index)}
             key={index}
+            onClick={() => {
+              // Set the tab as visited
+              visitedTabs[index] = true;
+
+              // Check if all tabs are visited
+              setAllVisited?.(visitedTabs.every(Boolean));
+            }}
           >
             {tab.title}
           </TabsPrimitive.Trigger>

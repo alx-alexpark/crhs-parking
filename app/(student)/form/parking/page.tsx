@@ -1,16 +1,15 @@
 'use client';
 
+import axios from 'axios';
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
-
 import useSWR from 'swr';
 
 import { Stepper } from '@/components';
-
-import axios from 'axios';
-import { useFormik } from 'formik';
+import Head from 'next/head';
 import { ParkingRequestForm } from './form';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { fetcher } from '@/app/util';
 
 const steps = [
   'Introduction',
@@ -63,6 +62,15 @@ export default function ParkingRequestPage() {
 
   return (
     <>
+      <Head>
+        <link
+          rel="preload"
+          href="/api/v1/student/parkingSpotRequest"
+          as="fetch"
+          crossOrigin="anonymous"
+        />
+      </Head>
+
       <Stepper
         steps={steps}
         stepperIndex={activeStep}

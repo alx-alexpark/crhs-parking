@@ -18,7 +18,7 @@ export function Stepper({
       {steps.map((step, index) => (
         <div
           className={styles.item}
-          onClick={() => setStepperIndex(index)}
+          // onClick={() => setStepperIndex(index)}
           key={index}
         >
           <span

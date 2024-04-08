@@ -1,3 +1,4 @@
+import { TextInput } from '@/components';
 import ParkingRequestPage from '.';
 
 export function VehicleInformation({ formik }: ParkingRequestPage) {
@@ -6,44 +7,39 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
       <section>
         <h1>Vehicle information</h1>
 
-        <label htmlFor="vehicle-make">Car manufacturer</label>
-        <input
+        <TextInput
           id="vehicle-make"
           name="vehicle.make"
-          onChange={formik.handleChange}
+          label="Car manufacturer"
           value={formik.values?.vehicle?.make}
         />
 
-        <label htmlFor="vehicle-model">Vehicle model</label>
-        <input
+        <TextInput
           id="vehicle-model"
           name="vehicle.model"
-          onChange={formik.handleChange}
+          label="Vehicle model"
           value={formik.values?.vehicle?.model}
         />
 
-        <label htmlFor="vehicle-year">Release year</label>
-        <input
+        <TextInput
           id="vehicle-year"
           name="vehicle.year"
+          label="Release year"
           type="number"
-          onChange={formik.handleChange}
-          value={formik.values?.vehicle?.year ?? undefined}
+          value={formik.values?.vehicle?.year}
         />
 
-        <label htmlFor="vehicle-color">Vehicle color</label>
-        <input
+        <TextInput
           id="vehicle-color"
           name="vehicle.color"
-          onChange={formik.handleChange}
+          label="Vehicle color"
           value={formik.values?.vehicle?.color}
         />
 
-        <label htmlFor="license-plate">License plate</label>
-        <input
+        <TextInput
           id="license-plate"
           name="vehicle.licensePlate"
-          onChange={formik.handleChange}
+          label="License plate"
           value={formik.values?.vehicle?.licensePlate}
         />
       </section>

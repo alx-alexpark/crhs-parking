@@ -14,18 +14,18 @@
   --color-container: #fff;
 
   --color-text: #444;
-  // --color-text: #666;
+  /* --color-text: #666; */
   --color-surface-text: var(--color-background);
   --color-placeholder: #c1c3cd;
   --color-error: #c91212;
 
-  --color-border: #bdc6d1;
-  // --color-border: #e2e8f0;
-  // --color-border: #cfd7e1;
+  /* --color-border: #bdc6d1; */
+  --color-border: #e2e8f0;
+  /* --color-border: #cfd7e1; */
   --color-inactive: #e0e0e0;
 
-  --text-h1: 2.25rem;
-  --text-h2: 2rem;
+  --text-h1: 1.8125em;
+  --text-h2: 1.45rem;
   --text-h3: 1.2rem;
   --text-body: 1rem;
   --text-small: 0.875rem;
@@ -73,4 +73,15 @@ button {
 
 .leaflet-pane canvas {
   max-width: unset;
+}
+
+.leaflet-control-zoom-fullscreen {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }

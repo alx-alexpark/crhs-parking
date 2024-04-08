@@ -1,7 +1,8 @@
-import { ParkingMap } from '@/components';
+import { ParkingMap, TextInput } from '@/components';
 import { useEffect, useState } from 'react';
 import ParkingRequestPage from '.';
 
+import { ErrorMessage, Field } from 'formik';
 import styles from './form-page.module.scss';
 
 export function ParkingSpot({ formik }: ParkingRequestPage) {
@@ -22,13 +23,15 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
           parking spot until you submit the form.
         </p>
 
-        <input
+        <TextInput
+          id="spotNum"
           name="spotNum"
+          label={null}
+          value={spot}
           type="number"
-          value={spot ?? undefined}
-          onChange={() => {}}
           hidden={true}
           readOnly={true}
+          onChange={() => {}}
         />
 
         <ParkingMap
@@ -38,6 +41,7 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
           interactive={true}
           className={styles.map}
         />
+        <ErrorMessage name="spotNum" component="div" />
       </section>
     </>
   );

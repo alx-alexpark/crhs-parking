@@ -1,20 +1,5 @@
 import mongoose, { InferSchemaType } from 'mongoose';
 
-const TodoSchema = new mongoose.Schema({
-  about: {
-    type: Boolean,
-    default: false,
-  },
-  parkingRequest: {
-    type: Boolean,
-    default: false,
-  },
-  accepted: {
-    type: Boolean,
-    default: false,
-  },
-});
-
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -56,10 +41,6 @@ const UserSchema = new mongoose.Schema(
       // format "$bucket/$filename"
       type: String,
       maxlength: 100,
-    },
-    todoSteps: {
-      type: TodoSchema,
-      required: true,
     },
   },
   { timestamps: true }

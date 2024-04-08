@@ -41,10 +41,10 @@ ol ol {
 }
 
 mark {
+  border-radius: var(--border-full);
   background: var(--color-primary);
   padding-inline: var(--spacing-md);
   padding-block: var(--spacing-sm);
-  border-radius: var(--border-full);
 
   color: var(--color-background);
 }

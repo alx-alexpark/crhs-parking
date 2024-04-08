@@ -1,5 +1,4 @@
 import mongoose, { InferSchemaType, Schema } from 'mongoose';
-import UserType from './User';
 
 const ParkingSpotRequestSchema = new Schema(
   {

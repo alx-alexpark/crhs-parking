@@ -1,0 +1,15 @@
+@keyframes pulse {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(0.9);
+  }
+}
+
+.skeleton {
+  animation: pulse 1s infinite alternate ease-in;
+  border-radius: var(--border-small);
+  background: var(--color-border);
+  height: 1rem;
+}

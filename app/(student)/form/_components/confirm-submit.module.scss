@@ -1,0 +1,83 @@
+@keyframes overlay-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(2px);
+  }
+}
+
+@keyframes content-appear {
+  from {
+    transform: translate(-50%, -48%) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.overlay {
+  position: fixed;
+  z-index: 1000;
+
+  animation: overlay-appear 0.1s forwards;
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+  animation: content-appear 0.1s forwards;
+  box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.16);
+  border-radius: var(--border-container);
+
+  background: var(--color-background);
+
+  padding: var(--spacing-container);
+
+  width: max-content;
+
+  max-width: 500px;
+  max-height: 85vh;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.description {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-lg);
+
+  .actionCancel {
+    transition: background-color 0.1s;
+    border: 2px solid var(--color-primary);
+    background: none;
+
+    color: var(--color-primary);
+
+    &:hover {
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+    }
+  }
+
+  .actionSubmit:hover {
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+  }
+}

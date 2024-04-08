@@ -15,21 +15,21 @@
   align-items: center;
   gap: var(--spacing-md);
 
-  width: 100%;
-  padding: var(--spacing-lg);
-
   border-left: 2px solid rgb(var(--color));
 
   background: rgba(var(--color), 5%);
+  padding: var(--spacing-lg);
+
+  width: 100%;
 
   color: var(--color-foreground);
 }
 
 .iconContainer {
-  padding: var(--spacing-md);
   border-radius: var(--border-small);
 
   background: rgb(var(--color));
+  padding: var(--spacing-md);
 
   color: white;
 }

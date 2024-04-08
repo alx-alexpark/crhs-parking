@@ -1,5 +1,5 @@
 import { UploadIcon } from '@radix-ui/react-icons';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, MutableRefObject, useRef } from 'react';
 import styles from './file-input.module.scss';
 
 interface FileInputProps extends React.HTMLAttributes<HTMLInputElement> {
@@ -9,10 +9,13 @@ interface FileInputProps extends React.HTMLAttributes<HTMLInputElement> {
 }
 
 export function FileInput({ setFile, ...props }: FileInputProps) {
+  const inputRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+
   const selectFile = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     if (target.files) {
-      setFile(target.files[0]);
+      const url = setFile(target.files[0]);
+      inputRef.current!.value = url;
     }
   };
 
@@ -23,6 +26,7 @@ export function FileInput({ setFile, ...props }: FileInputProps) {
       <input
         type="file"
         className={styles.input}
+        ref={inputRef}
         {...props}
         onChange={selectFile}
       />

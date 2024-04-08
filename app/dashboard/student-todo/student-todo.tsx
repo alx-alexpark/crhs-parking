@@ -43,9 +43,7 @@ export default async function StudentTodoPage() {
       <h1>Are you ready?</h1>
       <ol className={styles.stepsContainer}>
         {steps.map((step, i) => {
-          const complete =
-            // @ts-expect-error: These keys are hardcoded to match the schema
-            (data?.todoSteps && data.todoSteps[dataStepKeys[i]]) === true;
+          const complete = !userDbObj.driversLicense || !lastParkingRequest;
 
           const active = activeStep;
           activeStep = false;
@@ -75,10 +73,10 @@ export default async function StudentTodoPage() {
           styles.dashboardButton,
           !finished && styles.disabledButton
         )}
-        onClick={() => {
-          if (!finished) return;
-          window.location.reload();
-        }}
+        // onClick={() => {
+        //   if (!finished) return;
+        //   window.location.reload();
+        // }}
       >
         Open dashboard <ArrowRightIcon />
       </button>

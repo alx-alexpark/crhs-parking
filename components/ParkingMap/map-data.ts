@@ -28,6 +28,15 @@ export interface RowData {
   };
 }
 
+type NumberOrRange = number | [number, number];
+export interface HighlightSpots {
+  disabled: NumberOrRange[];
+  reserved: NumberOrRange[];
+  staff: NumberOrRange[];
+  visitor: NumberOrRange[];
+  special: NumberOrRange[];
+}
+
 // TODO: use 4 points per rect
 export const MAP_DATA: Quadrant[] = [
   {
@@ -374,21 +383,6 @@ export const MAP_DATA: Quadrant[] = [
           ],
         },
       },
-      {
-        double: false,
-        range: [1153, 1191],
-        spaces: [],
-        points: {
-          start: [
-            [29.74445339329114, -95.77961057424547],
-            [29.744400412633027, -95.77954083681108],
-          ],
-          end: [
-            [29.74377337568505, -95.7803823798895],
-            [29.74372505234061, -95.78032270073892],
-          ],
-        },
-      },
     ],
   },
   {
@@ -455,7 +449,7 @@ export const MAP_DATA: Quadrant[] = [
         },
       },
       {
-        double: true,
+        double: false,
         range: [1297, 1304],
         spaces: [],
         points: {
@@ -472,3 +466,52 @@ export const MAP_DATA: Quadrant[] = [
     ],
   },
 ];
+
+export const highlightSpots: HighlightSpots = {
+  disabled: [
+    /* todo */
+  ],
+  reserved: [],
+  staff: [
+    [1, 9],
+    [62, 79],
+    [134, 142],
+    [358, 364],
+    384,
+    386,
+    [388, 458],
+    [487, 501],
+    [723, 726],
+    [730, 735],
+    [752, 758],
+    [760, 767],
+    [812, 864],
+    [908, 953],
+    [1030, 1050],
+    [1312, 1305],
+    [1328, 1341],
+    [1355, 1368],
+    [1379, 1389],
+    [1399, 1402],
+    [1404, 1408],
+  ],
+  visitor: [[365, 382], [744, 747], 751, 759, [1192, 1204]],
+  special: [385, 387, [739, 743], 748],
+};
+
+export function isHighlightedSpot(
+  spots: HighlightSpots | undefined,
+  spot: number
+) {
+  if (!spots) {
+    return false;
+  }
+
+  return (
+    spots.disabled.includes(spot) ||
+    spots.reserved.includes(spot) ||
+    spots.staff.includes(spot) ||
+    spots.visitor.includes(spot) ||
+    spots.special.includes(spot)
+  );
+}
