@@ -3,6 +3,7 @@ import { currentUser } from '@clerk/nextjs';
 import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest from '@/models/ParkingSpotRequest';
 import User from '@/models/User';
+import { NextResponse } from 'next/server';
 
 export async function PATCH(request: Request) {
   await dbConnect();
@@ -11,7 +12,7 @@ export async function PATCH(request: Request) {
   const userDbObj = await User.findOne({ clerkUserId: user?.id });
 
   if (!userDbObj.admin) {
-    return new Response('Permission denied');
+    return NextResponse.json({ error: 'Permission denied' }, { status: 403 });
   }
 
   const data: { requestId: string; newDecision: string } = await request.json();
@@ -22,7 +23,7 @@ export async function PATCH(request: Request) {
   );
 
   // TODO: return actual json
-  return new Response('yes');
+  return NextResponse.json({ success: true });
 }
 
 export async function GET(request: Request) {
@@ -34,13 +35,12 @@ export async function GET(request: Request) {
   const data: { requestId: string } = await request.json();
 
   if (!userDbObj.admin) {
-    return new Response('Permission denied');
+    return NextResponse.json({ error: 'Permission denied' }, { status: 403 });
   }
 
   const parkingSpotRequest = await ParkingSpotRequest.findOne({
     _id: data.requestId,
   });
 
-  // TODO: return actual json
   return new Response(parkingSpotRequest);
 }

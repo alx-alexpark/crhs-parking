@@ -8,6 +8,9 @@ const ParkingSpotRequestSchema = new Schema(
     schoolYear: {
       type: String,
     },
+    changesRequestedMessage: {
+      type: String,
+    },
     vehicle: {
       licensePlate: {
         type: String,
@@ -62,6 +65,9 @@ const ParkingSpotRequestSchema = new Schema(
     formStep: {
       type: Number,
       default: 0,
+    },
+    parkingSticker: {
+      type: Number,
     },
   },
   { timestamps: true }
