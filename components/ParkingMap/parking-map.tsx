@@ -57,18 +57,18 @@ function MapEvents({
 
   map.addLayer(layer);
 
-  // TODO: Leaflet inserts a Ukrainian flag to the attribution bar.
+  // NOTE: Leaflet inserts a Ukrainian flag to the attribution bar.
   //       While it would be best to avoid introducing politics to
   //       the app, there are no references to the war, hence it is
   //       not political.
   // map.attributionControl.setPrefix('');
 
-  map.on('mouseup', function (e: any) {
-    console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
+  // map.on('mouseup', function (e: any) {
+  //   console.log(`[${e.latlng.lat}, ${e.latlng.lng}],`);
 
-    layer.clearLayers();
-    L.circleMarker(e.latlng).addTo(layer);
-  });
+  //   layer.clearLayers();
+  //   L.circleMarker(e.latlng).addTo(layer);
+  // });
 
   map.on('dragstart', () => setDragging(true));
   map.on('dragend', () => setDragging(false));
@@ -115,12 +115,12 @@ export function ParkingMap({
         content={isFullScreen ? exitFullScreenIcon : enterFullScreenIcon}
       />
 
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        maxNativeZoom={19}
-        maxZoom={22}
-      />
+      {/* <TileLayer */}
+      {/*   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' */}
+      {/*   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" */}
+      {/*   maxNativeZoom={19} */}
+      {/*   maxZoom={22} */}
+      {/* /> */}
 
       <LayerGroup>
         <TextMarker

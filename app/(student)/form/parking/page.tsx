@@ -31,35 +31,6 @@ export default function ParkingRequestPage() {
 
   console.debug({ data, error, isLoading });
 
-  const formik = useFormik({
-    initialValues: data,
-    // initialValues: {...RequestTemplate, data},
-    onSubmit: (values) => {
-      console.log('submitting', values);
-
-      if (activeStep !== steps.length - 1) {
-        setActiveStep(activeStep + 1);
-      }
-
-      if (formik.initialValues === values) {
-        console.log('Skip submit');
-        return;
-      }
-
-      axios
-        .put('/api/v1/student/parkingSpotRequest', values)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-
-    // reset form when initial values change
-    enableReinitialize: true,
-  });
-
   return (
     <>
       <Head>
@@ -82,9 +53,10 @@ export default function ParkingRequestPage() {
 
       {!isLoading && (
         <ParkingRequestForm
-          formik={formik}
+          data={data}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
+          maxSteps={steps.length}
         />
       )}
     </>

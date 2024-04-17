@@ -2,10 +2,6 @@
   display: flex;
   flex-shrink: 0;
   flex-direction: row;
-  gap: var(--spacing-lg);
-  border: 1px solid var(--color-border);
-  border-radius: 1rem;
-  padding: var(--spacing-lg) var(--spacing-md);
 
   max-width: 100%;
 
@@ -13,58 +9,31 @@
 }
 
 .item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
+  --border: var(--color-border);
 
-  cursor: pointer;
+  flex: 1;
+
+  border-bottom: 2px solid var(--border);
+  padding: var(--spacing-lg) var(--spacing-md);
 
   min-width: max-content;
   height: fit-content;
-}
 
-.icon {
-  --border: var(--color-border);
-  --color: var(--color-foreground);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid var(--border);
-  border-radius: var(--border-full);
-  min-width: 2rem;
-
-  height: 2rem;
-
-  color: var(--color);
-
-  user-select: none;
   text-align: center;
-}
 
-.active {
-  --border: var(--color-primary);
-  color: var(--border);
-
-  & + p {
-    color: var(--color-primary);
+  &.active {
+    --border: var(--color-primary);
   }
 }
 
-.complete {
-  --color: var(--color-background);
-  background-color: var(--color-primary);
-  color: var(--color);
-
-  & + p {
-    color: var(--color-primary);
-  }
+.active > p {
+  color: var(--color-primary);
 }
 
-.text p {
-  line-height: 115%;
+.complete > p {
+  color: var(--color-primary);
 }
 
-.textTitle {
+.inactive > p {
   color: var(--color-foreground);
 }

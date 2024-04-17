@@ -7,9 +7,10 @@ import {
 } from '@radix-ui/react-icons';
 import styles from './table.module.scss';
 
-interface Table {
+interface TableProps {
   children: ReactNode;
   header: TableHeader[];
+  title?: string;
   data: (string | number)[][];
   bodyWrapper?: (child: ReactNode, index: number) => ReactNode;
   formatter?: (data: (string | number)[]) => string[];
@@ -22,10 +23,11 @@ const sortStateIcons = { asc: <CaretUpIcon />, desc: <CaretDownIcon /> };
 export default function Table({
   children,
   header,
+  title,
   data,
   bodyWrapper,
   formatter,
-}: Table) {
+}: TableProps) {
   const maxItems = 10;
   let index = 0;
 
@@ -87,6 +89,7 @@ export default function Table({
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
+        <title>{title}</title>
         <thead>
           <tr>
             {header.map(([title, canSort], index) => (
@@ -125,9 +128,8 @@ export default function Table({
       </table>
       <div>
         <span>
-          Showing {index + 1} to{' '}
-          {Math.min((index + 1) * maxItems, sortedData.length)} of{' '}
-          {sortedData.length} entries
+          Showing {index + 1} to {(index + 1) * maxItems} of {sortedData.length}{' '}
+          entries
         </span>
       </div>
     </div>

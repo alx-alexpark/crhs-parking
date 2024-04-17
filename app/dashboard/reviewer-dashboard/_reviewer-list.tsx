@@ -44,6 +44,7 @@ export default function ReviewerList() {
         ['Date created', true],
         ['Status', true],
       ]}
+      title="Pending requests"
       bodyWrapper={(child: React.ReactNode, index: number) => (
         <ReviewerFormDialog form={data?.requests[index]} key={index}>
           {child}

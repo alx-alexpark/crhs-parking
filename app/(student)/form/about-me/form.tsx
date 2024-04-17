@@ -4,8 +4,9 @@ import * as Yup from 'yup';
 
 import { FileInput, Tooltip } from '@/components';
 import { ArrowRightIcon, InfoCircledIcon } from '@radix-ui/react-icons';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 
+import ErrorMessage from '@/components/Inputs/error-message';
 import ConfirmSubmit from '../_components/confirm-submit';
 import styles from '../form.module.scss';
 
@@ -31,11 +32,11 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
   const [insuranceFile, setInsuranceFile] = useState<File>();
   const [licenseFile, setLicenseFile] = useState<File>();
 
-  const initialData = useMemo(() => {
-    if (!data) return {};
+  // const initialData = useMemo(() => {
+  //   if (!data) return {};
 
-    return initialData;
-  }, [data]);
+  //   return data;
+  // }, [data]);
 
   return (
     <Formik
@@ -57,43 +58,50 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
       enableReinitialize={true}
     >
       {({ submitForm, isSubmitting, setFieldValue }) => (
-        <Form>
-          <label htmlFor="phone">Student's phone number</label>
-          <Field type="tel" name="phone" id="phone" />
-          <ErrorMessage name="phone" component="div" />
+        <>
+          <section>
+            <h2>Student information</h2>
 
-          {/* TODO: derive from email */}
-          {/* <Field type="text" name="studentId" /> */}
-          {/* <ErrorMessage name="studentId" component="div" /> */}
+            <label htmlFor="phone">Student's phone number</label>
+            <Field type="tel" name="phone" id="phone" />
+            <ErrorMessage name="phone" component="div" />
 
-          <label htmlFor="grade">
-            Grade level{' '}
-            <Tooltip content="Students may not park on campus as a freshman">
-              <InfoCircledIcon />
-            </Tooltip>
-          </label>
-          <div role="group" id="grade">
-            <label>
-              <Field type="radio" name="grade" value="10" />
-              10
+            {/* TODO: derive from email */}
+            {/* <Field type="text" name="studentId" /> */}
+            {/* <ErrorMessage name="studentId" component="div" /> */}
+
+            <label htmlFor="grade" className={styles.inlineLabel}>
+              Grade level{' '}
+              <Tooltip content="Students may not park on campus as a freshman">
+                <InfoCircledIcon />
+              </Tooltip>
             </label>
-            <label>
-              <Field type="radio" name="grade" value="11" />
-              11
-            </label>
-            <label>
-              <Field type="radio" name="grade" value="12" />
-              12
-            </label>
-          </div>
-          <ErrorMessage name="grade" component="div" />
+            <div role="group" id="grade">
+              <label>
+                <Field type="radio" name="grade" value="10" />
+                10
+              </label>
+              <label>
+                <Field type="radio" name="grade" value="11" />
+                11
+              </label>
+              <label>
+                <Field type="radio" name="grade" value="12" />
+                12
+              </label>
+            </div>
+            <ErrorMessage name="grade" component="div" />
+          </section>
 
           <section>
             <h2>Driver information</h2>
 
-            <label htmlFor="licensee-photo">
-              Photo of driver's license. Must not be a learner's permit.
-            </label>
+            <p>
+              You need valid documentation to apply for a parking spot. Students
+              with a <em>learner's permit</em> are not allowed to apply.
+            </p>
+
+            <label htmlFor="license-photo">Photo of driver's license.</label>
             <FileInput
               id="license-photo"
               name="student.driversLicense"
@@ -158,12 +166,14 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
             />
           </section>
 
-          <ConfirmSubmit onSubmit={submitForm}>
-            <button type="button" disabled={isSubmitting}>
-              Submit
-            </button>
-          </ConfirmSubmit>
-        </Form>
+          <div className={styles.actions}>
+            <ConfirmSubmit onSubmit={submitForm}>
+              <button type="button" disabled={isSubmitting}>
+                Submit
+              </button>
+            </ConfirmSubmit>
+          </div>
+        </>
       )}
     </Formik>
   );

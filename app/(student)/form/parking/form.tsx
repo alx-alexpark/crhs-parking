@@ -17,6 +17,7 @@ import { Formik, FormikProps } from 'formik';
 import ConfirmSubmit from '../_components/confirm-submit';
 import SubmittedPage from './submitted';
 
+import axios from 'axios';
 import styles from '../form.module.scss';
 
 const pages = [
@@ -54,12 +55,14 @@ interface ParkingRequestFormProps {
   data: ParkingSpotRequestType;
   activeStep: number;
   setActiveStep: Function;
+  maxSteps: number;
 }
 
 export function ParkingRequestForm({
   data,
   activeStep,
   setActiveStep,
+  maxSteps,
 }: ParkingRequestFormProps) {
   const [submitted, setSubmitted] = useState(false);
 
@@ -70,8 +73,29 @@ export function ParkingRequestForm({
   return (
     <Formik
       initialValues={data}
-      onSubmit={() => {
+      onSubmit={(values) => {
         setSubmitted(true);
+
+        console.log('submitting', values);
+
+        if (activeStep !== maxSteps - 1) {
+          setActiveStep(activeStep + 1);
+        }
+
+        // Don't PUT to API if initial values don't differ from submitted values
+        if (data === values) {
+          console.log('Skip submit');
+          return;
+        }
+
+        axios
+          .put('/api/v1/student/parkingSpotRequest', values)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       }}
       validationSchema={pages[activeStep].validationSchema}
       enableReinitialize={true}

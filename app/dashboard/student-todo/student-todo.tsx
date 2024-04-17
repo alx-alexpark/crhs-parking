@@ -13,18 +13,13 @@ import ParkingSpotRequest, {
 import { currentUser } from '@clerk/nextjs';
 import styles from './student-todo.module.scss';
 
-const steps = [
-  <>
-    Update your <Link href="/form/about-me">user information</Link>.
-  </>,
-  <>
-    Make your <Link href="parking">parking request</Link>.
-  </>,
-];
-const dataStepKeys = ['about', 'parkingRequest'];
-
 export default async function StudentTodoPage() {
   let activeStep = true;
+  const isActiveStep = () => {
+    const active = activeStep;
+    activeStep = false;
+    return active;
+  };
 
   const user = await currentUser();
 
@@ -36,43 +31,53 @@ export default async function StudentTodoPage() {
     submitted: true,
   })) as ParkingSpotRequestType;
 
-  const finished = !userDbObj.driversLicense || !lastParkingRequest;
+  const completedUserForm = Boolean(userDbObj.driversLicense);
+  const completedParkingForm = Boolean(lastParkingRequest);
 
   return (
     <div className={styles.container}>
       <h1>Are you ready?</h1>
       <ol className={styles.stepsContainer}>
-        {steps.map((step, i) => {
-          const complete = !userDbObj.driversLicense || !lastParkingRequest;
-
-          const active = activeStep;
-          activeStep = false;
-
-          return (
-            <li
-              className={clsx(styles.step, !active && styles.incomplete)}
-              key={i}
-            >
-              {/* https://www.radix-ui.com/primitives/docs/utilities/accessible-icon */}
-              <div
-                className={clsx(
-                  styles.checkIcon,
-                  complete && styles.iconComplete
-                )}
-              >
-                <CheckIcon />
-              </div>
-              <p>{step}</p>
-            </li>
-          );
-        })}
+        <li
+          className={clsx(
+            styles.step,
+            !isActiveStep() && !completedUserForm && styles.incomplete
+          )}
+        >
+          <div
+            className={clsx(
+              styles.checkIcon,
+              completedUserForm && styles.iconComplete
+            )}
+          >
+            <CheckIcon />
+          </div>
+          <p>
+            Update your <Link href="/form/about-me">user information</Link>.
+          </p>
+        </li>
+        <li
+          className={clsx(
+            styles.step,
+            !completedParkingForm && styles.incomplete
+          )}
+        >
+          <div
+            className={clsx(
+              styles.checkIcon,
+              completedParkingForm && styles.iconComplete
+            )}
+          >
+            <CheckIcon />
+          </div>
+          <p>
+            Make your <Link href="parking">parking request</Link>.
+          </p>
+        </li>
       </ol>
       <button
-        disabled={!finished}
-        className={clsx(
-          styles.dashboardButton,
-          !finished && styles.disabledButton
-        )}
+        disabled={!(completedUserForm && completedParkingForm)}
+        className={styles.dashboardButton}
         // onClick={() => {
         //   if (!finished) return;
         //   window.location.reload();

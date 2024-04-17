@@ -1,6 +1,7 @@
 import { CheckIcon, Cross2Icon, DashIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 
+import { formatDate } from '@/app/util';
 import styles from './parking-request-item.module.scss';
 
 const PENDING = 'undecided';
@@ -35,7 +36,7 @@ export function ParkingRequestItem({
         {status == PENDING && 'Pending since'}
         {status == APPROVED && 'Approved on'}
         {status == REJECTED && 'Rejected on'} {/* TODO: use text month */}
-        {new Date(timestamp).toISOString().split('T')[0]}
+        {formatDate(new Date(timestamp))}
       </p>
     </div>
   );

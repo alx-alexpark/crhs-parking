@@ -17,20 +17,15 @@ export function Stepper({
     <div className={styles.container}>
       {steps.map((step, index) => (
         <div
-          className={styles.item}
-          // onClick={() => setStepperIndex(index)}
+          className={clsx(
+            styles.item,
+            index > stepperIndex && styles.inactive,
+            index == stepperIndex && styles.active,
+            index < stepperIndex && styles.complete
+          )}
           key={index}
         >
-          <span
-            className={clsx(
-              styles.icon,
-              index <= stepperIndex && styles.active,
-              index < stepperIndex && styles.complete
-            )}
-          >
-            {index >= stepperIndex ? index + 1 : <CheckIcon />}
-          </span>
-          <p className={styles.textTitle}>{step}</p>
+          <p>{step}</p>
         </div>
       ))}
     </div>

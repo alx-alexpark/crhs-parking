@@ -16,17 +16,23 @@
 }
 
 .step {
+  --border: var(--color-border);
+
   // Align items horizontally
   display: flex;
   flex: 1;
   gap: var(--spacing-md);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border);
   border-radius: var(--border-container);
 
   padding: var(--spacing-lg);
 
   // Active step
   color: var(--color-foreground);
+
+  &:not(.incomplete) {
+    --border: var(--color-text);
+  }
 
   // Grey out incomplete steps
   &.incomplete > p,
@@ -61,10 +67,10 @@
 .dashboardButton {
   width: fit-content;
 
-  &.disabledButton {
+  &[disabled] {
     cursor: not-allowed;
-    border: 1px solid var(--color-text);
+    border: 1px solid var(--color-placeholder);
     background: none;
-    color: var(--color-text);
+    color: var(--color-placeholder);
   }
 }

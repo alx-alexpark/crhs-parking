@@ -22,7 +22,6 @@ export async function PATCH(request: Request) {
     { decision: data.newDecision }
   );
 
-  // TODO: return actual json
   return NextResponse.json({ success: true });
 }
 

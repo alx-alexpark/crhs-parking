@@ -1,8 +1,6 @@
 import Link from 'next/link';
 
-import ParkingRequestPage from '.';
-
-export function GetStarted({ formik }: ParkingRequestPage) {
+export function GetStarted() {
   return (
     <>
       <section>
@@ -25,7 +23,8 @@ export function GetStarted({ formik }: ParkingRequestPage) {
           </li>
         </ul>
         <p>
-          Only students in grades 10, 11, or 12 can purchase a parking spot.
+          Only students in grades 10, 11, or 12 can purchase and use a parking
+          spot.
         </p>
       </section>
       {/*

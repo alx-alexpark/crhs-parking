@@ -9,6 +9,7 @@
   /* --color-primary: #35f; */
   --color-primary-rgb: 51, 85, 255;
   --color-primary: rgb(var(--color-primary-rgb));
+  --color-error: #f35;
   --color-foreground: #222;
   --color-background: #fafaff;
   --color-container: #fff;
@@ -84,4 +85,18 @@ button {
     width: 1.5rem;
     height: 1.5rem;
   }
+}
+
+.leaflet-div-icon {
+  border: none !important;
+  // Disable background on marker
+  background: none !important;
+
+  // Text styles
+  font-weight: bold;
+  font-size: var(--text-small);
+  // TODO: use font
+
+  // Move text closer
+  line-height: 100%;
 }

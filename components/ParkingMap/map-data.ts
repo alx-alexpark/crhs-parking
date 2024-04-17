@@ -37,7 +37,6 @@ export interface HighlightSpots {
   special: NumberOrRange[];
 }
 
-// TODO: use 4 points per rect
 export const MAP_DATA: Quadrant[] = [
   {
     name: 'Athletic Lot',

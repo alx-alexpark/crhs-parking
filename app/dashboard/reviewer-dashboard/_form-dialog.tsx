@@ -10,6 +10,7 @@ import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 
 import { UserType } from '@/models/User';
 
+import Autocomplete from '@/components/Autocomplete/autocomplete';
 import { Field, Formik } from 'formik';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styles from './_form-dialog.module.scss';
@@ -23,31 +24,37 @@ export function ReviewerFormDialog({
   form,
   children,
 }: ReviewerFormDialogProps) {
-  const [checkboxesVisible, setCheckboxesVisibility] = useState(false);
   const [requestingChanges, setRequestingChanges] = useState(false);
 
   const user = form.user as unknown as UserType;
 
   const values = {
-    Name: user.name,
-    'Student ID': user.studentId,
-    'Payment ID': form.paymentId,
-    'Parking spot': (
+    Name: [user.name, ['Name is incomplete']],
+    'Student ID': [user.studentId, ['Student ID is incomplete']],
+    'Payment ID': [
+      <img src={form.paymentId!} />,
+      ['Payment ID does not exist'],
+    ],
+    "Driver's license": [
+      <img src={user.driversLicense!} />,
+      ["Learner's permit is not allowed"],
+    ],
+    'Parking spot': [
       <ParkingMap
         spot={form.spotNum ?? null}
         interactive={false}
         height={400}
-      />
-    ),
-    // 'Parking spot': form.spotNum,
+      />,
+      ['Parking spot does not exist', 'Parking spot is not available'],
+    ],
   };
 
   const valuesCar = {
-    Manufacturer: form.vehicle?.make,
-    Model: form.vehicle?.model,
-    'Release year': form.vehicle?.year,
-    Color: form.vehicle?.color,
-    'License plate': form.vehicle?.licensePlate,
+    Manufacturer: [form.vehicle?.make, []],
+    Model: [form.vehicle?.model, []],
+    'Release year': [form.vehicle?.year, []],
+    Color: [form.vehicle?.color, []],
+    'License plate': [form.vehicle?.licensePlate, []],
   };
 
   const updateSubmission = (status: string) => {
@@ -65,20 +72,13 @@ export function ReviewerFormDialog({
   };
 
   function generateFromValues(values: Object) {
-    return Object.entries(values).map(([key, value], index) => {
+    return Object.entries(values).map(([key, [value, errors]], index) => {
       const id = key.toLocaleLowerCase().replace(' ', '-');
       const descId = id + '-desc';
 
       return (
         <div className={styles.formLine} key={index}>
-          {checkboxesVisible && (
-            <Field
-              id={id}
-              name={key}
-              type="checkbox"
-              aria-describedby={descId}
-            />
-          )}
+          <Field id={id} name={key} type="checkbox" aria-describedby={descId} />
           <label htmlFor={id}>{key}</label>
           <p id={descId}>
             {value || (
@@ -87,6 +87,8 @@ export function ReviewerFormDialog({
               </strong>
             )}
           </p>
+
+          {requestingChanges && <Autocomplete value="" options={errors} />}
         </div>
       );
     });
@@ -118,31 +120,36 @@ export function ReviewerFormDialog({
         </section>
 
         <div className={styles.actionButtonContainer}>
-          <button
-            className={styles.actionButton}
-            aria-label="Request changes"
-            onClick={() => setRequestingChanges(!requestingChanges)}
-          >
-            {requestingChanges ? '' : 'Request changes'}
-          </button>
-          <Dialog.Close asChild>
+          {requestingChanges ? (
             <button
               className={styles.actionButton}
-              aria-label="Deny application"
-              onClick={() => updateSubmission('denied')}
+              aria-label="Request changes"
+              onClick={() => setRequestingChanges(!requestingChanges)}
             >
-              Deny
+              Request these changes
             </button>
-          </Dialog.Close>
-          <Dialog.Close asChild>
-            <button
-              className={styles.actionButton}
-              aria-label="Approve application"
-              onClick={() => updateSubmission('approved')}
-            >
-              Approve
-            </button>
-          </Dialog.Close>
+          ) : (
+            <>
+              <Dialog.Close asChild>
+                <button
+                  className={styles.actionButton}
+                  aria-label="Deny application"
+                  onClick={() => updateSubmission('denied')}
+                >
+                  Deny
+                </button>
+              </Dialog.Close>
+              <Dialog.Close asChild>
+                <button
+                  className={styles.actionButton}
+                  aria-label="Approve application"
+                  onClick={() => updateSubmission('approved')}
+                >
+                  Approve
+                </button>
+              </Dialog.Close>
+            </>
+          )}
         </div>
       </Formik>
 
