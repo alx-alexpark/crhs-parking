@@ -68,14 +68,17 @@ const ParkingSpotRequestSchema = new Schema(
     },
     lastInteractingAdminUserId: {
       type: String,
-      maxlength: 30, 
+      maxlength: 30,
+    },
+    // TODO: how will this work?
+    changeRequests: {
+      user: {
+        type: String,
+      },
     },
     formStep: {
       type: Number,
       default: 0,
-    },
-    parkingSticker: {
-      type: Number,
     },
   },
   { timestamps: true }
