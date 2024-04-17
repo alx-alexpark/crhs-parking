@@ -12,7 +12,7 @@ import {
 } from './_components';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
-import { Formik, FormikProps } from 'formik';
+import { Form, Formik } from 'formik';
 
 import ConfirmSubmit from '../_components/confirm-submit';
 import SubmittedPage from './submitted';
@@ -100,8 +100,8 @@ export function ParkingRequestForm({
       validationSchema={pages[activeStep].validationSchema}
       enableReinitialize={true}
     >
-      {({ submitForm }) => (
-        <>
+      {(formik) => (
+        <Form className={styles.formPage}>
           <input
             name="formStep"
             type="number"
@@ -120,7 +120,7 @@ export function ParkingRequestForm({
         inside of a function would normally raise an error. Doing this
         tells React that this is a component and not a normal function.
         */}
-            {createElement(pages[activeStep].page)}
+            {createElement(pages[activeStep].page, { formik })}
           </div>
           <div className={styles.actions}>
             <button
@@ -135,18 +135,22 @@ export function ParkingRequestForm({
             </button>
 
             {activeStep < pages.length - 1 ? (
-              <button className={styles.nextButton} type="submit">
+              <button
+                className={styles.nextButton}
+                onClick={() => void setActiveStep(activeStep + 1)}
+                type="submit"
+              >
                 Next <ArrowRightIcon />
               </button>
             ) : (
-              <ConfirmSubmit onSubmit={submitForm}>
+              <ConfirmSubmit onSubmit={formik.submitForm}>
                 <button className={styles.backButton} type="button">
                   Submit
                 </button>
               </ConfirmSubmit>
             )}
           </div>
-        </>
+        </Form>
       )}
     </Formik>
   );

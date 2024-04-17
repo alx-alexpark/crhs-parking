@@ -5,8 +5,10 @@ import * as Yup from 'yup';
 import { FileInput, Tooltip } from '@/components';
 import { ArrowRightIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 import { Field, Formik } from 'formik';
+import PhoneInput from 'react-phone-number-input';
 
 import ErrorMessage from '@/components/Inputs/error-message';
+import 'react-phone-number-input/style.css';
 import ConfirmSubmit from '../_components/confirm-submit';
 import styles from '../form.module.scss';
 
@@ -32,6 +34,8 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
   const [insuranceFile, setInsuranceFile] = useState<File>();
   const [licenseFile, setLicenseFile] = useState<File>();
 
+  const [phoneNumber, setPhoneNumber] = useState<string>();
+
   // const initialData = useMemo(() => {
   //   if (!data) return {};
 
@@ -47,10 +51,11 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
           .put('/api/v1/student/userProfile', values)
           .then((res) => {
             console.log(res);
-            // redirect to home
+            redirect('/dashboard');
           })
           .catch((error) => {
             console.error(error);
+            toast.error('There was an error updating your user information');
           });
       }}
       validationSchema={AboutMeSchema}
@@ -63,7 +68,13 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
             <h2>Student information</h2>
 
             <label htmlFor="phone">Student's phone number</label>
-            <Field type="tel" name="phone" id="phone" />
+            <PhoneInput
+              placeholder="Enter phone number"
+              value={phoneNumber}
+              onChange={setPhoneNumber}
+              defaultCountry="US"
+              numberInputProps={{ name: 'phone', id: 'phone' }}
+            />
             <ErrorMessage name="phone" component="div" />
 
             {/* TODO: derive from email */}
