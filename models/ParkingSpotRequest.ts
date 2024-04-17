@@ -49,6 +49,10 @@ const ParkingSpotRequestSchema = new Schema(
       type: Number,
       maxlength: 4,
     },
+    stickerNum: {
+      type: Number,
+      maxlength: 15,
+    },
     paymentId: {
       // An invoice number or similar to confirm that the person has indeed paid their dues through PayNGo
       type: String,
@@ -61,6 +65,10 @@ const ParkingSpotRequestSchema = new Schema(
       type: String,
       enum: ['undecided', 'approved', 'denied'],
       default: 'undecided',
+    },
+    lastInteractingAdminUserId: {
+      type: String,
+      maxlength: 30, 
     },
     formStep: {
       type: Number,
