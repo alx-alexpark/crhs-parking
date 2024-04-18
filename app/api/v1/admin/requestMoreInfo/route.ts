@@ -31,12 +31,16 @@ export async function POST(request: Request) {
     _id: referencedParkingSpotRequest.user,
   });
 
+  const message =
+    'Hello\nWe are contacting you that your parking spot request requires changes or additional information.\nThe administration has left this note: ' +
+    data.message +
+    '\nGo to [insert link] to see more information and make changes.\nThank You';
+
   sendEmail(
     student.email,
     'Your parking application requires changes',
-    'Hello\nWe are contacting you that your parking spot request requires changes or additional information.\nThe administration has left this note: ' +
-      data.message +
-      '\nGo to [insert link] to see more information and make changes.\nThank You'
+    message,
+    message
   );
 
   return NextResponse.json({ success: true });
