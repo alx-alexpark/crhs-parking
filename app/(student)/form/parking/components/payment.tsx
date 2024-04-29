@@ -1,10 +1,9 @@
+import { getPresignedUrl } from '@/app/util';
 import { FileInput } from '@/components';
 import { ErrorMessage } from 'formik';
-import { useState } from 'react';
+import ParkingRequestPage from '.';
 
-export function Payment() {
-  const [receiptFile, setReceiptFile] = useState<File>();
-
+export function Payment({ formik }: ParkingRequestPage) {
   return (
     <>
       <section>
@@ -23,7 +22,12 @@ export function Payment() {
           id="receipt-photo"
           name="paymentId"
           accept="image/*"
-          setFile={setReceiptFile}
+          onSetFile={async (h: File) => {
+            const url = getPresignedUrl(h);
+            formik.setFieldValue('vehicle.proofOfInsurance', url);
+
+            return url;
+          }}
         />
         <ErrorMessage name="paymentId" component="div" />
       </section>

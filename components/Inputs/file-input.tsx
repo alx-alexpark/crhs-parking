@@ -1,22 +1,42 @@
 import { UploadIcon } from '@radix-ui/react-icons';
-import { ChangeEvent, MutableRefObject, useRef } from 'react';
+import {
+  ChangeEvent,
+  MutableRefObject,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import styles from './file-input.module.scss';
 
 interface FileInputProps extends React.HTMLAttributes<HTMLInputElement> {
   accept: string;
   name: string;
-  setFile: Function;
+  onSetFile: Function;
 }
 
-export function FileInput({ setFile, ...props }: FileInputProps) {
-  const inputRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+interface FileInputRef extends HTMLInputElement {
+  changeUrl: (url: string) => void;
+}
+
+export function FileInput({ onSetFile, ...props }: FileInputProps) {
+  const inputRef: MutableRefObject<FileInputRef | null> = useRef(null);
+  useImperativeHandle(
+    inputRef,
+    // @ts-expect-error: Not all HTMLInputElement properties will be set
+    () => ({
+      changeUrl: (url: string) => {
+        inputRef.current!.value = url;
+      },
+    }),
+    []
+  );
 
   const selectFile = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     if (target.files) {
-      const url = setFile(target.files[0]);
-      inputRef.current!.value = url;
+      const url = onSetFile(target.files[0]);
+      inputRef.current!.changeUrl(url);
     }
+    console.log('selectFile done');
   };
 
   return (
@@ -24,9 +44,9 @@ export function FileInput({ setFile, ...props }: FileInputProps) {
       <UploadIcon className={styles.icon} />
 
       <input
-        type="file"
-        className={styles.input}
         ref={inputRef}
+        className={styles.input}
+        type="file"
         {...props}
         onChange={selectFile}
       />

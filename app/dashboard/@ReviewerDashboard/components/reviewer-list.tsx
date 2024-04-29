@@ -2,8 +2,7 @@
 
 import useSWR from 'swr';
 
-import { ParkingRequestItem } from '../_components/parking-request-item';
-import { ReviewerFormDialog } from './_form-dialog';
+import { ReviewerFormDialog } from './form-dialog';
 
 import { fetcher, formatDate } from '@/app/util';
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';

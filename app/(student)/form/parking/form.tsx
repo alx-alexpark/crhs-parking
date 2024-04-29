@@ -1,26 +1,31 @@
 import clsx from 'clsx';
-import { createElement, useState } from 'react';
+import { ReactNode, createElement, useState } from 'react';
 import * as Yup from 'yup';
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
-import {
+import ParkingRequestPage, {
   GetStarted,
   Guidelines,
   ParkingSpot,
   Payment,
   VehicleInformation,
-} from './_components';
+} from './components';
 
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 import { Form, Formik } from 'formik';
 
-import ConfirmSubmit from '../_components/confirm-submit';
+import ConfirmSubmit from '../components/confirm-submit';
 import SubmittedPage from './submitted';
 
 import axios from 'axios';
 import styles from '../form.module.scss';
 
-const pages = [
+type Page = {
+  page: (props: ParkingRequestPage) => JSX.Element;
+  validationSchema?: Yup.Schema;
+};
+
+const pages: Page[] = [
   { page: GetStarted, validationSchema: undefined },
   {
     page: ParkingSpot,
@@ -82,7 +87,7 @@ export function ParkingRequestForm({
           setActiveStep(activeStep + 1);
         }
 
-        // Don't PUT to API if initial values don't differ from submitted values
+        // Don't make a request if no changes have been made
         if (data === values) {
           console.log('Skip submit');
           return;

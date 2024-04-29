@@ -11,7 +11,6 @@ import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 import { UserType } from '@/models/User';
 
 import Autocomplete from '@/components/Autocomplete/autocomplete';
-import { useUser } from '@clerk/nextjs';
 import { Field } from 'formik';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styles from './_form-dialog.module.scss';
@@ -30,9 +29,6 @@ export function ReviewerFormDialog({
 
   // Requesting changes state
   const [requestingChanges, setRequestingChanges] = useState(false);
-
-  // Clerk user
-  const { user } = useUser();
 
   // Shorthand for the student user data
   const student = form.user as unknown as UserType;
@@ -82,7 +78,6 @@ export function ReviewerFormDialog({
         // @ts-ignore-error: _id does exist
         requestId: form._id,
         decision: 'approved',
-        lastInteractingAdminUserId: user?.id, // TODO: this must not be falsy
       })
       // Close the dialog after the request is done
       .then(() => setOpen(false));

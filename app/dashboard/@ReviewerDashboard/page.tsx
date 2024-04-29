@@ -1,6 +1,6 @@
 import { currentUser } from '@clerk/nextjs';
 
-import ReviewerList from './_reviewer-list';
+import ReviewerList from './components/reviewer-list';
 
 export default async function ReviewerDashboardPage() {
   const user = await currentUser();

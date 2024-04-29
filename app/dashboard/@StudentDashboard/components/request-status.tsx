@@ -2,11 +2,12 @@
 
 import useSWR from 'swr';
 
-import { ParkingRequestItem } from '../_components/parking-request-item';
+import { ParkingRequestItem } from './parking-request-item';
 
+import { fetcher } from '@/app/util';
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 
-export default function ParkingRequestHistory() {
+export default function ParkingRequestStatus() {
   const { data, error, isLoading } = useSWR(
     '/api/v1/student/getAllParkingSpotRequests',
     fetcher
@@ -21,6 +22,7 @@ export default function ParkingRequestHistory() {
             status={req.decision}
             timestamp={req.updatedAt}
             key={index}
+            requests={req.changesRequestedMessage}
           />
         ))}
       </>

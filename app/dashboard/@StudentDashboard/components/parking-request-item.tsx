@@ -10,33 +10,36 @@ const REJECTED = 'denied';
 
 interface ParkingRequestItemProps {
   status: 'undecided' | 'approved' | 'denied';
-  timestamp: number;
+  requests?: string | null;
+  timestamp: NativeDate;
 }
 
 export function ParkingRequestItem({
   status,
+  requests,
   timestamp,
 }: ParkingRequestItemProps) {
   return (
     <div
       className={clsx(
         styles.container,
-        status == PENDING && styles.pending,
-        status == APPROVED && styles.approved,
-        status == REJECTED && styles.rejected
+        status === PENDING && styles.pending,
+        status === APPROVED && styles.approved,
+        status === REJECTED && styles.rejected
       )}
     >
       <div className={styles.iconContainer}>
-        {status == PENDING && <DashIcon />}
-        {status == APPROVED && <CheckIcon />}
-        {status == REJECTED && <Cross2Icon />}
+        {status === PENDING && <DashIcon />}
+        {status === APPROVED && <CheckIcon />}
+        {status === REJECTED && <Cross2Icon />}
       </div>
 
       <p>
-        {status == PENDING && 'Pending since'}
-        {status == APPROVED && 'Approved on'}
-        {status == REJECTED && 'Rejected on'} {/* TODO: use text month */}
-        {formatDate(new Date(timestamp))}
+        {status === PENDING && 'Pending since'}
+        {status === APPROVED && 'Approved on'}
+        {status === REJECTED && 'Rejected on'} {/* TODO: use text month */}
+        {formatDate(timestamp)}
+        {requests && requests}
       </p>
     </div>
   );
