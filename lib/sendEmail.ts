@@ -3,8 +3,7 @@ import nodemailer from 'nodemailer';
 async function sendEmail(
   to: string,
   subject: string,
-  text: string,
-  html: string
+  { text, html }: { text: string; html: string }
 ) {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER || '',
@@ -20,11 +19,16 @@ async function sendEmail(
   });
 
   const info = await transporter.sendMail({
-    from: `"CRHS Parking" <${process.env.SMTP_USER}>`, // sender address
-    to, // list of receivers
-    subject, // Subject line
-    text, // plain text body
-    html, // html body
+    // sender address
+    from: `"CRHS Parking" <${process.env.SMTP_USER}>`,
+    // list of receivers
+    to,
+    // Subject line
+    subject,
+    // plain text body
+    text,
+    // html body
+    html,
   });
 
   console.log('Message sent: %s', info.messageId);

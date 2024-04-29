@@ -31,17 +31,20 @@ export async function POST(request: Request) {
     _id: referencedParkingSpotRequest.user,
   });
 
-  const message =
-    'Hello\nWe are contacting you that your parking spot request requires changes or additional information.\nThe administration has left this note: ' +
-    data.message +
-    '\nGo to [insert link] to see more information and make changes.\nThank You';
+  const url = '[insert link]';
 
-  sendEmail(
-    student.email,
-    'Your parking application requires changes',
-    message,
-    message
-  );
+  const message = `Hello, ${student.name}!
+
+Your parking spot request was reviewed, and it was determined that it requires changes or additional information.
+The reviewer attached this message: ${data.message}
+
+Go to ${url} to see more information and make changes.
+Thank You`;
+
+  sendEmail(student.email, 'Your parking application requires changes', {
+    text: message,
+    html: message,
+  });
 
   return NextResponse.json({ success: true });
 }
