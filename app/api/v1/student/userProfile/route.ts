@@ -3,7 +3,7 @@ import User from '@/models/User';
 import { currentUser } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
 
   const user = await currentUser();
@@ -22,12 +22,16 @@ export async function PUT(request: Request) {
 
   const model = new User(json);
   if (!model.validateSync()) {
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 
   await User.updateOne(
     { clerkUserId: user?.id },
-    { phone: json.phone, driversLicense: json.license }
+    {
+      phone: json.phone,
+      driversLicense: json.student?.driversLicense,
+      proofOfInsurance: json.vehicle?.proofOfInsurance,
+    }
   );
 
   return NextResponse.json({ success: true });
