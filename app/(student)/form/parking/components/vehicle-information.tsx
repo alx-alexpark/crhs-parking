@@ -1,4 +1,5 @@
 import { TextInput } from '@/components';
+import { FieldArray } from 'formik';
 import ParkingRequestPage from '.';
 
 export function VehicleInformation({ formik }: ParkingRequestPage) {
@@ -7,40 +8,63 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
       <section>
         <h1>Vehicle information</h1>
 
-        <TextInput
-          id="vehicle-make"
-          name="vehicle.make"
-          label="Car manufacturer"
-          value={formik.values?.vehicle?.make}
-        />
+        <FieldArray
+          name="vehicles"
+          render={(arrayHelpers) => (
+            <>
+              {formik.values.vehicles.map((vehicle, index) => (
+                <fieldset key={index}>
+                  <legend>Vehicle information</legend>
+                  <button
+                    type="button"
+                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                  >
+                    -
+                  </button>
 
-        <TextInput
-          id="vehicle-model"
-          name="vehicle.model"
-          label="Vehicle model"
-          value={formik.values?.vehicle?.model}
-        />
+                  <TextInput
+                    id={'vehicle-make' + index}
+                    name={`vehicles.${index}.make`}
+                    label="Car manufacturer"
+                    value={vehicle?.make}
+                  />
 
-        <TextInput
-          id="vehicle-year"
-          name="vehicle.year"
-          label="Release year"
-          type="number"
-          value={formik.values?.vehicle?.year}
-        />
+                  <TextInput
+                    id={'vehicle-model' + index}
+                    name={`vehicles.${index}.model`}
+                    label="Vehicle model"
+                    value={vehicle?.model}
+                  />
 
-        <TextInput
-          id="vehicle-color"
-          name="vehicle.color"
-          label="Vehicle color"
-          value={formik.values?.vehicle?.color}
-        />
+                  <TextInput
+                    id={'vehicle-year' + index}
+                    name={`vehicles.${index}.year`}
+                    label="Release year"
+                    type="number"
+                    value={vehicle?.year}
+                  />
 
-        <TextInput
-          id="license-plate"
-          name="vehicle.licensePlate"
-          label="License plate"
-          value={formik.values?.vehicle?.licensePlate}
+                  <TextInput
+                    id={'vehicle-color' + index}
+                    name={`vehicles.${index}.color`}
+                    label="Vehicle color"
+                    value={vehicle?.color}
+                  />
+
+                  <TextInput
+                    id={'license-plate' + index}
+                    name={`vehicles.${index}.licensePlate`}
+                    label="License plate"
+                    value={vehicle?.licensePlate}
+                  />
+                </fieldset>
+              ))}
+
+              <button type="button" onClick={() => arrayHelpers.push({})}>
+                Register another vehicle
+              </button>
+            </>
+          )}
         />
       </section>
     </>
