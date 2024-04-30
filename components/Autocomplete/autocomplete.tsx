@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Autosuggest from 'react-autosuggest';
 
-interface AutocompleteProps extends React.HTMLAttributes<HTMLInputElement> {
+import type ReactAutosuggest from 'react-autosuggest';
+
+interface AutocompleteProps extends ReactAutosuggest.InputProps {
   options: string[];
-  value: string;
 }
 
 export default function Autocomplete({
@@ -26,9 +27,7 @@ export default function Autocomplete({
   return (
     <Autosuggest
       suggestions={suggestions}
-      onSuggestionsFetchRequested={() =>
-        setSuggestions(getSuggestions(props.value))
-      }
+      onSuggestionsFetchRequested={() => setSuggestions(getSuggestions(value))}
       onSuggestionsClearRequested={() => setSuggestions([])}
       getSuggestionValue={(suggestion) => suggestion}
       renderSuggestion={(suggestion) => <div>{suggestion}</div>}

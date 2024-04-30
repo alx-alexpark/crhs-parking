@@ -1,12 +1,20 @@
 {
   "extends": [
     "eslint:recommended",
-    "next/core-web-vitals:recommended",
-    "plugin:react-hooks/recmomended"
+    "next/core-web-vitals",
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
-    "indent": ["error", 4],
-    "quotes": ["warning", "single"],
-    "no-constant-binary-expression": "error"
+    "semi": ["error", "always"],
+    "indent": ["error", 2],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "no-unused-vars": ["warn"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "no-constant-binary-expression": "error",
+    "react/no-unescaped-entities": ["warn"]
+  },
+  "globals": {
+    "React": "readonly",
+    "JSX": "readonly"
   }
 }

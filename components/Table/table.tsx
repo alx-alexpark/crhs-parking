@@ -82,7 +82,7 @@ export default function Table({
       // Descending order
       return bVal.localeCompare(aVal);
     });
-  }, [sort]);
+  }, [sort, data]);
 
   const hasChildren = React.Children.toArray(children).length > 0;
 

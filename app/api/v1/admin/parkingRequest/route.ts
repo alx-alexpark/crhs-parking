@@ -15,15 +15,27 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: 'Permission denied' }, { status: 403 });
   }
 
-  const data: { requestId: string; newDecision: string, parkingSticker: string } = await request.json();
+  const data: {
+    requestId: string;
+    newDecision: string;
+    parkingSticker: string;
+  } = await request.json();
 
-  if (data.requestId.length == 0 || data.newDecision.length == 0 || data.parkingSticker.length == 0) {
-    return NextResponse.json({ error: "You are missing a required data key." });
+  if (
+    data.requestId.length == 0 ||
+    data.newDecision.length == 0 ||
+    data.parkingSticker.length == 0
+  ) {
+    return NextResponse.json({ error: 'You are missing a required data key.' });
   }
 
   const requests = await ParkingSpotRequest.findOneAndUpdate(
     { _id: data.requestId },
-    { decision: data.newDecision, lastInteractingAdminUserId: user?.id, parkiingSticker: data.parkingSticker }
+    {
+      decision: data.newDecision,
+      lastInteractingAdminUserId: user?.id,
+      parkiingSticker: data.parkingSticker,
+    }
   );
 
   return NextResponse.json({ success: true });

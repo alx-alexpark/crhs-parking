@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 // Source: https://gist.github.com/bbenezech/70794e37ef1a44a4cb7ffc531ed9dc6f
 
 // TS 2.4 min

@@ -13,7 +13,7 @@ import { UserType } from '@/models/User';
 import Autocomplete from '@/components/Autocomplete/autocomplete';
 import { Field } from 'formik';
 import 'react-toastify/dist/ReactToastify.min.css';
-import styles from './_form-dialog.module.scss';
+import styles from './form-dialog.module.scss';
 
 interface ReviewerFormDialogProps {
   form: ParkingSpotRequestType;
@@ -33,6 +33,9 @@ export function ReviewerFormDialog({
   // Shorthand for the student user data
   const student = form.user as unknown as UserType;
 
+  // Collected requested changes
+  const requestedChanges: { [key: string]: string } = {};
+
   /**
    * Values to display in the dialog
    *
@@ -44,11 +47,17 @@ export function ReviewerFormDialog({
     Name: [student.name, ['Name is incomplete']],
     'Student ID': [student.studentId, ['Student ID is incomplete']],
     'Payment ID': [
-      <img src={form.paymentId!} />,
-      ['Payment ID does not exist'],
+      <img
+        src={form.paymentId!}
+        alt="Image attached to the payment ID field"
+      />,
+      ['Payment ID is invalid'],
     ],
     "Driver's license": [
-      <img src={student.driversLicense!} />,
+      <img
+        src={student.driversLicense!}
+        id="Image attached to the driver's license field"
+      />,
       ["Learner's permit is not allowed"],
     ],
     'Parking spot': [
@@ -61,13 +70,13 @@ export function ReviewerFormDialog({
     ],
   };
 
-  const valuesCar = {
-    Manufacturer: [form.vehicle?.make, []],
-    Model: [form.vehicle?.model, []],
-    'Release year': [form.vehicle?.year, []],
-    Color: [form.vehicle?.color, []],
-    'License plate': [form.vehicle?.licensePlate, []],
-  };
+  const valuesCar = form.vehicles.map((vehicle) => ({
+    Manufacturer: [vehicle?.make, []],
+    Model: [vehicle?.model, []],
+    'Release year': [vehicle?.year, []],
+    Color: [vehicle?.color, []],
+    'License plate': [vehicle?.licensePlate, []],
+  }));
 
   /**
    * Update the submission's decision to either approved or denied
@@ -113,14 +122,20 @@ export function ReviewerFormDialog({
    * Generate the fields from a set of values
    */
   function generateFromValues(values: Object) {
-    return Object.entries(values).map(([key, [value, errors]], index) => {
-      const id = key.toLocaleLowerCase().replace(' ', '-');
+    return Object.entries(values).map(([label, [value, errors]], index) => {
+      const id = label.toLocaleLowerCase().replace(' ', '-');
       const descId = id + '-desc';
 
       return (
         <div className={styles.formLine} key={index}>
-          <Field id={id} name={key} type="checkbox" aria-describedby={descId} />
-          <label htmlFor={id}>{key}</label>
+          <Field
+            id={id}
+            name={label}
+            type="checkbox"
+            aria-describedby={descId}
+          />
+          <label htmlFor={id}>{label}</label>
+
           <p id={descId}>
             {value || (
               <strong style={{ color: 'var(--color-error)' }}>
@@ -129,7 +144,15 @@ export function ReviewerFormDialog({
             )}
           </p>
 
-          {requestingChanges && <Autocomplete value="" options={errors} />}
+          {requestingChanges && (
+            <Autocomplete
+              value=""
+              onChange={({ target }) => {
+                requestedChanges[label] = target.value;
+              }}
+              options={errors}
+            />
+          )}
         </div>
       );
     });
@@ -151,7 +174,14 @@ export function ReviewerFormDialog({
 
       <section>
         <h3 className={styles.sectionTitle}>Vehicle details</h3>
-        {generateFromValues(valuesCar)}
+        {valuesCar.map((vehicleValues, i) => (
+          <>
+            {generateFromValues(vehicleValues)}
+
+            {/* Insert a separator between sections */}
+            {valuesCar.length > 1 && i !== valuesCar.length - 1 && <hr />}
+          </>
+        ))}
       </section>
 
       <div className={styles.actionButtonContainer}>

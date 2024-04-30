@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { ParkingMap } from '@/components';
 import { useState } from 'react';
-import ParkingRequestStatus from './_request-status';
+import ParkingRequestStatus from './components/request-status';
 
 import styles from '../dashboard.module.scss';
 

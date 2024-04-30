@@ -11,7 +11,7 @@ import { UserType } from '@/models/User';
 import SkeletonBox from '@/components/Skeleton/skeleton';
 import Table from '@/components/Table/table';
 import { useMemo } from 'react';
-import styles from './_reviewer-list.module.scss';
+import styles from './reviewer-list.module.scss';
 
 export default function ReviewerList() {
   const { data, error, isLoading } = useSWR(

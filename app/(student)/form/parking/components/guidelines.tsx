@@ -152,7 +152,7 @@ export function Guidelines() {
             <li>
               The District may suspend a student's permission to drive or park a
               vehicle on any District property for violation of any traffic or
-              parking regulation as promulgated by the board.  After 30 days,
+              parking regulation as promulgated by the board. After 30 days,
               reinstatement may be permitted, and a fee of $25 for reissuance of
               a parking permit shall be assessed. Thereafter for each reissuance
               of a parking permit a fee of $50 shall be charged.

@@ -11,7 +11,7 @@ const REJECTED = 'denied';
 interface ParkingRequestItemProps {
   status: 'undecided' | 'approved' | 'denied';
   requests?: string | null;
-  timestamp: NativeDate;
+  timestamp: Date;
 }
 
 export function ParkingRequestItem({
