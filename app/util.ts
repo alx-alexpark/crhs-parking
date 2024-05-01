@@ -38,7 +38,7 @@ export async function getPresignedUrl(file: File) {
   });
   console.log('getPresignedUrl', { data });
 
-  let uploadResp = await axios.put(data.url, file.stream, {
+  let uploadResp = await axios.put(data.url, file, {
     headers: {
       'Content-type': file.type,
       'Access-Control-Allow-Origin': '*',
