@@ -79,6 +79,9 @@ function MapEvents({
   return null;
 }
 
+const enterFullScreenIcon = renderToString(<EnterFullScreenIcon />);
+const exitFullScreenIcon = renderToString(<ExitFullScreenIcon />);
+
 export function ParkingMap({
   spot,
   setSpot,
@@ -87,9 +90,6 @@ export function ParkingMap({
   className,
   highlightSpots,
 }: ParkingMapProps) {
-  const enterFullScreenIcon = renderToString(<EnterFullScreenIcon />);
-  const exitFullScreenIcon = renderToString(<ExitFullScreenIcon />);
-
   const bounds = [
     [29.74335, -95.78269],
     [29.74711, -95.77633],

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { fetcher } from '@/app/util';
 import User, { UserType } from '@/models/User';
 
+import dbConnect from '@/lib/dbConnect';
 import ParkingSpotRequest, {
   ParkingSpotRequestType,
 } from '@/models/ParkingSpotRequest';
@@ -14,6 +15,8 @@ import { currentUser } from '@clerk/nextjs';
 import styles from './student-todo.module.scss';
 
 export default async function StudentTodoPage() {
+  await dbConnect();
+
   let activeStep = true;
   const isActiveStep = () => {
     const active = activeStep;

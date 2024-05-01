@@ -48,15 +48,17 @@ export default async function DashboardLayout({
   if (userDbObj.admin) {
     return (
       <main>
-        <span>
-          <Link href="/">
-            <strong>CRHS Parking</strong>
-          </Link>
-        </span>
-        <div className="nav-links">
-          <Link href="/review-log">Review log</Link>
-          <UserButton />
-        </div>
+        <nav>
+          <span>
+            <Link href="/">
+              <strong>CRHS Parking</strong>
+            </Link>
+          </span>
+          <div className="nav-links">
+            <Link href="/review-log">Review log</Link>
+            <UserButton />
+          </div>
+        </nav>
         {ReviewerDashboard}
       </main>
     );
