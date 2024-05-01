@@ -10,8 +10,10 @@ const s3 = new S3({
   signatureVersion: 'v4',
 });
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function getPresignedUrl(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -49,7 +51,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(err);
     res.status(400).json({ message: err });
   }
-};
+}
 
 export const config = {
   api: {

@@ -32,7 +32,7 @@ export default function ReviewerList() {
       // TODO: request status
       'TODO',
     ]);
-  }, [data]);
+  }, [isLoading, error, data]);
 
   return (
     <Table

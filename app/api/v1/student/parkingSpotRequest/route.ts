@@ -59,7 +59,7 @@ export async function PUT(request: Request) {
           // strings to index Objects.
           return filterObject(target[key], value);
         }
-        return ref.hasOwnProperty(key);
+        return Object.prototype.hasOwnProperty.call(ref, key);
       }
     );
 

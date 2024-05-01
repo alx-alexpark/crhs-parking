@@ -50,6 +50,7 @@ export function ReviewerFormDialog({
       <img
         src={form.paymentId!}
         alt="Image attached to the payment ID field"
+        key="paymentId"
       />,
       ['Payment ID is invalid'],
     ],
@@ -57,6 +58,7 @@ export function ReviewerFormDialog({
       <img
         src={student.driversLicense!}
         id="Image attached to the driver's license field"
+        key="driversLicense"
       />,
       ["Learner's permit is not allowed"],
     ],
@@ -65,6 +67,7 @@ export function ReviewerFormDialog({
         spot={form.spotNum ?? null}
         interactive={false}
         height={400}
+        key="parkingSpot"
       />,
       ['Parking spot does not exist', 'Parking spot is not available'],
     ],
