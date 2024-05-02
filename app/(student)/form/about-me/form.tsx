@@ -1,6 +1,6 @@
-import { getPresignedUrl } from '@/app/util';
+import { uploadFileToBucket } from '@/app/util';
 import axios from 'axios';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import * as Yup from 'yup';
 
@@ -36,6 +36,7 @@ const AboutMeSchema = Yup.object().shape({
 
 export function AboutMeForm({ data }: AboutMeFormProps) {
   const [phoneNumber, setPhoneNumber] = useState<string>();
+  const [dl, setDL] = useState<string>();
 
   // TODO: detect when fetched data differs from current data
   // const initialData = useMemo(() => {
@@ -44,21 +45,24 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
   //   return data;
   // }, [data]);
 
+  const router = useRouter()
+
   return (
     <>
       <Formik
         className={styles.formPage}
         initialValues={data}
         onSubmit={(values: any) => {
+          // console.log({phone: values.phone, grade: values.grade, driversLicense: dl});
           axios
-            .put('/api/v1/student/userProfile', values)
+            .put('/api/v1/student/userProfile', {phone: phoneNumber, grade: values.grade, driversLicense: dl} )
             .then((res) => {
               console.log(res);
-              redirect('/dashboard');
+              router.push('/dashboard');
             })
             .catch((error) => {
               console.error(error);
-              toast.error('There was an error updating your user information');
+              toast.error('There was an error updating your user information: ' + error);
             });
         }}
         validationSchema={AboutMeSchema}
@@ -122,27 +126,15 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
                 name="student.driversLicense"
                 accept="image/*"
                 onSetFile={async (h: File) => {
-                  const url = getPresignedUrl(h);
-                  setFieldValue('student.driversLicense', url);
+                  const filename = await uploadFileToBucket(h);
+                  setFieldValue('driversLicense', filename);
+                  console.warn(filename);
+                  setDL(filename);
 
-                  return url;
+                  return filename
                 }}
               />
 
-              <label htmlFor="insurance-photo">
-                Photo of vehicle's insurance
-              </label>
-              <FileInput
-                id="insurance-photo"
-                name="vehicle.proofOfInsurance"
-                accept="image/*"
-                onSetFile={async (h: File) => {
-                  const url = getPresignedUrl(h);
-                  setFieldValue('vehicle.proofOfInsurance', url);
-
-                  return url;
-                }}
-              />
             </section>
 
             <div className={styles.actions}>

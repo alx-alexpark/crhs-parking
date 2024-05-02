@@ -31,7 +31,7 @@ export function formatDate(
   ).format(date);
 }
 
-export async function getPresignedUrl(file: File) {
+export async function uploadFileToBucket(file: File) {
   let { data } = await axios.post('/api/v1/student/getPresignedUrl', {
     name: file.name,
     type: file.type,
@@ -45,8 +45,8 @@ export async function getPresignedUrl(file: File) {
     },
   });
 
-  const url = uploadResp.data;
-  console.log('getPresignedUrl', { url });
+  console.log('getPresignedUrl', data);
+  console.log(data.filename);
 
-  return url;
+  return data.filename;
 }

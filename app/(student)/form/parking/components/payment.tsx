@@ -1,4 +1,4 @@
-import { getPresignedUrl } from '@/app/util';
+import { uploadFileToBucket } from '@/app/util';
 import { FileInput } from '@/components';
 import { ErrorMessage } from 'formik';
 import ParkingRequestPage from '.';
@@ -23,7 +23,7 @@ export function Payment({ formik }: ParkingRequestPage) {
           name="paymentId"
           accept="image/*"
           onSetFile={async (h: File) => {
-            const url = getPresignedUrl(h);
+            const url = uploadFileToBucket(h);
             formik.setFieldValue('vehicle.proofOfInsurance', url);
 
             return url;
