@@ -11,36 +11,35 @@ const ParkingSpotRequestSchema = new Schema(
     changesRequestedMessage: {
       type: String,
     },
-    vehicles: [
-      {
-        licensePlate: {
-          type: String,
-          maxlength: 10,
-          default: '',
-        },
-        year: {
-          type: Number,
-          // length: 4,
-          min: 1900,
-          max: 9999,
-        },
-        make: {
-          type: String,
-          maxlength: 64,
-          default: '',
-        },
-        model: {
-          type: String,
-          maxlength: 64,
-          default: '',
-        },
-        color: {
-          type: String,
-          maxlength: 64,
-          default: '',
-        },
+    vehicle: {
+      licensePlate: {
+        type: String,
+        maxlength: 10,
+        default: '',
       },
-    ],
+      year: {
+        type: Number,
+        // length: 4,
+        min: 1900,
+        max: 9999,
+      },
+      make: {
+        type: String,
+        maxlength: 64,
+        default: '',
+      },
+      model: {
+        type: String,
+        maxlength: 64,
+        default: '',
+      },
+      color: {
+        type: String,
+        maxlength: 64,
+        default: '',
+      },
+    },
+
     spotNum: {
       type: Number,
       maxlength: 4,

@@ -73,13 +73,14 @@ export function ReviewerFormDialog({
     ],
   };
 
-  const valuesCar = form.vehicles.map((vehicle) => ({
+  const vehicle = form.vehicle;
+  const valuesCar = {
     Manufacturer: [vehicle?.make, []],
     Model: [vehicle?.model, []],
     'Release year': [vehicle?.year, []],
     Color: [vehicle?.color, []],
     'License plate': [vehicle?.licensePlate, []],
-  }));
+  };
 
   /**
    * Update the submission's decision to either approved or denied
