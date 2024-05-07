@@ -1,0 +1,15 @@
+@keyframes slideDownAndFade {
+  from {
+    transform: translateY(-1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cl-signIn-root,
+.cl-signUp-root {
+  animation: 1s slideDownAndFade cubic-bezier(0.16, 1, 0.3, 1);
+}

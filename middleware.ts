@@ -8,6 +8,7 @@ export default authMiddleware({
     '/',
     '/login',
     '/sign-up',
+    '/register',
 
     // TEMPORARY. PLEASE UNDO BEFORE COMITTING
     '/dashboard',
