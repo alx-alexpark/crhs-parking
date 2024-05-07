@@ -31,9 +31,9 @@
 }
 
 .complete > p {
-  color: var(--color-primary);
+  color: var(--color-foreground);
 }
 
 .inactive > p {
-  color: var(--color-foreground);
+  color: var(--color-placeholder);
 }

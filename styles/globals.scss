@@ -72,6 +72,11 @@ button {
   cursor: pointer;
 }
 
+hr {
+  margin: var(--spacing-md);
+  color: var(--color-inactive);
+}
+
 .leaflet-pane canvas {
   max-width: unset;
 }

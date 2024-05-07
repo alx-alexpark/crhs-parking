@@ -16,6 +16,7 @@
 }
 
 .step {
+  // Inactive style by default
   --border: var(--color-border);
 
   // Align items horizontally
@@ -27,16 +28,16 @@
 
   padding: var(--spacing-lg);
 
-  // Active step
   color: var(--color-foreground);
 
+  // Active step
   &:not(.incomplete) {
-    --border: var(--color-text);
+    --border: var(--color-foreground);
   }
 
   // Grey out incomplete steps
-  &.incomplete > p,
-  &.incomplete > p > * {
+  &.incomplete,
+  &.incomplete * {
     pointer-events: none;
     color: var(--color-border) !important;
   }

@@ -1,0 +1,15 @@
+.question {
+  legend {
+    font-size: var(--text-small);
+  }
+
+  div > label {
+    &:first-child {
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+    }
+
+    &:last-child {
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+  }
+}

@@ -2,6 +2,11 @@
  * Form elements
  */
 
+fieldset {
+  border: none;
+  padding: 0;
+}
+
 label {
   display: block;
 

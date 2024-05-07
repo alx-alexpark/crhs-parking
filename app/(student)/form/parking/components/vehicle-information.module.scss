@@ -1,0 +1,11 @@
+.vehicleButton {
+  // Constrain height to the child icon
+  display: grid;
+  border-color: var(--color-primary);
+  // Undo styles
+  background: initial;
+  padding: initial;
+
+  // Apply new styles
+  color: var(--color-primary);
+}
