@@ -42,6 +42,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       maxlength: 100,
     },
+    proofOfInsurance: {
+      // A url to a bucket (picture)
+      type: String,
+      maxlength: 100,
+      default: '',
+    },
   },
   { timestamps: true }
 );

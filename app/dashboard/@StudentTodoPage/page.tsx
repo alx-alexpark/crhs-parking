@@ -44,7 +44,7 @@ export default async function StudentTodoPage() {
         <li
           className={clsx(
             styles.step,
-            !isActiveStep() && !completedUserForm && styles.incomplete
+            !completedUserForm && !isActiveStep() && styles.incomplete
           )}
         >
           <div
@@ -62,7 +62,7 @@ export default async function StudentTodoPage() {
         <li
           className={clsx(
             styles.step,
-            !completedParkingForm && styles.incomplete
+            !completedParkingForm && !isActiveStep() && styles.incomplete
           )}
         >
           <div
@@ -74,7 +74,7 @@ export default async function StudentTodoPage() {
             <CheckIcon />
           </div>
           <p>
-            Make your <Link href="parking">parking request</Link>.
+            Make your <Link href="/form/parking">parking request</Link>.
           </p>
         </li>
       </ol>

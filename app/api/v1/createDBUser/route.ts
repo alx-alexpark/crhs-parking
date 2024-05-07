@@ -1,11 +1,10 @@
 import { currentUser } from '@clerk/nextjs';
 
 import dbConnect from '@/lib/dbConnect';
-import sendEmail from '@/lib/sendEmail';
 import User from '@/models/User';
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
 
   const user = await currentUser();

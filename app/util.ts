@@ -32,21 +32,21 @@ export function formatDate(
 }
 
 export async function uploadFileToBucket(file: File) {
-  let { data } = await axios.post('/api/v1/student/getPresignedUrl', {
+  const { data } = await axios.post('/api/v1/student/getPresignedUrl', {
     name: file.name,
     type: file.type,
   });
-  console.log('getPresignedUrl', { data });
 
-  let uploadResp = await axios.put(data.url, file, {
+  const uploadResp = await axios.put(data.url, file, {
     headers: {
       'Content-type': file.type,
       'Access-Control-Allow-Origin': '*',
     },
   });
 
-  console.log('getPresignedUrl', data);
-  console.log(data.filename);
+  if (uploadResp.status !== 200) {
+    return Promise.reject('Failed to upload file');
+  }
 
   return data.filename;
 }

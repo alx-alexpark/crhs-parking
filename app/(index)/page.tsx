@@ -36,12 +36,6 @@ export default function IndexPage() {
       <h1>Need to park at CRHS?</h1>
       <p>Click where you'd like to park, and we'll get you started!</p>
 
-      {spot && (
-        <p>
-          You selected: <b>{spot}</b>
-        </p>
-      )}
-
       <ParkingMap
         spot={spot}
         setSpot={setSpot}

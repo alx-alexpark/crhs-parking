@@ -46,10 +46,10 @@ export default async function getPresignedUrl(
 
     const url = await s3.getSignedUrlPromise('putObject', fileParams);
 
-    res.status(200).json({ url: url, filename: newName });
+    return res.status(200).json({ url: url, filename: newName });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: err });
+    return res.status(400).json({ message: err });
   }
 }
 

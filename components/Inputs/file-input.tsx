@@ -18,6 +18,7 @@ interface FileInputRef extends HTMLInputElement {
 }
 
 export function FileInput({ onSetFile, ...props }: FileInputProps) {
+  // Allow the input's value to be mutated
   const inputRef: MutableRefObject<FileInputRef | null> = useRef(null);
   useImperativeHandle(
     inputRef,

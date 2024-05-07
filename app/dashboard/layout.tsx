@@ -44,29 +44,34 @@ export default async function DashboardLayout({
     submitted: true,
   })) as ParkingSpotRequestType;
 
+  const wrapPage = (nav: ReactNode, body: ReactNode) => (
+    <main>
+      <nav>{nav}</nav>
+      {body}
+    </main>
+  );
+
   // If the user is a reviewer, show the reviewer dashboard
   if (userDbObj.admin) {
-    return (
-      <main>
-        <nav>
-          <span>
-            <Link href="/">
-              <strong>CRHS Parking</strong>
-            </Link>
-          </span>
-          <div className="nav-links">
-            <Link href="/review-log">Review log</Link>
-            <UserButton />
-          </div>
-        </nav>
-        {ReviewerDashboard}
-      </main>
+    return wrapPage(
+      <>
+        <span>
+          <Link href="/">
+            <strong>CRHS Parking</strong>
+          </Link>
+        </span>
+        <div className="nav-links">
+          <Link href="/review-log">Review log</Link>
+          <UserButton />
+        </div>
+      </>,
+      ReviewerDashboard
     );
   }
 
   // Show either the student dashboard or the todo page if the user has not completed the form
-  return (
-    <main>
+  return wrapPage(
+    <>
       <span>
         <Link href="/">
           <strong>CRHS Parking</strong>
@@ -75,9 +80,9 @@ export default async function DashboardLayout({
       <div className="nav-links">
         <UserButton />
       </div>
-      {!userDbObj.driversLicense || !lastParkingRequest
-        ? StudentTodoPage
-        : StudentDashboard}
-    </main>
+    </>,
+    !userDbObj.driversLicense || !lastParkingRequest
+      ? StudentTodoPage
+      : StudentDashboard
   );
 }

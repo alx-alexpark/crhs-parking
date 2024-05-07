@@ -3,7 +3,7 @@ import L, { LatLngBoundsExpression } from 'leaflet';
 import { useState } from 'react';
 import { Marker, useMap } from 'react-leaflet';
 
-import { LayerGroup, MapContainer, TileLayer, Tooltip } from 'react-leaflet';
+import { LayerGroup, MapContainer, TileLayer } from 'react-leaflet';
 import { FullscreenControl } from 'react-leaflet-fullscreen';
 
 import 'leaflet/dist/leaflet.css';
