@@ -109,9 +109,8 @@ export function ParkingRequestForm({
         <Form className={styles.formPage}>
           <input
             name="formStep"
-            type="number"
+            type="hidden"
             value={activeStep}
-            hidden={true}
             readOnly={true}
           />
 

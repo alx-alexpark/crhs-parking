@@ -10,6 +10,7 @@ import Head from 'next/head';
 import { ParkingRequestForm } from './form';
 
 import { fetcher } from '@/app/util';
+import { StatusCard } from '@/components/StatusCard/status-card';
 
 const steps = [
   'Introduction',
@@ -48,8 +49,12 @@ export default function ParkingRequestPage() {
         setStepperIndex={setActiveStep}
       />
 
-      {error && <div>There was an error loading your data.</div>}
-      {isLoading && <div>Please wait.</div>}
+      {error && (
+        <StatusCard status="error">
+          There was an error loading your data.
+        </StatusCard>
+      )}
+      {isLoading && <StatusCard status="info">Please wait.</StatusCard>}
 
       {!isLoading && (
         <ParkingRequestForm

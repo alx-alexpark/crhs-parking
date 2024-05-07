@@ -23,6 +23,19 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
           parking spot until you submit the form.
         </p>
 
+        <ParkingMap
+          spot={spot}
+          setSpot={setSpot}
+          height={400}
+          interactive={true}
+          className={styles.map}
+        />
+
+        {spot && (
+          <p>
+            You selected spot <b>{spot}</b>
+          </p>
+        )}
         <TextInput
           id="spotNum"
           name="spotNum"
@@ -33,15 +46,6 @@ export function ParkingSpot({ formik }: ParkingRequestPage) {
           readOnly={true}
           onChange={() => {}}
         />
-
-        <ParkingMap
-          spot={spot}
-          setSpot={setSpot}
-          height={400}
-          interactive={true}
-          className={styles.map}
-        />
-        <ErrorMessage name="spotNum" component="div" />
       </section>
     </>
   );

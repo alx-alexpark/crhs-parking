@@ -12,6 +12,7 @@ import PhoneInput from 'react-phone-number-input';
 import { ToastContainer, toast } from 'react-toastify';
 import ConfirmSubmit from '../components/confirm-submit';
 
+import { StatusCard } from '@/components/StatusCard/status-card';
 import 'react-phone-number-input/style.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styles from '../form.module.scss';
@@ -45,7 +46,7 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
   //   return data;
   // }, [data]);
 
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
@@ -55,14 +56,20 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
         onSubmit={(values: any) => {
           // console.log({phone: values.phone, grade: values.grade, driversLicense: dl});
           axios
-            .put('/api/v1/student/userProfile', {phone: phoneNumber, grade: values.grade, driversLicense: dl} )
+            .put('/api/v1/student/userProfile', {
+              phone: phoneNumber,
+              grade: values.grade,
+              driversLicense: dl,
+            })
             .then((res) => {
               console.log(res);
               router.push('/dashboard');
             })
             .catch((error) => {
               console.error(error);
-              toast.error('There was an error updating your user information: ' + error);
+              toast.error(
+                'There was an error updating your user information: ' + error
+              );
             });
         }}
         validationSchema={AboutMeSchema}
@@ -71,6 +78,11 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
       >
         {({ submitForm, isSubmitting, setFieldValue }) => (
           <>
+            {isSubmitting && (
+              <StatusCard status="info">
+                Updating your information...
+              </StatusCard>
+            )}
             <section>
               <h2>Student information</h2>
 
@@ -131,10 +143,9 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
                   console.warn(filename);
                   setDL(filename);
 
-                  return filename
+                  return filename;
                 }}
               />
-
             </section>
 
             <div className={styles.actions}>

@@ -1,0 +1,35 @@
+.info {
+  --color: 51, 51, 51;
+}
+
+.success {
+  --color: var(--color-primary-rgb);
+}
+
+.error {
+  --color: 255, 51, 51;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+
+  border-left: 2px solid rgb(var(--color));
+
+  background: rgba(var(--color), 5%);
+  padding: var(--spacing-lg);
+
+  width: 100%;
+
+  color: var(--color-foreground);
+}
+
+.iconContainer {
+  border-radius: var(--border-small);
+
+  background: rgb(var(--color));
+  padding: var(--spacing-md);
+
+  color: white;
+}

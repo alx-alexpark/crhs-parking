@@ -2,6 +2,9 @@ import { TextInput } from '@/components';
 import { FieldArray } from 'formik';
 import ParkingRequestPage from '.';
 
+import { MinusCircledIcon } from '@radix-ui/react-icons';
+import styles from './vehicle-information.module.scss';
+
 export function VehicleInformation({ formik }: ParkingRequestPage) {
   return (
     <>
@@ -13,51 +16,60 @@ export function VehicleInformation({ formik }: ParkingRequestPage) {
           render={(arrayHelpers) => (
             <>
               {formik.values.vehicles.map((vehicle, index) => (
-                <fieldset key={index}>
-                  <legend>Vehicle information</legend>
-                  <button
-                    type="button"
-                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                  >
-                    -
-                  </button>
+                <>
+                  {index > 0 && <hr />}
 
-                  <TextInput
-                    id={'vehicle-make' + index}
-                    name={`vehicles.${index}.make`}
-                    label="Car manufacturer"
-                    value={vehicle?.make}
-                  />
+                  <fieldset key={index}>
+                    <div>
+                      <legend>Vehicle information</legend>
+                      {index > 0 && (
+                        <button
+                          type="button"
+                          className={styles.vehicleButton}
+                          onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                        >
+                          <MinusCircledIcon />
+                        </button>
+                      )}
+                    </div>
 
-                  <TextInput
-                    id={'vehicle-model' + index}
-                    name={`vehicles.${index}.model`}
-                    label="Vehicle model"
-                    value={vehicle?.model}
-                  />
+                    <TextInput
+                      id={'vehicle-make' + index}
+                      name={`vehicles.${index}.make`}
+                      label="Car manufacturer"
+                      value={vehicle?.make}
+                    />
 
-                  <TextInput
-                    id={'vehicle-year' + index}
-                    name={`vehicles.${index}.year`}
-                    label="Release year"
-                    type="number"
-                    value={vehicle?.year}
-                  />
+                    <TextInput
+                      id={'vehicle-model' + index}
+                      name={`vehicles.${index}.model`}
+                      label="Vehicle model"
+                      value={vehicle?.model}
+                    />
 
-                  <TextInput
-                    id={'vehicle-color' + index}
-                    name={`vehicles.${index}.color`}
-                    label="Vehicle color"
-                    value={vehicle?.color}
-                  />
+                    <TextInput
+                      id={'vehicle-year' + index}
+                      name={`vehicles.${index}.year`}
+                      label="Release year"
+                      type="number"
+                      value={vehicle?.year}
+                    />
 
-                  <TextInput
-                    id={'license-plate' + index}
-                    name={`vehicles.${index}.licensePlate`}
-                    label="License plate"
-                    value={vehicle?.licensePlate}
-                  />
-                </fieldset>
+                    <TextInput
+                      id={'vehicle-color' + index}
+                      name={`vehicles.${index}.color`}
+                      label="Vehicle color"
+                      value={vehicle?.color}
+                    />
+
+                    <TextInput
+                      id={'license-plate' + index}
+                      name={`vehicles.${index}.licensePlate`}
+                      label="License plate"
+                      value={vehicle?.licensePlate}
+                    />
+                  </fieldset>
+                </>
               ))}
 
               <button type="button" onClick={() => arrayHelpers.push({})}>

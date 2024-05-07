@@ -1,6 +1,7 @@
 import { Tabs } from '@/components';
 import { useState } from 'react';
-import ParkingRequestPage from '.';
+
+import styles from './guidelines.module.scss';
 
 export function Guidelines() {
   const documents = [
@@ -257,6 +258,33 @@ export function Guidelines() {
           I've read and understood these terms
         </input>
       </section>
+
+      <section>
+        <Question question={'wow'} key={0} />
+      </section>
     </>
+  );
+}
+
+interface QuestionProps {
+  question: string;
+  key: number;
+}
+function Question({ question, key }: QuestionProps) {
+  const trueId = `true-${key}`;
+  const falseId = `false-${key}`;
+  const questionId = `${key}-question`;
+
+  return (
+    <fieldset className={styles.question}>
+      <legend>{question}</legend>
+      <div>
+        <label htmlFor={trueId}>Yes</label>
+        <label htmlFor={falseId}>No</label>
+      </div>
+
+      <input type="radio" id={trueId} name={questionId} hidden required />
+      <input type="radio" id={falseId} name={questionId} hidden required />
+    </fieldset>
   );
 }

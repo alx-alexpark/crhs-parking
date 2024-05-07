@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { AboutMeForm } from './form';
 
 import { fetcher } from '@/app/util';
+import { StatusCard } from '@/components/StatusCard/status-card';
 
 export default function ParkingRequestPage() {
   const { data, error, isLoading } = useSWR(
@@ -24,8 +25,12 @@ export default function ParkingRequestPage() {
         />
       </Head>
 
-      {error && <div>There was an error loading your data.</div>}
-      {isLoading && <div>Please wait.</div>}
+      {error && (
+        <StatusCard status="error">
+          There was an error loading your data.
+        </StatusCard>
+      )}
+      {isLoading && <StatusCard status="info">Please wait.</StatusCard>}
 
       {!isLoading && <AboutMeForm data={data} />}
     </>

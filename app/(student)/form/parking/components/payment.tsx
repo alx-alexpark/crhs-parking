@@ -23,7 +23,7 @@ export function Payment({ formik }: ParkingRequestPage) {
           name="paymentId"
           accept="image/*"
           onSetFile={async (h: File) => {
-            const url = uploadFileToBucket(h);
+            const url = await uploadFileToBucket(h);
             formik.setFieldValue('vehicle.proofOfInsurance', url);
 
             return url;
