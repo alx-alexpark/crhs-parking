@@ -17,6 +17,12 @@ const ParkingSpotRequestSchema = new Schema(
         maxlength: 10,
         default: '',
       },
+      proofOfInsurance: {
+        // A url to a bucket (picture)
+        type: String,
+        maxlength: 100,
+        default: '',
+      },
       year: {
         type: Number,
         // length: 4,
@@ -39,7 +45,6 @@ const ParkingSpotRequestSchema = new Schema(
         default: '',
       },
     },
-
     spotNum: {
       type: Number,
       maxlength: 4,
@@ -47,6 +52,10 @@ const ParkingSpotRequestSchema = new Schema(
     stickerNum: {
       type: Number,
       maxlength: 15,
+    },
+    stickerClaimed: {
+      type: Boolean,
+      defualt: false,
     },
     paymentId: {
       // An invoice number or similar to confirm that the person has indeed paid their dues through PayNGo
@@ -63,17 +72,14 @@ const ParkingSpotRequestSchema = new Schema(
     },
     lastInteractingAdminUserId: {
       type: String,
-      maxlength: 30,
-    },
-    // TODO: how will this work?
-    changeRequests: {
-      user: {
-        type: String,
-      },
+      maxlength: 30, 
     },
     formStep: {
       type: Number,
       default: 0,
+    },
+    parkingSticker: {
+      type: String,
     },
   },
   { timestamps: true }
