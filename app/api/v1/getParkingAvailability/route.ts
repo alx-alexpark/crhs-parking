@@ -12,3 +12,5 @@ export async function GET() {
 
   return NextResponse.json({ unavailableSpots: parkingSpotRequests });
 }
+
+export const dynamic = 'force-dynamic';

@@ -32,3 +32,5 @@ export async function GET() {
   });
   return NextResponse.json({ success: 'User created' });
 }
+
+export const dynamic = 'force-dynamic';

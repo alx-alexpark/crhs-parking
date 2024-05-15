@@ -22,3 +22,5 @@ export async function GET() {
 
   return NextResponse.json({ requests: requests });
 }
+
+export const dynamic = 'force-dynamic';

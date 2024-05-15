@@ -16,3 +16,5 @@ export async function GET() {
 
   return NextResponse.json({ requests: parkingSpotRequests });
 }
+
+export const dynamic = 'force-dynamic';
