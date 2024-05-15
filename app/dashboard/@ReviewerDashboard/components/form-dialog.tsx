@@ -74,7 +74,7 @@ export function ReviewerFormDialog({
   };
 
   const vehicle = form.vehicle;
-  const valuesCar = {
+  const valuesVehicle = {
     Manufacturer: [vehicle?.make, []],
     Model: [vehicle?.model, []],
     'Release year': [vehicle?.year, []],
@@ -178,14 +178,7 @@ export function ReviewerFormDialog({
 
       <section>
         <h3 className={styles.sectionTitle}>Vehicle details</h3>
-        {valuesCar.map((vehicleValues, i) => (
-          <>
-            {generateFromValues(vehicleValues)}
-
-            {/* Insert a separator between sections */}
-            {valuesCar.length > 1 && i !== valuesCar.length - 1 && <hr />}
-          </>
-        ))}
+        {generateFromValues(valuesVehicle)}
       </section>
 
       <div className={styles.actionButtonContainer}>
