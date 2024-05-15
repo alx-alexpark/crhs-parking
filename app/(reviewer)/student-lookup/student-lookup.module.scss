@@ -1,0 +1,13 @@
+.formLine {
+  display: flex;
+  gap: var(--spacing-md);
+
+  span {
+    width: 15ch;
+    text-align: right;
+  }
+
+  p {
+    color: var(--color-foreground);
+  }
+}
