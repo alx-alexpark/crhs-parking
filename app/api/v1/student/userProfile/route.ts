@@ -25,7 +25,7 @@ export async function PUT(request: Request) {
     {
       phone: json.phone,
       grade: json.grade,
-      driversLicense: json.driversLicense
+      driversLicense: json.driversLicense,
     }
   );
 

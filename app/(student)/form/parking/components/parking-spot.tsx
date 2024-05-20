@@ -2,7 +2,6 @@ import { ParkingMap, TextInput } from '@/components';
 import { useEffect, useState } from 'react';
 import ParkingRequestPage from '.';
 
-import { ErrorMessage } from 'formik';
 import styles from './form-page.module.scss';
 
 export function ParkingSpot({ formik }: ParkingRequestPage) {

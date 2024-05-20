@@ -72,7 +72,7 @@ const ParkingSpotRequestSchema = new Schema(
     },
     lastInteractingAdminUserId: {
       type: String,
-      maxlength: 30, 
+      maxlength: 30,
     },
     formStep: {
       type: Number,

@@ -8,6 +8,7 @@ import { FileInput, Tooltip } from '@/components';
 import ErrorMessage from '@/components/Inputs/error-message';
 import { ArrowRightIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 import { Field, Formik } from 'formik';
+import { E164Number } from 'libphonenumber-js/core';
 import PhoneInput from 'react-phone-number-input';
 import { ToastContainer, toast } from 'react-toastify';
 import ConfirmSubmit from '../components/confirm-submit';
@@ -36,7 +37,11 @@ const AboutMeSchema = Yup.object().shape({
 });
 
 export function AboutMeForm({ data }: AboutMeFormProps) {
-  const [phoneNumber, setPhoneNumber] = useState<string>();
+  // Phone number
+  // NOTE: E164Number is a string. The specific definition is Tagged<string, "E164Number">
+  const [phoneNumber, setPhoneNumber] = useState<E164Number>();
+
+  // Driver's license
   const [dl, setDL] = useState<string>();
 
   // TODO: detect when fetched data differs from current data
@@ -57,7 +62,7 @@ export function AboutMeForm({ data }: AboutMeFormProps) {
           // console.log({phone: values.phone, grade: values.grade, driversLicense: dl});
           axios
             .put('/api/v1/student/userProfile', {
-              phone: phoneNumber,
+              phone: Number(phoneNumber),
               grade: values.grade,
               driversLicense: dl,
             })

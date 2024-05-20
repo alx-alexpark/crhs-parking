@@ -48,6 +48,13 @@ const UserSchema = new mongoose.Schema(
       maxlength: 100,
       default: '',
     },
+    sticker: {
+      type: Number,
+    },
+    stickerClaimed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

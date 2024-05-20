@@ -71,3 +71,12 @@ nav {
     }
   }
 }
+
+// Global element styles
+.btn-tertiary {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--color-primary);
+  text-decoration: underline;
+}

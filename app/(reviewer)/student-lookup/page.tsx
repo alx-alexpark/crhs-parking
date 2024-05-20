@@ -6,6 +6,7 @@ import { StatusCard } from '@/components/StatusCard/status-card';
 import { UserType } from '@/models/User';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 
+import Card from '@/components/Card/card';
 import { ParkingSpotRequestType } from '@/models/ParkingSpotRequest';
 import styles from './student-lookup.module.scss';
 
@@ -63,7 +64,7 @@ export default function StudentLookup() {
       <h1>Student Lookup</h1>
 
       <div>
-        <div>
+        <Card>
           <p>Look up by parking sticker</p>
 
           <label htmlFor="parking-sticker">Parking Sticker</label>
@@ -77,9 +78,9 @@ export default function StudentLookup() {
           <button onClick={() => searchUser({ sticker: parkingSticker })}>
             Search <ArrowRightIcon />
           </button>
-        </div>
+        </Card>
 
-        <div>
+        <Card>
           <p>Look up by parking spot</p>
 
           <label htmlFor="parking-spot">Parking Spot</label>
@@ -93,29 +94,35 @@ export default function StudentLookup() {
           <button onClick={() => searchUser({ spot: parkingSpot })}>
             Search <ArrowRightIcon />
           </button>
-        </div>
+        </Card>
       </div>
 
-      <hr />
+      {/* TODO: show this while data is being fetched */}
+      {!userData && (
+        <StatusCard status="info">Searching for student...</StatusCard>
+      )}
 
-      <div>
-        {userData === null && (
-          <StatusCard status="info">Searching for student...</StatusCard>
-        )}
-        {userData && (
-          <>
-            <section>
-              <h3 className={styles.sectionTitle}>Student details</h3>
-              {/* {generateFromValues()} */}
-            </section>
+      {userData && (
+        <>
+          <hr />
 
-            <section>
-              <h3 className={styles.sectionTitle}>Vehicle details</h3>
-              {/* {generateFromValues()} */}
-            </section>
-          </>
-        )}
-      </div>
+          <Card>
+            {userData && (
+              <>
+                <section>
+                  <h3 className={styles.sectionTitle}>Student details</h3>
+                  {/* {generateFromValues()} */}
+                </section>
+
+                <section>
+                  <h3 className={styles.sectionTitle}>Vehicle details</h3>
+                  {/* {generateFromValues()} */}
+                </section>
+              </>
+            )}
+          </Card>
+        </>
+      )}
     </>
   );
 }
