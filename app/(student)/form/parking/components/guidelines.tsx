@@ -104,9 +104,8 @@ export function Guidelines({ formik }: ParkingRequestPage) {
 
         <Tabs tabs={documents} setAllVisited={setAllVisited} />
 
-        <input type="checkbox" disabled={!allVisited} required>
-          I've read and understood these terms
-        </input>
+        I've read and understood these terms
+        <input type="checkbox" disabled={!allVisited} required />
       </section>
 
       <section>
