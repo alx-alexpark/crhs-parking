@@ -73,7 +73,6 @@ export async function PUT(request: Request) {
 
   // Prevent the user from directly setting sensitive information
   // TODO: is there benefit to setting to original values?
-  newJson.submitted = false;
   newJson.decision = 'undecided';
   newJson.user = dbUser._id;
 

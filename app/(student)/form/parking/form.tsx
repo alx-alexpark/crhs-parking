@@ -93,6 +93,8 @@ export function ParkingRequestForm({
           return;
         }
 
+        values.submitted = true;
+
         axios
           .put('/api/v1/student/parkingSpotRequest', values)
           .then((res) => {
@@ -101,6 +103,7 @@ export function ParkingRequestForm({
           .catch((error) => {
             console.error(error);
           });
+
       }}
       validationSchema={pages[activeStep].validationSchema}
       enableReinitialize={true}
